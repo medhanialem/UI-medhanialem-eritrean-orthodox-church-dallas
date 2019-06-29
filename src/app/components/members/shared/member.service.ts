@@ -10,12 +10,12 @@ export class MemberService {
 
   memberList: Array<any>  = [{
     $key: 1,
-    firstName: 'Andom',
-    lastName: 'Woldu',
+    firstName: 'Daniel',
+    lastName: 'Kifle',
     dependency: '1',
     relationship: '1',
     gender: '1', //will be changed to male or female while getting data from the backend
-    mobile: '2133529858',
+    mobile: '6419198902',
     address: '8901 Veller Ave Dallas, TX 75233',
     email: 'andom.woldu@gmail.com',
     registrationDate: '4/13/2019',
@@ -24,8 +24,8 @@ export class MemberService {
   },
   {
     $key: 2,
-    firstName: 'Hagos',
-    lastName: 'Biniam',
+    firstName: 'Robel',
+    lastName: 'Woldu',
     dependency: '1',
     relationship: '1',
     gender: '1',
@@ -38,22 +38,22 @@ export class MemberService {
   },
   {
     $key: 3,
-    firstName: 'John',
-    lastName: 'Raggio',
+    firstName: 'Tesfahiwet',
+    lastName: 'Array',
     dependency: '1',
     relationship: '1',
     gender: '1',
-    mobile: '2133529858',
+    mobile: '7034195193',
     address: '8901 Veller Ave Dallas, TX 75233',
     email: 'John.Raggio@gmail.com',
     registrationDate: '4/13/2019',
-    isSundaySchoolMember: false,
-    isSebekaGubae: true
+    isSundaySchoolMember: true,
+    isSebekaGubae: false
   },
   {
     $key: 4,
-    firstName: 'Selam',
-    lastName: 'Biniam',
+    firstName: 'Burtye',
+    lastName: 'Andemariam',
     dependency: '1',
     relationship: '1',
     gender: '2',
@@ -76,7 +76,7 @@ export class MemberService {
     email: 'andom.woldu@gmail.com',
     registrationDate: '4/13/2019',
     isSundaySchoolMember: false,
-    isSebekaGubae: true
+    isSebekaGubae: false
   },
   {
     $key: 6,

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MemberService } from '../members/shared/member.service';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms' ;
 import { NotificationService } from '../members/shared/notification.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { headersToString } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-sms',
@@ -10,7 +12,7 @@ import { NotificationService } from '../members/shared/notification.service';
 })
 export class SmsComponent implements OnInit {
 
-  constructor(private service: MemberService, private notificationService: NotificationService) { }
+  constructor(private service: MemberService, private notificationService: NotificationService, private http: HttpClient) { }
 
   memberList: Array<any>;
   sundaySchoolNumbers: Array<any> = [];
@@ -20,10 +22,17 @@ export class SmsComponent implements OnInit {
   specificMembersSelected: Array<any> = [];
   filterMemberIds: Array<any>;
   memberTypeSelected: any;
+  smsTextObject: any;
 
   sortedMemberList: Array<any> = [];
 
   displaySingleMembersInfo: boolean = false;
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+  };
 
   ngOnInit() {
     // Heavy lift of members full information while the page loads
@@ -53,8 +62,7 @@ export class SmsComponent implements OnInit {
 
   // Filter membership type and collect their numbers which will serve in sending messages
   putNumbersToMemberTypeArrays(members): void {
-    for (let i=0; i < members.length; i++){
-      console.log("isSundaySchoolMember ", members[i].isSundaySchoolMember);
+    for (let i=0; i < members.length; i++) {
       //Sunday school
       if (members[i].isSundaySchoolMember) {
         this.sundaySchoolNumbers.push(members[i].mobile);
@@ -74,18 +82,50 @@ export class SmsComponent implements OnInit {
       if (this.memberTypeSelected == 1) {
         //call backend service with sundaySchoolNumbers
         console.log("sundaySchoolNumbers ", this.sundaySchoolNumbers);
+        this.smsTextObject = {
+          phoneNumbers: this.sundaySchoolNumbers,
+          message: this.smsForm.value.message
+        };
       }
       else if (this.memberTypeSelected == 2) {
         //call backend service with sebekaGubaeNumbers
         console.log("sebekaGubaeNumbers ", this.sebekaGubaeNumbers);
+        this.smsTextObject = {
+          phoneNumbers: this.sebekaGubaeNumbers,
+          message: this.smsForm.value.message
+        };
       }
       else if (this.memberTypeSelected == 3) {
         //call backend service with allMembersNumbers
         console.log("allMembersNumbers ", this.allMembersNumbers);
+        this.smsTextObject = {
+          phoneNumbers: this.specificMembers,
+          message: this.smsForm.value.message
+        };
       }
       else if (this.memberTypeSelected == 4) {
         //call backend service with specific phone number/s selected
+        this.smsTextObject = {
+          phoneNumbers: this.allMembersNumbers,
+          message: this.smsForm.value.message
+        };
       }
+
+      console.log("Request###########", this.smsTextObject);
+
+      this.http.post("http://localhost:8090/api/v1/sms/Churchmembers", this.smsTextObject, this.httpOptions)
+       .subscribe(
+        (val) => {
+            console.log("POST call successful value returned in body", 
+                        val);
+        },
+        response => {
+            console.log("POST call in error", response);
+        },
+        () => {
+            console.log("The POST observable is now completed.");
+        });
+      
 
       this.smsForm.reset();
       this.initializeFormGroup();

@@ -1,0 +1,59 @@
+
+.matTable {
+    width: 100%;
+}
+
+#registartion_select {
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_id {
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_name {
+    max-width: 8%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_gender {
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_mobile {
+    max-width: 7%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_address {
+    max-width: 35%;
+    margin-left: 3px;
+    margin-right: 2px;
+}
+
+.registartion_email {
+    max-width: 25%;
+    margin-left: 2px;
+    margin-right: 2px;
+    word-break: break-word;
+}
+
+#registartion_date {
+    max-width: 9%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+#registartion_actions{
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
+
+}
