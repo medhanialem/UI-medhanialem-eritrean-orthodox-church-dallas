@@ -10,60 +10,78 @@
   </mat-form-field>
 </div>
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="memberListData" matSort>
-      <ng-container matColumnDef="$key">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>No</mat-header-cell>
-          <mat-cell *matCellDef="let element">{{ element.$key }}</mat-cell>
-        </ng-container>
+  <mat-table [dataSource]="memberListData" matSort class='matTable' >
+    <ng-container matColumnDef="select">
+      <mat-header-cell id = "registartion_select" *matHeaderCellDef class="colSelect">
+        <mat-checkbox color="primary">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell id = "registartion_select" *matCellDef="let row" class='colSelect'>
+        <mat-checkbox color="primary">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="$key">
+      <mat-header-cell id = "registartion_id" *matHeaderCellDef mat-sort-header>No</mat-header-cell>
+      <mat-cell id = "registartion_id" *matCellDef="let element">{{ element.$key }}</mat-cell>
+    </ng-container>
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
-      <mat-cell *matCellDef="let element">{{ element.firstName }}</mat-cell>
+      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
+      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.firstName }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="lastName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.lastName }}</mat-cell>
+      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
+      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.lastName }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="gender">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.gender }}</mat-cell>
+      <mat-header-cell id = "registartion_gender" *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+      <mat-cell id = "registartion_gender" *matCellDef="let element">{{ element.gender==1?'Male':'Female' }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="mobile">
-        <mat-header-cell *matHeaderCellDef>Mobile</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.mobile }}</mat-cell>
+      <mat-header-cell id = "registartion_mobile" *matHeaderCellDef>Mobile</mat-header-cell>
+      <mat-cell id = "registartion_mobile" *matCellDef="let element">{{ element.mobile }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="address">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.address }}</mat-cell>
+      <mat-header-cell id = "registartion_address" *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+      <mat-cell id = "registartion_address" *matCellDef="let element">{{ element.address }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
+      <mat-header-cell class="registartion_email" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell class="registartion_email" *matCellDef="let element">{{ element.email }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="registrationDate">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Registration date</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{ element.registrationDate }}</mat-cell>
+      <mat-header-cell id = "registartion_date" *matHeaderCellDef mat-sort-header>Registration date</mat-header-cell>
+      <mat-cell id = "registartion_date" *matCellDef="let element">{{ element.registrationDate }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <button mat-icon-button (click)="onEdit(row)"><mat-icon>launch</mat-icon></button>
-          <button mat-icon-button color="warn" (click)="onDelete(row.$key)"><mat-icon>delete_outline</mat-icon></button>
-        </mat-cell>
+      <mat-header-cell *matHeaderCellDef id = "registartion_actions">
+
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" id = "registartion_actions">
+        <button mat-icon-button (click)="onEdit(row)">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="onDelete(row.$key)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </mat-cell>
     </ng-container>
     <ng-container matColumnDef="loading">
-        <mat-footer-cell *matFooterCellDef colspan="6">
-          Loading data...
-        </mat-footer-cell>
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="noData">
-        <mat-footer-cell *matFooterCellDef colspan="6">
-          No data.
-        </mat-footer-cell>
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':memberListData!=null}"></mat-footer-row>
-    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(memberListData!=null && memberListData.data.length==0)}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+      [ngClass]="{'hide':!(memberListData!=null && memberListData.data.length==0)}"></mat-footer-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
+    showFirstLastButtons></mat-paginator>
 </div>

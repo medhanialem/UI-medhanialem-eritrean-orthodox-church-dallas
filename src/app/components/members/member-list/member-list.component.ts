@@ -19,7 +19,7 @@ export class MemberListComponent implements OnInit {
     private dialogService: DialogService) { }
 
   memberListData: MatTableDataSource<any>;
-  displayedColumns: string[] = ['$key', 'firstName', 'lastName', 'gender', 'mobile', 'address', 'email', 'registrationDate', 'actions'];
+  displayedColumns: string[] = ['select','$key', 'firstName', 'lastName', 'gender', 'mobile', 'address', 'email', 'registrationDate', 'actions'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchKey: string;
