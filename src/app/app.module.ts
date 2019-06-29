@@ -17,6 +17,7 @@ import { MemberService } from './components/members/shared/member.service';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
 import { MatConfirmDialogComponent } from './components/members/mat-confirm-dialog/mat-confirm-dialog.component';
 import { SmsComponent } from './components/sms/sms.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SmsComponent } from './components/sms/sms.component';
     MemberComponent,
     MemberListComponent,
     MatConfirmDialogComponent,
-    SmsComponent
+    SmsComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
