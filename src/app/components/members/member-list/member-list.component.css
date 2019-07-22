@@ -51,9 +51,13 @@
     margin-left: 2px;
     margin-right: 2px;
 }
-#registartion_actions{
+#registartion_actions {
     max-width: 5%;
     margin-left: 2px;
     margin-right: 2px;
 
+}
+
+.sebekaGubae {
+    padding-right: 15px;
 }

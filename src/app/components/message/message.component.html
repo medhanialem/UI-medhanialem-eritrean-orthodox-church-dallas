@@ -1,0 +1,23 @@
+ <mat-toolbar>
+  <span>Send Message</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="messageForm" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="1" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controls-container">
+        <mat-form-field>
+          <textarea formControlName="message" matInput placeholder="Message*"><textarea></textarea>
+          <mat-error>Please write proper message.</mat-error>
+        </mat-form-field>
+        NB: Messages to be sent<br>
+        <strong>{{phoneNumbersLength}}</strong>
+      </div>
+        <div class="button-row">
+          <button mat-raised-button color="primary" type="submit" [disabled]="messageForm.invalid">Send</button>
+          <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
+        </div>
+    </mat-grid-tile>  
+  </mat-grid-list>
+</form>

@@ -18,6 +18,7 @@ import { MemberListComponent } from './components/members/member-list/member-lis
 import { MatConfirmDialogComponent } from './components/members/mat-confirm-dialog/mat-confirm-dialog.component';
 import { SmsComponent } from './components/sms/sms.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { MessageComponent } from './components/message/message.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     MemberListComponent,
     MatConfirmDialogComponent,
     SmsComponent,
-    PaymentComponent
+    PaymentComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +46,6 @@ import { PaymentComponent } from './components/payment/payment.component';
   ],
   providers: [MemberService],
   bootstrap: [AppComponent],
-  entryComponents: [MemberComponent, MatConfirmDialogComponent]
+  entryComponents: [MemberComponent, MessageComponent, MatConfirmDialogComponent]
 })
 export class AppModule { }

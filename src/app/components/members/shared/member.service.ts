@@ -16,7 +16,7 @@ export class MemberService {
     relationship: '1',
     gender: '1', //will be changed to male or female while getting data from the backend
     mobile: '6419198902',
-    address: '8901 Veller Ave Dallas, TX 75233',
+    address: '8901 Veller Ave Irving, TX 76211',
     email: 'andom.woldu@gmail.com',
     registrationDate: '4/13/2019',
     isSundaySchoolMember: true,
@@ -47,7 +47,7 @@ export class MemberService {
     address: '8901 Veller Ave Dallas, TX 75233',
     email: 'John.Raggio@gmail.com',
     registrationDate: '4/13/2019',
-    isSundaySchoolMember: true,
+    isSundaySchoolMember: false,
     isSebekaGubae: false
   },
   {
@@ -62,7 +62,7 @@ export class MemberService {
     email: 'Selam.Biniam@gmail.com',
     registrationDate: '4/01/2019',
     isSundaySchoolMember: false,
-    isSebekaGubae: true
+    isSebekaGubae: false
   },
   {
     $key: 5,
@@ -76,7 +76,7 @@ export class MemberService {
     email: 'andom.woldu@gmail.com',
     registrationDate: '4/13/2019',
     isSundaySchoolMember: false,
-    isSebekaGubae: false
+    isSebekaGubae: true
   },
   {
     $key: 6,

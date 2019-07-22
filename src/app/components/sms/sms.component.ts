@@ -12,7 +12,10 @@ import { headersToString } from 'selenium-webdriver/http';
 })
 export class SmsComponent implements OnInit {
 
-  constructor(private service: MemberService, private notificationService: NotificationService, private http: HttpClient) { }
+  constructor(
+    private service: MemberService, 
+    private notificationService: NotificationService, 
+    private http: HttpClient) { }
 
   memberList: Array<any>;
   sundaySchoolNumbers: Array<any> = [];

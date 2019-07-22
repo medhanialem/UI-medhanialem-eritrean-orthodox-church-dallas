@@ -8,16 +8,23 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
+  <mat-radio-group formControlName="relationship">
+    <mat-checkbox color="primary" (change)="changeMatTableDataSource($event, 'sundaySchool')">Sunday School</mat-checkbox>
+    <mat-checkbox color="primary" class="sebekaGubae" (change)="changeMatTableDataSource($event, 'sebekaGubae')">Sebeka Gubae</mat-checkbox>
+  </mat-radio-group>
+  <button mat-raised-button (click)="onSendSMS()" [disabled]="sendMessageBtnDisable">
+    <mat-icon>message</mat-icon>Send
+  </button>
 </div>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="memberListData" matSort class='matTable' >
     <ng-container matColumnDef="select">
       <mat-header-cell id = "registartion_select" *matHeaderCellDef class="colSelect">
-        <mat-checkbox color="primary">
+        <mat-checkbox color="primary" [checked] = "tableHeaderCheckbox" (change)="changeTableHeaderCheckbox()">
         </mat-checkbox>
       </mat-header-cell>
       <mat-cell id = "registartion_select" *matCellDef="let row" class='colSelect'>
-        <mat-checkbox color="primary">
+        <mat-checkbox color="primary" [checked]="tableHeaderCheckbox" (change)="filterSelectedMembersPhoneNumbers($event, row.mobile, row.$key)">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
