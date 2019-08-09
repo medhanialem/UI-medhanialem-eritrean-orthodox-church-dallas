@@ -46,7 +46,7 @@ export class MessageComponent implements OnInit {
 
       console.log("Request###########", this.smsTextObject);
 
-      this.http.post("http://localhost:8090/api/v1/sms/Churchmembers", this.smsTextObject, this.httpOptions)
+      this.http.post("http://localhost:8091/api/v1/sms/Churchmembers", this.smsTextObject, this.httpOptions)
        .subscribe(
         (val) => {
             console.log("POST call successful value returned in body", 
