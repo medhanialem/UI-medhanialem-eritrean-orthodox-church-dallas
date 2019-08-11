@@ -17,6 +17,9 @@ import { MemberService } from './components/members/shared/member.service';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
 import { MatConfirmDialogComponent } from './components/members/mat-confirm-dialog/mat-confirm-dialog.component';
 import { SmsComponent } from './components/sms/sms.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { MessageComponent } from './components/message/message.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { SmsComponent } from './components/sms/sms.component';
     MemberComponent,
     MemberListComponent,
     MatConfirmDialogComponent,
-    SmsComponent
+    SmsComponent,
+    PaymentComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -40,8 +45,8 @@ import { SmsComponent } from './components/sms/sms.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [MemberService],
+  providers: [MemberService, DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [MemberComponent, MatConfirmDialogComponent]
+  entryComponents: [MemberComponent, MessageComponent, MatConfirmDialogComponent]
 })
 export class AppModule { }
