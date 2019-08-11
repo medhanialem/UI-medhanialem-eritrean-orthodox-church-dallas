@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms' ;
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from '../members/shared/notification.service';
+import { Member } from '../members/member';
 
 @Component({
   selector: 'app-message',
@@ -12,18 +13,18 @@ import { NotificationService } from '../members/shared/notification.service';
 export class MessageComponent implements OnInit {
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: any, 
+    @Inject(MAT_DIALOG_DATA) public data: Member[],
     public dialogRef: MatDialogRef<MessageComponent>,
     private http: HttpClient,
-    private notificationService: NotificationService,) 
-    { }
+    private notificationService: NotificationService) {
+      data.forEach(member => {
+        this.phoneNumbersList.push(member.homePhoneNo);
+      });
+    }
 
-  phoneNumbersLength = 0;
+
+  phoneNumbersList: Array<string> = [];
   smsTextObject: any;
-
-  ngOnInit() {
-    this.phoneNumbersLength = this.data.length;
-  }
 
   messageForm: FormGroup = new FormGroup({
     message: new FormControl('', Validators.required)
@@ -35,8 +36,11 @@ export class MessageComponent implements OnInit {
     })
   };
 
-  onSubmit(){
-    if (this.messageForm.valid){
+  ngOnInit() {
+  }
+
+  onSubmit() {
+    if (this.messageForm.valid) {
 
         this.smsTextObject = {
           phoneNumbers: this.data,
@@ -44,36 +48,36 @@ export class MessageComponent implements OnInit {
         };
       }
 
-      console.log("Request###########", this.smsTextObject);
+    console.log('Request###########', this.smsTextObject);
 
-      this.http.post("http://localhost:8091/api/v1/sms/Churchmembers", this.smsTextObject, this.httpOptions)
+    this.http.post('http://localhost:8091/api/v1/sms/Churchmembers', this.smsTextObject, this.httpOptions)
        .subscribe(
         (val) => {
-            console.log("POST call successful value returned in body", 
+            console.log('POST call successful value returned in body',
                         val);
         },
         response => {
-            console.log("POST call in error", response);
+            console.log('POST call in error', response);
         },
         () => {
-            console.log("The POST observable is now completed.");
+            console.log('The POST observable is now completed.');
         });
-      
 
-      this.messageForm.reset();
-      this.initializeFormGroup();
-      this.onClose();
-      this.notificationService.success(':: Sent successfully');
+
+    this.messageForm.reset();
+    this.initializeFormGroup();
+    this.onClose();
+    this.notificationService.success(':: Sent successfully');
   }
 
   onClear() {
     this.initializeFormGroup();
   }
-  
+
   initializeFormGroup() {
     this.messageForm.setValue({
       message: ''
-    })
+    });
   }
 
   onClose() {

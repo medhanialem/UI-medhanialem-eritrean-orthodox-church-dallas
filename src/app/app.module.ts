@@ -19,6 +19,7 @@ import { MatConfirmDialogComponent } from './components/members/mat-confirm-dial
 import { SmsComponent } from './components/sms/sms.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { MessageComponent } from './components/message/message.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { MessageComponent } from './components/message/message.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [MemberService],
+  providers: [MemberService, DatePipe],
   bootstrap: [AppComponent],
   entryComponents: [MemberComponent, MessageComponent, MatConfirmDialogComponent]
 })

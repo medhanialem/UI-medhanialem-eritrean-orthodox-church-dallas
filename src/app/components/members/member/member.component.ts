@@ -11,7 +11,7 @@ import { NotificationService } from '../shared/notification.service';
 })
 export class MemberComponent implements OnInit {
 
-  constructor(private service: MemberService, 
+  constructor(public service: MemberService, 
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef<MemberComponent>) { }
 
@@ -42,27 +42,27 @@ export class MemberComponent implements OnInit {
   }
 
   onClear(){
-    this.service.form.reset();
-    this.service.initializeFormGroup();
+    //this.service.form.reset();
+    //this.service.initializeFormGroup();
   }
 
   onSubmit(){
-    if (this.service.form.valid){
-      if (!this.service.form.get('$key').value)
-        this.service.insertMember(this.service.form.value);
-      else
-        this.service.updateMember(this.service.form.value);
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      this.notificationService.success(':: Submitted successfully');
-      this.onClose();
-    }
+    // if (this.service.form.valid){
+    //   if (!this.service.form.get('$key').value)
+    //     this.service.insertMember(this.service.form.value);
+    //   else
+    //     this.service.updateMember(this.service.form.value);
+    //   this.service.form.reset();
+    //   this.service.initializeFormGroup();
+    //   this.notificationService.success(':: Submitted successfully');
+    //   this.onClose();
+    // }
   }
   
   onClose(){
-    this.service.form.reset();
-    this.service.initializeFormGroup();
-    this.dialogRef.close();
+    // this.service.form.reset();
+    // this.service.initializeFormGroup();
+    // this.dialogRef.close();
   }
 
   displayRelationshipOnOff(obj) {

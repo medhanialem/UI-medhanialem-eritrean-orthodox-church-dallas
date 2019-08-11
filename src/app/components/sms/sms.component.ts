@@ -39,7 +39,7 @@ export class SmsComponent implements OnInit {
 
   ngOnInit() {
     // Heavy lift of members full information while the page loads
-    this.memberList = this.service.getMembers();
+    //this.memberList = this.service.getMembers();
 
     // Filter numbers based on membership type 
     this.putNumbersToMemberTypeArrays(this.memberList);

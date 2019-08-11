@@ -8,62 +8,62 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <mat-radio-group formControlName="relationship">
-    <mat-checkbox color="primary" (change)="changeMatTableDataSource($event, 'sundaySchool')">Sunday School</mat-checkbox>
-    <mat-checkbox color="primary" class="sebekaGubae" (change)="changeMatTableDataSource($event, 'sebekaGubae')">Sebeka Gubae</mat-checkbox>
-  </mat-radio-group>
-  <button mat-raised-button (click)="onSendSMS()" [disabled]="sendMessageBtnDisable">
+   <mat-checkbox color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
+   <mat-checkbox color="primary" class="sebekaGubae" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
+  <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0">
     <mat-icon>message</mat-icon>Send
   </button>
 </div>
+
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="memberListData" matSort class='matTable' >
     <ng-container matColumnDef="select">
-      <mat-header-cell id = "registartion_select" *matHeaderCellDef class="colSelect">
-        <mat-checkbox color="primary" [checked] = "tableHeaderCheckbox" (change)="changeTableHeaderCheckbox()">
+      <mat-header-cell *matHeaderCellDef  id="registartion_select">
+        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()"
+                      >
         </mat-checkbox>
       </mat-header-cell>
-      <mat-cell id = "registartion_select" *matCellDef="let row" class='colSelect'>
-        <mat-checkbox color="primary" [checked]="tableHeaderCheckbox" (change)="filterSelectedMembersPhoneNumbers($event, row.mobile, row.$key)">
+      <mat-cell *matCellDef="let row" id='registartion_select'>
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="$key">
-      <mat-header-cell id = "registartion_id" *matHeaderCellDef mat-sort-header>No</mat-header-cell>
-      <mat-cell id = "registartion_id" *matCellDef="let element">{{ element.$key }}</mat-cell>
+    <ng-container matColumnDef="churchId">
+      <mat-header-cell id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
+      <mat-cell id = "church_id" *matCellDef="let element">{{ element.churchId }}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
-      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.firstName }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
-      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.lastName }}</mat-cell>
+    <ng-container matColumnDef="name">
+      <mat-header-cell id = "registartion_name" *matHeaderCellDef>Full name</mat-header-cell>
+      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.firstName + ' ' +element.middleName+' '+ element.lastName }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="gender">
       <mat-header-cell id = "registartion_gender" *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
-      <mat-cell id = "registartion_gender" *matCellDef="let element">{{ element.gender==1?'Male':'Female' }}</mat-cell>
+      <mat-cell id = "registartion_gender" *matCellDef="let element">{{ element.gender }}</mat-cell>
     </ng-container>
-    <ng-container matColumnDef="mobile">
-      <mat-header-cell id = "registartion_mobile" *matHeaderCellDef>Mobile</mat-header-cell>
-      <mat-cell id = "registartion_mobile" *matCellDef="let element">{{ element.mobile }}</mat-cell>
+    <ng-container matColumnDef="homePhoneNo">
+      <mat-header-cell id = "registartion_mobile" *matHeaderCellDef>Phone No.</mat-header-cell>
+      <mat-cell id = "registartion_mobile" *matCellDef="let element">{{ element.homePhoneNo }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="address">
       <mat-header-cell id = "registartion_address" *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
-      <mat-cell id = "registartion_address" *matCellDef="let element">{{ element.address }}</mat-cell>
+      <mat-cell id = "registartion_address" *matCellDef="let element">{{ element.streetAddress +' '+ element.city +', '+ element.state +' '+element.zipCode}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="email">
-      <mat-header-cell class="registartion_email" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
-      <mat-cell class="registartion_email" *matCellDef="let element">{{ element.email }}</mat-cell>
+      <mat-header-cell id="registartion_email" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell id="registartion_email" *matCellDef="let element">{{ element.email }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="registrationDate">
-      <mat-header-cell id = "registartion_date" *matHeaderCellDef mat-sort-header>Registration date</mat-header-cell>
-      <mat-cell id = "registartion_date" *matCellDef="let element">{{ element.registrationDate }}</mat-cell>
+      <mat-header-cell id="registartion_date" *matHeaderCellDef mat-sort-header>Member Since</mat-header-cell>
+      <mat-cell id="registartion_date" *matCellDef="let element">{{ toShortDate(element.registrationDate) }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef id = "registartion_actions">
-
-      </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id = "registartion_actions">Actions</mat-header-cell>
       <mat-cell *matCellDef="let row" id = "registartion_actions">
         <button mat-icon-button (click)="onEdit(row)">
           <mat-icon>launch</mat-icon>
