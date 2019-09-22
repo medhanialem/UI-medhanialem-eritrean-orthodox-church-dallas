@@ -1,0 +1,36 @@
+<mat-dialog-content>
+  <div class="example-container">
+    <mat-form-field>
+      <input matInput placeholder="Full Name" [(ngModel)]="fullName" [disabled] = "true">
+    </mat-form-field>
+
+    <p>Number of months</p>
+    <mat-form-field>
+      <button mat-icon-button [disabled]="months<=1? true : false" (click) = "calculateTotalMinusMonthClicked()"><mat-icon>remove_circle</mat-icon></button>
+      <input matInput [(ngModel)]="months" [disabled] = "true"/>
+      <button mat-icon-button [disabled]="months>=maximumMonths? true : false" (click) = "calculateTotalPlusMonthClicked()"><mat-icon>add_circle</mat-icon></button>
+    </mat-form-field>
+  
+    <!-- <mat-form-field>
+      <textarea matInput placeholder="Textarea"></textarea>
+    </mat-form-field> -->
+
+    <p>Total amount</p>
+    <mat-form-field>
+        $<input matInput [(ngModel)]="total" [disabled] = "true">
+    </mat-form-field>
+  </div>
+  <!-- ********************* -->
+
+  
+   <!-- ********************* -->
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button [disabled]="maximumMonths==0" (click)="makePayment()" mat-button color='primary'>    
+    Pay
+  </button>
+  <button mat-button color='accent' (click)="dismiss()">
+    <mat-icon>cancel</mat-icon>
+    Cancel 
+  </button>
+</mat-dialog-actions>
