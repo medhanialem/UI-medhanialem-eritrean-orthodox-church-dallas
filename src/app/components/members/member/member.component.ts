@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms' ;
 
 import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
@@ -11,7 +12,7 @@ import { NotificationService } from '../shared/notification.service';
 })
 export class MemberComponent implements OnInit {
 
-  constructor(private service: MemberService, 
+  constructor(public service: MemberService, 
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef<MemberComponent>) { }
 
@@ -42,27 +43,27 @@ export class MemberComponent implements OnInit {
   }
 
   onClear(){
-    this.service.form.reset();
-    this.service.initializeFormGroup();
+    //this.service.form.reset();
+    //this.service.initializeFormGroup();
   }
 
   onSubmit(){
-    if (this.service.form.valid){
-      if (!this.service.form.get('$key').value)
-        this.service.insertMember(this.service.form.value);
-      else
-        this.service.updateMember(this.service.form.value);
-      this.service.form.reset();
-      this.service.initializeFormGroup();
-      this.notificationService.success(':: Submitted successfully');
-      this.onClose();
-    }
+    // if (this.service.form.valid){
+    //   if (!this.service.form.get('$key').value)
+    //     this.service.insertMember(this.service.form.value);
+    //   else
+    //     this.service.updateMember(this.service.form.value);
+    //   this.service.form.reset();
+    //   this.service.initializeFormGroup();
+    //   this.notificationService.success(':: Submitted successfully');
+    //   this.onClose();
+    // }
   }
   
   onClose(){
-    this.service.form.reset();
-    this.service.initializeFormGroup();
-    this.dialogRef.close();
+    // this.service.form.reset();
+    // this.service.initializeFormGroup();
+    // this.dialogRef.close();
   }
 
   displayRelationshipOnOff(obj) {
@@ -71,5 +72,21 @@ export class MemberComponent implements OnInit {
       this.checkedDependent = false;
     }
   }
+
+  addMemberForm: FormGroup = new FormGroup({
+    $key: new FormControl(null),
+    firstName: new FormControl('', Validators.required),
+    middleName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    dependency: new FormControl('1'),
+    relationship: new FormControl('1'),
+    gender: new FormControl('1'),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    address: new FormControl(''),
+    email: new FormControl('', Validators.email),
+    registrationDate: new FormControl('', Validators.required),
+    isSundaySchoolMember: new FormControl(),
+    isSebekaGubae: new FormControl()
+  });
 
 }

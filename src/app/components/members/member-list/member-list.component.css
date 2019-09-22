@@ -3,26 +3,36 @@
     width: 100%;
 }
 
+mat-header-cell {
+display:flex;
+justify-content: left !important;
+}
+
+mat-cell{
+display:flex;
+justify-content: left !important;
+}
+
 #registartion_select {
-    max-width: 5%;
+    max-width: 3%;
     margin-left: 2px;
     margin-right: 2px;
 }
 
-#registartion_id {
-    max-width: 5%;
+#church_id {
+    max-width: 7%;
     margin-left: 2px;
     margin-right: 2px;
 }
 
 #registartion_name {
-    max-width: 8%;
+    max-width: 17%;
     margin-left: 2px;
     margin-right: 2px;
 }
 
 #registartion_gender {
-    max-width: 5%;
+    max-width: 7%;
     margin-left: 2px;
     margin-right: 2px;
 }
@@ -51,9 +61,13 @@
     margin-left: 2px;
     margin-right: 2px;
 }
-#registartion_actions{
+#registartion_actions {
     max-width: 5%;
     margin-left: 2px;
     margin-right: 2px;
 
+}
+
+.sebekaGubae {
+    padding-right: 15px;
 }

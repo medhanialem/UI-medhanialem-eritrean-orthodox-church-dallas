@@ -12,7 +12,10 @@ import { headersToString } from 'selenium-webdriver/http';
 })
 export class SmsComponent implements OnInit {
 
-  constructor(private service: MemberService, private notificationService: NotificationService, private http: HttpClient) { }
+  constructor(
+    private service: MemberService, 
+    private notificationService: NotificationService, 
+    private http: HttpClient) { }
 
   memberList: Array<any>;
   sundaySchoolNumbers: Array<any> = [];
@@ -36,7 +39,7 @@ export class SmsComponent implements OnInit {
 
   ngOnInit() {
     // Heavy lift of members full information while the page loads
-    this.memberList = this.service.getMembers();
+    //this.memberList = this.service.getMembers();
 
     // Filter numbers based on membership type 
     this.putNumbersToMemberTypeArrays(this.memberList);

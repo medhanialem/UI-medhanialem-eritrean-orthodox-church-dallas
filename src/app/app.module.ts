@@ -20,8 +20,8 @@ import { SmsComponent } from './components/sms/sms.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 import { PaymentDialogComponent } from './components/payment/payment-dialog/payment-dialog.component';
+import { MessageComponent } from './components/message/message.component';
 import { DatePipe } from '@angular/common';
-
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { DatePipe } from '@angular/common';
     SmsComponent,
     PaymentComponent,
     PaymentListComponent,
-    PaymentDialogComponent
+    PaymentDialogComponent,
+    MessageComponent
   ],
   imports: [
     BrowserModule,
@@ -50,6 +51,8 @@ import { DatePipe } from '@angular/common';
   ],
   providers: [MemberService,DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent]
+  entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent, MessageComponent],
+  providers: [MemberService, DatePipe],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
