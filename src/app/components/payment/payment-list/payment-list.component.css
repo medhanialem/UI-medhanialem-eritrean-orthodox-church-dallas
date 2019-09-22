@@ -1,0 +1,60 @@
+.blue {
+    background-color: #4e74c9;
+    text-shadow: 1px 1px 1px rgba(000,000,000, .20);
+    border: 1px solid #415CB0;
+    color: #FFFFFF;
+}
+.blue:active {
+    position: relative;
+    top: 1px;
+}
+
+.blue:hover {
+    background-color: #5F85DB;
+}
+.button:hover, .auto_button:hover, .sm_button:hover {
+    text-decoration: none;
+}
+
+.search-div,.search-form-field {
+    margin-left: 0;
+}
+.matTable {
+    max-width:100%;   
+}
+
+.pay-btn {
+    float: right;
+}
+
+  .colMobile {
+ 
+    /* padding-left: 1%; */
+    padding-right: 1%;
+} 
+
+.colSelect {
+    max-width: 3%;
+   
+}
+.colKey {
+    max-width: 4%;
+    
+}
+
+.monthJan{
+    padding-left: 1%;
+}
+
+.year-dpn{
+
+    background-color: white;
+    max-width: 10%;
+    
+}
+/*
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  } */
+/***********************************************/

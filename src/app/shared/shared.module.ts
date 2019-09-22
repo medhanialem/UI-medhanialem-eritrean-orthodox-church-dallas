@@ -20,7 +20,8 @@ import * as Material from '@angular/material';
         Material.MatSortModule,
         Material.MatDialogModule,
         Material.MatSelectModule,
-        Material.MatCheckboxModule
+        Material.MatCheckboxModule,
+        Material.MatIconModule
     ],
     exports: [
         Material.MatTabsModule,
@@ -40,7 +41,8 @@ import * as Material from '@angular/material';
         Material.MatSortModule,
         Material.MatDialogModule,
         Material.MatSelectModule,
-        Material.MatCheckboxModule
+        Material.MatCheckboxModule,
+        Material.MatIconModule
     ]
 })
 

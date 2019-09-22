@@ -18,6 +18,10 @@ import { MemberListComponent } from './components/members/member-list/member-lis
 import { MatConfirmDialogComponent } from './components/members/mat-confirm-dialog/mat-confirm-dialog.component';
 import { SmsComponent } from './components/sms/sms.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
+import { PaymentDialogComponent } from './components/payment/payment-dialog/payment-dialog.component';
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +35,9 @@ import { PaymentComponent } from './components/payment/payment.component';
     MemberListComponent,
     MatConfirmDialogComponent,
     SmsComponent,
-    PaymentComponent
+    PaymentComponent,
+    PaymentListComponent,
+    PaymentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -42,8 +48,8 @@ import { PaymentComponent } from './components/payment/payment.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [MemberService],
+  providers: [MemberService,DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [MemberComponent, MatConfirmDialogComponent]
+  entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent]
 })
 export class AppModule { }
