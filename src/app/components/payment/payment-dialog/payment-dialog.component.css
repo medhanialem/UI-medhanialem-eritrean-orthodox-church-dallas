@@ -1,0 +1,20 @@
+.blue {
+    background-color: #4e74c9;
+    text-shadow: 1px 1px 1px rgba(000,000,000, .20);
+    border: 1px solid #415CB0;
+    color: #FFFFFF;
+}
+
+.example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    width: 100%;
+  }
+  
+
+  .mat-input-element {
+    width: 5%;
+  }
