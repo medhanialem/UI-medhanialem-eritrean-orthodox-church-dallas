@@ -111,6 +111,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   applyFilter() {
     this.memberListData.filter = this.searchKey.trim().toLowerCase();
+    // this.filteredList = [];
+    // this.filteredList = this.memberListData.data;
   }
 
   changeMatTableDataSource() {
@@ -134,6 +136,15 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.memberListData.data = this.filteredList;
    }
 
+   onAddMember(){
+    //this.service.initializeFormGroup();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "60%";
+    this.dialog.open(MemberComponent, dialogConfig);
+  }
+
    onSendSMS() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -141,6 +152,10 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     dialogConfig.width = '60%';
     dialogConfig.data = this.selection.selected;
     this.dialog.open(MessageComponent, dialogConfig);
+  }
+
+  abc(){
+    console.log("***** Repeating ******")
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms' ;
 
 import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
@@ -71,5 +72,21 @@ export class MemberComponent implements OnInit {
       this.checkedDependent = false;
     }
   }
+
+  addMemberForm: FormGroup = new FormGroup({
+    $key: new FormControl(null),
+    firstName: new FormControl('', Validators.required),
+    middleName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    dependency: new FormControl('1'),
+    relationship: new FormControl('1'),
+    gender: new FormControl('1'),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10)]),
+    address: new FormControl(''),
+    email: new FormControl('', Validators.email),
+    registrationDate: new FormControl('', Validators.required),
+    isSundaySchoolMember: new FormControl(),
+    isSebekaGubae: new FormControl()
+  });
 
 }
