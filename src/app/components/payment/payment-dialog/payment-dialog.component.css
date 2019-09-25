@@ -6,15 +6,31 @@
 }
 
 .example-container {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
   
-  .example-container > * {
-    width: 100%;
-  }
+.example-container > * {
+  width: 100%;
+}
   
+.mat-input-element {
+  width: 5%;
+}
 
-  .mat-input-element {
-    width: 5%;
-  }
+.nameMonthTotal {
+  margin-top: 40px;
+  margin-left: 20px;
+}
+
+#leftLabels {
+  padding-right: 10px;
+}
+
+#rowLabels {
+  padding-top: 15px;
+}
+
+/* #minusPlusBtn {
+  color: darkblue;
+} */

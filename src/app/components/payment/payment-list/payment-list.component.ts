@@ -12,101 +12,115 @@ import { DatePipe } from '@angular/common';
 })
 export class PaymentListComponent implements OnInit {
 
-  constructor(private service:PaymentService,
+  constructor(private service: PaymentService,
     private dialog: MatDialog, private datePipe: DatePipe) { }
-  paymentListData =new MatTableDataSource<MemberModel>();
-  displayedColumns: string[] = ['select','memberId','firstName','middleName' ,'lastName', 'tier','Jan','Feb','Mar', 'April','May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  paymentListData = new MatTableDataSource<MemberModel>();
+  //displayedColumns: string[] = ['select', 'memberId', 'firstName', 'middleName', 'lastName', 'tier', 'Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  displayedColumns: string[] = ['select', 'churchId', 'name', 'homePhoneNo', 'Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'unpaidMonths'];
   //paymentList: Array<MemberModel> ;
-  currentYear=new Date().getFullYear();
-  selected=new Date().getFullYear();
-  selectedrow :MemberModel=null;
-  years: any[]=[2018,2017,2016,2015,2014,2013] ;
+  //currentYear = new Date().getFullYear();
+  //selected = new Date().getFullYear();
+  selectedrow: MemberModel = null;
+  //years: any[]=[2018,2017,2016,2015,2014,2013];
+  year:number = new Date().getFullYear();
+  minimumYear: number = 2012
+  maximumYear: number = new Date().getFullYear() + 1;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  abc(){
+  abc() {
     console.log(this.selectedrow);
   }
-  
-  ngOnInit(){
+
+  ngOnInit() {
     console.log("On ng init.....");
     this.getPaymentList();
     // this.paymentList = this.service.getPaymentList();
     // this.paymentListData = new MatTableDataSource(this.paymentList);
     this.paymentListData.paginator = this.paginator;
-    this.paymentListData.sort = this.sort;  
-    
+    this.paymentListData.sort = this.sort;
+
     // this.activatedRoute.queryParamMap.subscribe((paramMap: ParamMap) => {
     //   const refresh = paramMap.get('refresh');
     //   if (refresh) {
     //     this.paymentList = this.service.getPaymentList2();
     //   }
     // });
-
-
-
   }
 
-  getPaymentList(){
+  getPaymentList() {
     console.log("change");
-    this.service.getPaymentList("" + this.selected).subscribe(response=>{
-      this.paymentListData.data= response as MemberModel[];
+    this.service.getPaymentList("" + this.year).subscribe(response => {
+      this.paymentListData.data = response as MemberModel[];
     });
   }
 
-
-  pay(){
+  pay() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
+    dialogConfig.width = "35%";
     // this.dialog.open(PaymentDialogComponent, dialogConfig);
-    let dialogRef=this.dialog.open(PaymentDialogComponent, {width:"60%",data:this.selectedrow});
+    let dialogRef = this.dialog.open(PaymentDialogComponent, { width: "35%", data: this.selectedrow });
   }
-  onEdit(row:MemberModel){
+
+  onEdit(row: MemberModel) {
     // this.service.populateForm(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "60%";
-    this.selectedrow=row;
+    this.selectedrow = row;
     // let dialogRef=this.dialog.open(PaymentDialogComponent, {width:"60%",data:row});
   }
 
   applyFilter(filterValue: string) {
     this.paymentListData.filter = filterValue.trim().toLowerCase();
   }
-  compareRegistrationDate(registrationDate: Date,month: number,year: number){
 
-    console.log("Logging "+registrationDate+" month "+month+ " year "+ year)
-    if(registrationDate.getFullYear() < year){      
+  compareRegistrationDate(registrationDate: Date, month: number, year: number) {
+    console.log("Logging " + registrationDate + " month " + month + " year " + year)
+    if (registrationDate.getFullYear() < year) {
       return true;
     }
-    else if(registrationDate.getFullYear()==year && registrationDate.getMonth() <= month){
+    else if (registrationDate.getFullYear() == year && registrationDate.getMonth() <= month) {
       return true;
     }
-    else{
+    else {
       return false;
     }
 
   }
 
+  minusYearClicked(): void {
+    this.year--;
+    this.getPaymentList();
+  }
 
+  plusYearClicked(): void {
+    this.year++;
+    this.getPaymentList();
+  }
 
-//***********************************************/
+  currentYearClicked(): void {
+    this.year = new Date().getFullYear();
+    this.getPaymentList();
+  }
 
-// checkboxLabel(row?: MemberModel): string{
+  registrationAfterThisMonth(registrationMonth:number, registrationYear:number, monthToPay:number) :boolean{
+    if(registrationYear > this.year || (registrationYear === this.year && registrationMonth > monthToPay)){
+      return true;
+    }
+    return false;
 
-//     return `${
-//       this.selection.isSelected(row)? 'deselect':'select'
-//     } row ${row.memberId + 1}`;
-// }
+  }
+  //***********************************************/
+  // checkboxLabel(row?: MemberModel): string{
 
-
-
-//***********************************************/
-
-
-
-
+  //     return `${
+  //       this.selection.isSelected(row)? 'deselect':'select'
+  //     } row ${row.memberId + 1}`;
+  // }
+  //***********************************************/
 }

@@ -27,34 +27,55 @@
     float: right;
 }
 
-  .colMobile {
- 
-    /* padding-left: 1%; */
+/* .colMobile {
     padding-right: 1%;
-} 
+}  */
 
-.colSelect {
+mat-header-cell {
+    display:flex;
+    justify-content: left !important;
+}
+    
+mat-cell{
+    display:flex;
+    justify-content: left !important;
+}
+
+#colSelect {
+    max-width: 2%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#church_id {
     max-width: 3%;
-   
-}
-.colKey {
-    max-width: 4%;
-    
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
-.monthJan{
-    padding-left: 1%;
+#name {
+    max-width: 20%;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
-.year-dpn{
-
-    background-color: white;
-    max-width: 10%;
-    
+#month {
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
 }
-/*
-.mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  } */
-/***********************************************/
+
+#paidMonth {
+    /* font-weight: bolder; */
+    color: darkgreen;
+}
+
+#notMemberMonth {
+    /* font-weight: bolder; */
+    color: darkred;
+}
+
+#minusPlusBtn {
+    font-weight: bolder;
+    color: darkblue;
+}

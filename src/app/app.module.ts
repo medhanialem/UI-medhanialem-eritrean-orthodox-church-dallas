@@ -52,7 +52,5 @@ import { DatePipe } from '@angular/common';
   providers: [MemberService,DatePipe],
   bootstrap: [AppComponent],
   entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent, MessageComponent],
-  providers: [MemberService, DatePipe],
-  bootstrap: [AppComponent],
 })
 export class AppModule { }

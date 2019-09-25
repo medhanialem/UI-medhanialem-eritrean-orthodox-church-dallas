@@ -1,36 +1,49 @@
 <mat-dialog-content>
   <div class="example-container">
-    <mat-form-field>
-      <input matInput placeholder="Full Name" [(ngModel)]="fullName" [disabled] = "true">
-    </mat-form-field>
-
-    <p>Number of months</p>
-    <mat-form-field>
-      <button mat-icon-button [disabled]="months<=1? true : false" (click) = "calculateTotalMinusMonthClicked()"><mat-icon>remove_circle</mat-icon></button>
-      <input matInput [(ngModel)]="months" [disabled] = "true"/>
-      <button mat-icon-button [disabled]="months>=maximumMonths? true : false" (click) = "calculateTotalPlusMonthClicked()"><mat-icon>add_circle</mat-icon></button>
-    </mat-form-field>
-  
     <!-- <mat-form-field>
-      <textarea matInput placeholder="Textarea"></textarea>
+      <input matInput placeholder="Full Name" [(ngModel)]="fullName" [disabled]="true">
     </mat-form-field> -->
-
-    <p>Total amount</p>
-    <mat-form-field>
-        $<input matInput [(ngModel)]="total" [disabled] = "true">
-    </mat-form-field>
+    <mat-toolbar>
+      <span>Membership Payment</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+    <div class = "nameMonthTotal">
+      <span><b id = "leftLabels">Full name:</b><label>{{fullName}}</label></span>
+      <br>
+      <span><b id = "leftLabels">Church Id:</b><label>{{churchId}}</label></span>
+      <br>
+      <span><b id = "leftLabels">Phone:</b><label>{{phone}}</label></span>
+      <br>
+      <span><b id = "leftLabels">Tier:</b><label>{{tierId}}</label></span>
+      <br>
+      <span><b id = "leftLabels">Months:</b>
+      <!-- <mat-form-field> -->
+      <button id = "minusPlusBtn" mat-icon-button [disabled]="months<=1? true : false" (click)="calculateTotalMinusMonthClicked()">
+        <mat-icon>remove_circle</mat-icon>
+      </button>
+      <!-- <input matInput [(ngModel)]="months" [disabled] = "true"/> -->
+      <label>{{months}}</label>
+      <button id = "minusPlusBtn" mat-icon-button [disabled]="months>=maximumMonths? true : false" (click)="calculateTotalPlusMonthClicked()">
+        <mat-icon>add_circle</mat-icon>
+      </button>
+      <!-- </mat-form-field> -->
+      </span>
+      <br>
+      <span id = "rowLabels"><b id = "leftLabels">Total:</b>
+      <!-- <mat-form-field>
+        $<input matInput [(ngModel)]="total" [disabled]="true">
+      </mat-form-field> -->
+      ${{total}}
+      </span>
+    </div>
   </div>
-  <!-- ********************* -->
-
-  
-   <!-- ********************* -->
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button [disabled]="maximumMonths==0" (click)="makePayment()" mat-button color='primary'>    
+  <button [disabled]="maximumMonths==0" (click)="makePayment()" mat-button color='primary'>
     Pay
   </button>
   <button mat-button color='accent' (click)="dismiss()">
     <mat-icon>cancel</mat-icon>
-    Cancel 
+    Cancel
   </button>
 </mat-dialog-actions>

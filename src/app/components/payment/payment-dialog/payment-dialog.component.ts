@@ -29,6 +29,9 @@ export class PaymentDialogComponent implements OnInit {
   paymentLogs = [];
   paymentLookUps: PaymentLookUp[];
   startingPay: number = -1;
+  churchId: string;
+  tierId: number;
+  phone: string;
 
   ngOnInit() {
     console.log(this.data);
@@ -36,8 +39,10 @@ export class PaymentDialogComponent implements OnInit {
     //this.selecteddata=this.data;
     this.fullName = this.data.firstName + " " + this.data.middleName + " " + this.data.lastName;
     this.paymentLogs = this.data.paymentLog;
+    this.churchId = this.data.churchId;
+    this.tierId = this.data.tier;
+    this.phone = this.data.homePhoneNo;
     this.determineMinimumMaximumMonths();
-
   }
 
   getPaymentLookupData() {
@@ -95,7 +100,6 @@ export class PaymentDialogComponent implements OnInit {
   }
 
   calculateTotalPlusMonthClicked(): void {
-
     if (this.months < this.maximumMonths) {
       this.total += this.paymentLookUps[this.index].amount;
       this.index++;
@@ -109,7 +113,6 @@ export class PaymentDialogComponent implements OnInit {
       this.index--;
       this.total -= this.paymentLookUps[this.index].amount;
     }
-
   }
 
   makePayment(){
