@@ -1,0 +1,80 @@
+<mat-dialog-content>
+  <div class="example-container">
+    <mat-toolbar>
+      <span>MedhaniAlem Eritrean Orthodox Church, Dallas Texas</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+    <div class="paymentReceipt">
+      <hr>
+      <p id="paymentReceipt">Membership Payment Receipt</p>
+      <hr>
+    </div>
+  </div>
+  <div class="nameMonthTotal">
+    <table class="memberPaymentInfoTbl">
+      <tr>
+        <td id="leftLabels">Full Name</td>
+        <td id="value">{{fullName}}</td>
+      </tr>
+      <tr>
+        <td id="leftLabels">Church Id</td>
+        <td id="value">{{churchId}}</td>
+      </tr>
+      <tr>
+        <td id="leftLabels">Phone</td>
+        <td id="value">{{phone}}</td>
+      </tr>
+      <tr>
+        <td id="leftLabels">Tier</td>
+        <td id="value">{{tierId}}</td>
+      </tr>
+      <tr>
+        <td id="leftLabels">Months</td>
+        <td id="value">{{months}}</td>
+      </tr>
+      <tr>
+      <tr>
+        <td id="leftLabels">Date</td>
+        <td id="value">{{date}}</td>
+      </tr>
+      <tr>
+        <td id="leftLabels">Total</td>
+        <td id="value">${{total}}</td>
+      </tr>
+    </table>
+  </div>
+  <div>
+    <table class="memberPaymentInfoMonthsTbl">
+      <tr>
+        <td id="leftLabels">{{year}}</td>
+      </tr>
+      <tr>
+        <td id="leftLabelsMonths">January</td>
+        <td id="leftLabelsMonths">February</td>
+        <td id="leftLabelsMonths">March</td>
+        <td id="leftLabelsMonths">April</td>
+        <td id="leftLabelsMonths">May</td>
+        <td id="leftLabelsMonths">June</td>
+        <td id="leftLabelsMonths">July</td>
+        <td id="leftLabelsMonths">August</td>
+        <td id="leftLabelsMonths">September</td>
+        <td id="leftLabelsMonths">October</td>
+        <td id="leftLabelsMonths">November</td>
+        <td id="leftLabelsMonths">December</td>
+      </tr>
+      <tr>
+        <td id="monthVaue" *ngFor="let month of monthsLoop">
+          <mat-icon *ngIf = "startingPay <= month && month < index">done</mat-icon>
+        </td>
+      </tr>
+    </table>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="printReceipt()">
+    <mat-icon>local_printshop</mat-icon>Print
+  </button>
+  <button mat-raised-button color='accent' (click)="dismiss()">
+    <mat-icon>clear</mat-icon>Close
+  </button>
+</mat-dialog-actions>

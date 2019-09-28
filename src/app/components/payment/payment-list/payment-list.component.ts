@@ -16,7 +16,7 @@ export class PaymentListComponent implements OnInit {
     private dialog: MatDialog, private datePipe: DatePipe) { }
   paymentListData = new MatTableDataSource<MemberModel>();
   //displayedColumns: string[] = ['select', 'memberId', 'firstName', 'middleName', 'lastName', 'tier', 'Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  displayedColumns: string[] = ['select', 'churchId', 'name', 'homePhoneNo', 'Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'unpaidMonths'];
+  displayedColumns: string[] = ['select', 'churchId', 'name', 'homePhoneNo', 'unpaidMonths', 'Jan', 'Feb', 'Mar', 'April', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   //paymentList: Array<MemberModel> ;
   //currentYear = new Date().getFullYear();
   //selected = new Date().getFullYear();
@@ -28,6 +28,9 @@ export class PaymentListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  searchKey: string;
+  minusBtnClass: string = "notMinimumYear";
+  plusBtnClass: string = "notMaximumYear";
 
   abc() {
     console.log(this.selectedrow);
@@ -60,9 +63,16 @@ export class PaymentListComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "35%";
-    // this.dialog.open(PaymentDialogComponent, dialogConfig);
-    let dialogRef = this.dialog.open(PaymentDialogComponent, { width: "35%", data: this.selectedrow });
+    dialogConfig.width = "30%";
+    dialogConfig.data = this.selectedrow;
+    let dialogRef = this.dialog.open(PaymentDialogComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(response => {
+      if(response == "loadPaymentList") {
+        this.getPaymentList();
+        this.selectedrow = null;
+      }
+    });
+
   }
 
   onEdit(row: MemberModel) {
@@ -77,6 +87,7 @@ export class PaymentListComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.paymentListData.filter = filterValue.trim().toLowerCase();
+    this.selectedrow = null;
   }
 
   compareRegistrationDate(registrationDate: Date, month: number, year: number) {
@@ -96,16 +107,22 @@ export class PaymentListComponent implements OnInit {
   minusYearClicked(): void {
     this.year--;
     this.getPaymentList();
+    this.selectedrow = null;
+    this.determineMinusPlusYearBtnColor();
   }
 
   plusYearClicked(): void {
     this.year++;
     this.getPaymentList();
+    this.selectedrow = null;
+    this.determineMinusPlusYearBtnColor();
   }
 
   currentYearClicked(): void {
     this.year = new Date().getFullYear();
     this.getPaymentList();
+    this.selectedrow = null;
+    this.determineMinusPlusYearBtnColor();
   }
 
   registrationAfterThisMonth(registrationMonth:number, registrationYear:number, monthToPay:number) :boolean{
@@ -115,12 +132,27 @@ export class PaymentListComponent implements OnInit {
     return false;
 
   }
-  //***********************************************/
-  // checkboxLabel(row?: MemberModel): string{
 
-  //     return `${
-  //       this.selection.isSelected(row)? 'deselect':'select'
-  //     } row ${row.memberId + 1}`;
-  // }
-  //***********************************************/
+  onSearchClear() {
+    this.searchKey = '';
+    this.applyFilter(this.searchKey);
+    this.selectedrow = null;
+  }
+
+  determineMinusPlusYearBtnColor(): void {
+    if(this.year <= this.minimumYear) {
+      this.minusBtnClass = "minimumYear";
+    }
+    else {
+      this.minusBtnClass = "notMinimumYear";
+    }
+
+    if (this.year >= this.maximumYear){
+      this.plusBtnClass = "maximumYear";
+    }
+    else {
+      this.plusBtnClass = "notMaximumYear";
+    }
+  }
+   
 }

@@ -1,15 +1,15 @@
 
-<div class="search-div">   
-    <mat-form-field class="search-form-field" floatLabel="never">
+<!-- <div class="search-div">    -->
+    <!-- <mat-form-field class="search-form-field" floatLabel="never">
       <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter($event.target.value)">
-      <!-- <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
         <mat-icon>close</mat-icon>
-      </button> -->
-    </mat-form-field>
-    <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
-        Pay
       </button>
-  </div>
+    </mat-form-field> -->
+    <!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+        Pay
+    </button> -->
+  <!-- </div> -->
   <!-- <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field> -->
@@ -25,11 +25,28 @@
     <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
   </mat-select> -->
  
-<button mat-icon-button id="minusPlusBtn" [disabled]="year <= minimumYear" (click) = "minusYearClicked()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+<button mat-icon-button id="minusPlusBtn" [ngClass] = "minusBtnClass" [disabled]="year <= minimumYear" (click) = "minusYearClicked()">
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
 <label>{{year}}</label>
-<button mat-icon-button id="minusPlusBtn" [disabled]="year >= maximumYear" (click) = "plusYearClicked()"><mat-icon>keyboard_arrow_right</mat-icon></button>
-<button mat-icon-button id="minusPlusBtn" (click) = "currentYearClicked()"><mat-icon>autorenew</mat-icon></button>
+<button mat-icon-button id="minusPlusBtn" [ngClass] = "plusBtnClass" [disabled]="year >= maximumYear" (click) = "plusYearClicked()">
+  <mat-icon>keyboard_arrow_right</mat-icon>
+</button>
+<button mat-icon-button id="refreshYear" (click) = "currentYearClicked()">
+  <mat-icon>autorenew</mat-icon>
+</button>
 
+<mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput class = "search-input" [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter($event.target.value)">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+<!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+    <mat-icon>monetization_on</mat-icon>
+    Pay
+</button> -->
 <mat-table [dataSource]="paymentListData" matSort>    
       <ng-container matColumnDef="select">
           <mat-header-cell  *matHeaderCellDef id="colSelect" class="colSelect">
@@ -56,7 +73,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header class="colKey">No</mat-header-cell>
           <mat-cell *matCellDef="let element" class="colKey">{{element.memberId}}</mat-cell>
       </ng-container> -->
-      <ng-container  matColumnDef="churchId">
+    <ng-container  matColumnDef="churchId">
         <mat-header-cell *matHeaderCellDef mat-sort-header id="churchId">Church Id</mat-header-cell>
         <mat-cell *matCellDef="let element" id="churchId">{{element.churchId}}</mat-cell>
     </ng-container>
@@ -68,7 +85,12 @@
       <mat-header-cell  *matHeaderCellDef mat-sort-header class="homePhoneNo">Phone</mat-header-cell>
       <mat-cell  *matCellDef="let element" class="homePhoneNo">{{element.homePhoneNo}}</mat-cell>
   </ng-container>
-
+  <ng-container  matColumnDef="unpaidMonths">
+      <mat-header-cell *matHeaderCellDef id="month">Unpaid</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <label>{{element.unpaidMonths}}</label>
+        </mat-cell>
+    </ng-container>
   <ng-container matColumnDef="Jan" >
     <mat-header-cell *matHeaderCellDef id="month">January</mat-header-cell>
       <mat-cell *matCellDef="let element" id="month">
@@ -153,15 +175,13 @@
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 12)">remove</mat-icon>
         </mat-cell>
     </ng-container>
-    <ng-container  matColumnDef="unpaidMonths">
-      <mat-header-cell *matHeaderCellDef id="month">Unpaid</mat-header-cell>
-        <mat-cell *matCellDef="let element" id="month">
-          <label>{{element.unpaidMonths}}</label>
-        </mat-cell>
-    </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
+    <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+        <mat-icon>monetization_on</mat-icon>
+        Proceed to payment
+    </button>
     <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
     showFirstLastButtons></mat-paginator>
    

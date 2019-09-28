@@ -1,6 +1,6 @@
 <div class="search-div">
-  <button mat-raised-button (click)="onAddMember()">
-    <mat-icon>add</mat-icon>Member
+  <button mat-raised-button (click)="onAddMember()" color="primary">
+    <mat-icon>person_add</mat-icon>{{" "}}Member
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">
     <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
@@ -8,10 +8,10 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-   <mat-checkbox color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
-   <mat-checkbox color="primary" class="sebekaGubae" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
-  <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0">
-    <mat-icon>message</mat-icon>Send
+   <mat-checkbox class = "sundaySchool" color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
+   <mat-checkbox class = "sebekaGubae" color="primary" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
+  <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0" color="primary">
+    <mat-icon>message</mat-icon>{{" "}}Send
   </button>
 </div>
 

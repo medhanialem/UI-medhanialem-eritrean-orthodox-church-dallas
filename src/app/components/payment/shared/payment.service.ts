@@ -18,7 +18,265 @@ export class PaymentService {
     
     paymentInformationByYear(year):void {
       this.$paymentList = of([]);
-      if (year === "2019") {
+      if (year === "2020") {
+        this.paymentList = [{
+          memberId: 1,
+          churchId: 'MOECD-1',
+          firstName: 'Daniel',
+          middleName: 'Tesfay',
+          lastName: 'Kifle',
+          registrationDate: new Date('2019-03-01'),
+          unpaidMonths: 12,
+          tier:1,
+          homePhoneNo: '6419198902',
+          paymentLog:[{
+            paymentLogId:null,
+            year:2020,
+            month:1,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:2,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:3,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:4,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:5,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:6,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:7,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:8,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:9,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:10,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:11,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:12,
+            amount:25
+          }
+    
+        ],
+        },
+        {
+          memberId: 2,
+          churchId: 'MOECD-2',
+          firstName: 'Robel',
+          middleName: 'G',
+          lastName: 'Woldu',
+          tier:1,
+          homePhoneNo: '2133529858',
+          registrationDate: new Date('2018-03-01'),
+          unpaidMonths: 12,
+          paymentLog:[{
+            paymentLogId:null,
+            year:2020,
+            month:1,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:2,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:3,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:4,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:5,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:6,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:7,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:8,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:9,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:10,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:11,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:12,
+            amount:25
+          }
+    
+        ],
+        },
+        {
+          memberId: 3,
+          churchId: 'MOECD-3',
+          firstName: 'Yodit',
+          middleName: 'G',
+          lastName: 'Kifle',
+          registrationDate: new Date('2019-05-01'),
+          unpaidMonths: 12,
+          tier:3,
+          homePhoneNo: '6419194444',
+          paymentLog:[{
+            paymentLogId:null,
+            year:2020,
+            month:1,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:2,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:3,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:4,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:5,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:6,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:7,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:8,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:9,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:10,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:11,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:12,
+            amount:25
+          }
+        ]
+        }
+      ];
+      this.$paymentList=of(this.paymentList);
+      }
+      else if (year === "2019") {
         this.paymentList = [{
           memberId: 1,
           churchId: 'MOECD-1',

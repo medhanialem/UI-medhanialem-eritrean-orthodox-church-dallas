@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatDialogConfig, MatDialog } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms' ;
 
 import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
+import { AddMemberDialogCloseComponent } from '../add-member-dialog-close/add-member-dialog-close.component';
 
 @Component({
   selector: 'app-member',
@@ -14,7 +15,8 @@ export class MemberComponent implements OnInit {
 
   constructor(public service: MemberService, 
     private notificationService: NotificationService,
-    public dialogRef: MatDialogRef<MemberComponent>) { }
+    public dialogRef: MatDialogRef<MemberComponent>,
+    private dialog: MatDialog) { }
 
   displayRelationship: boolean = false;
   checkedDependent: boolean = false;
@@ -64,6 +66,16 @@ export class MemberComponent implements OnInit {
     // this.service.form.reset();
     // this.service.initializeFormGroup();
     // this.dialogRef.close();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "30%";
+    let dialogRef = this.dialog.open(AddMemberDialogCloseComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "yes") {
+        this.dialogRef.close(null);
+      }
+    });
   }
 
   displayRelationshipOnOff(obj) {

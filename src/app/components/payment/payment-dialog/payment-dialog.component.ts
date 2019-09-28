@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { PaymentLookUp } from '../shared/paymentLookUps.model';
 import { PaymentService } from '../shared/payment.service';
 import { MemberModel } from '../shared/member.model';
 import { NumberValueAccessor } from '@angular/forms/src/directives';
+import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -14,12 +15,13 @@ export class PaymentDialogComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) private data: MemberModel,
     private dialogRef: MatDialogRef<PaymentDialogComponent>,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private dialog: MatDialog
   ) { }
   //selecteddata: null;
   fullName: string;
   //months = 1;
-  tierValue = 15;
+  //tierValue = 15;
   //total = this.tierValue;
   minimumMonths = 0;
   maximumMonths = 0;
@@ -32,6 +34,12 @@ export class PaymentDialogComponent implements OnInit {
   churchId: string;
   tierId: number;
   phone: string;
+  paymentConfirmationData: {};
+  //paymentPayload: {};
+  memberId: number;
+  paymentLogList = [];
+  minusBtnClass: string = "minimumMonth";
+  plusBtnClass: string = "notMaximumMonth";
 
   ngOnInit() {
     console.log(this.data);
@@ -42,6 +50,7 @@ export class PaymentDialogComponent implements OnInit {
     this.churchId = this.data.churchId;
     this.tierId = this.data.tier;
     this.phone = this.data.homePhoneNo;
+    this.memberId = this.data.memberId;
     this.determineMinimumMaximumMonths();
   }
 
@@ -62,13 +71,10 @@ export class PaymentDialogComponent implements OnInit {
   }
 
   dismiss() {
-    this.dialogRef.close(null);
+    this.dialogRef.close("loadPaymentList");
   }
 
-
-
   determineMinimumMaximumMonths(): void {
-
     for (let i = 0; i < this.paymentLogs.length; i++) {
       if (this.paymentLogs[i].paymentLogId == null 
         && this.verifyRegistrationDate(this.paymentLogs[i].month,this.paymentLookUps[i].year)) {
@@ -105,6 +111,7 @@ export class PaymentDialogComponent implements OnInit {
       this.index++;
       this.months++;
     }
+    this.determineMinusPlusYearBtnColor();
   }
 
   calculateTotalMinusMonthClicked(): void {
@@ -113,9 +120,54 @@ export class PaymentDialogComponent implements OnInit {
       this.index--;
       this.total -= this.paymentLookUps[this.index].amount;
     }
+    this.determineMinusPlusYearBtnColor();
   }
 
   makePayment(){
+    this.paymentConfirmation();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "28%";
+    dialogConfig.data = this.paymentConfirmationData;
+    let dialogRef = this.dialog.open(PaymentConfirmationComponent, dialogConfig);
     console.log(`Number of months: ${this.months}, Amount payed: ${this.total}`);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === "yes") {
+        this.dialogRef.close("loadPaymentList");
+      }
+    });
   }
+
+  paymentConfirmation(): void {
+    this.paymentConfirmationData = {
+      memberId: this.memberId,
+      name: this.fullName,
+      churchId: this.churchId,
+      tier: this.tierId,
+      phone: this.phone,
+      months: this.months,
+      total: this.total,
+      index: this.index,
+      paymentLookUps: this.paymentLookUps,
+      startingPay: this.startingPay
+    };
+  }
+
+  determineMinusPlusYearBtnColor(): void {
+    if(this.months <= this.minimumMonths) {
+      this.minusBtnClass = "minimumMonth";
+    }
+    else {
+      this.minusBtnClass = "notMinimumMonth";
+    }
+
+    if (this.months >= this.maximumMonths){
+      this.plusBtnClass = "maximumMonth";
+    }
+    else {
+      this.plusBtnClass = "notMaximumMonth";
+    }
+  }
+
 }

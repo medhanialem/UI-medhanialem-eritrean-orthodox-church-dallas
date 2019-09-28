@@ -4,13 +4,23 @@
 }
 
 mat-header-cell {
-display:flex;
-justify-content: left !important;
+    display:flex;
+    justify-content: left !important;
+    font-weight: bold;
 }
 
 mat-cell{
-display:flex;
-justify-content: left !important;
+    display:flex;
+    justify-content: left !important;
+}
+
+mat-header-row {
+    min-height: 30px;
+    background-color: aliceblue;
+}
+
+.mat-row:nth-child(odd){
+    background-color:#f5f5f5;
 }
 
 #registartion_select {
@@ -69,5 +79,10 @@ justify-content: left !important;
 }
 
 .sebekaGubae {
-    padding-right: 15px;
+    padding-left: 25px;
+    padding-right: 35px;
+}
+
+.sundaySchool {
+    padding-left: 35px;
 }
