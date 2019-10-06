@@ -13,7 +13,7 @@
   <!-- <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field> -->
-  
+ 
 <div class="mat-elevation-z8 payment-container">
     <!-- <mat-select [(value)]="year" formControlName="StatusCode">
         <mat-option *ngFor="let status of year" [value]="year.Value" >
@@ -24,7 +24,7 @@
     <mat-option [value]="currentYear">{{currentYear}}</mat-option>
     <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
   </mat-select> -->
- 
+<hr/>
 <button mat-icon-button id="minusPlusBtn" [ngClass] = "minusBtnClass" [disabled]="year <= minimumYear" (click) = "minusYearClicked()">
   <mat-icon>keyboard_arrow_left</mat-icon>
 </button>
@@ -42,7 +42,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-
+  <hr/>
 <!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
     <mat-icon>monetization_on</mat-icon>
     Pay

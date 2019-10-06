@@ -4,7 +4,6 @@ import { MemberModel, PaymentLog } from './member.model';
 import { of, Observable } from 'rxjs';
 import { TierPaymentLookUp, PaymentLookUp } from './paymentLookUps.model';
 import { HttpClient } from '@angular/common/http';
-import { ENGINE_METHOD_PKEY_ASN1_METHS } from 'constants';
 
 
 @Injectable({
@@ -647,6 +646,19 @@ export class PaymentService {
       });
       return of(result);   
   }
+
+  // postPayment(paymentPayLoad:PaymentPayLoad){
+  postPayment(paymentPayLoad){
+    this.paymentList.forEach(element => {
+      if(element.memberId==paymentPayLoad.memberId){
+        for (let i = 0; i < paymentPayLoad.paymentLogs.length; i++) {
+          element.paymentLog[paymentPayLoad.payStartMonth + i].paymentLogId = paymentPayLoad.paymentLogs[i].paymentLookupId;
+        }
+      }
+    });
+    this.$paymentList=of(this.paymentList);
+    console.log("$$$$$$$$$", this.$paymentList);
+  } 
  }
 
  let tierPaymentLookUps = [

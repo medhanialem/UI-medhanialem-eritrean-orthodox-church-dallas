@@ -1,3 +1,4 @@
+<hr/>
 <div class="search-div">
   <button mat-raised-button (click)="onAddMember()" color="primary">
     <mat-icon>person_add</mat-icon>{{" "}}Member
@@ -14,7 +15,7 @@
     <mat-icon>message</mat-icon>{{" "}}Send
   </button>
 </div>
-
+<hr/>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="memberListData" matSort class='matTable' >
     <ng-container matColumnDef="select">

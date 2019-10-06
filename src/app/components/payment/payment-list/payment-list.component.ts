@@ -53,7 +53,6 @@ export class PaymentListComponent implements OnInit {
   }
 
   getPaymentList() {
-    console.log("change");
     this.service.getPaymentList("" + this.year).subscribe(response => {
       this.paymentListData.data = response as MemberModel[];
     });
@@ -68,7 +67,7 @@ export class PaymentListComponent implements OnInit {
     let dialogRef = this.dialog.open(PaymentDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(response => {
       if(response == "loadPaymentList") {
-        this.getPaymentList();
+        //this.getPaymentList();
         this.selectedrow = null;
       }
     });

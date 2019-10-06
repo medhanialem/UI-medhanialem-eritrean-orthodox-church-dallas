@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { MemberPaymentReceiptComponent } from '../member-payment-receipt/member-payment-receipt.component';
+import { PaymentService } from '../shared/payment.service';
 
 @Component({
   selector: 'app-payment-confirmation',
@@ -9,7 +10,8 @@ import { MemberPaymentReceiptComponent } from '../member-payment-receipt/member-
 })
 export class PaymentConfirmationComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data,
+  constructor(private service: PaymentService,
+    @Inject(MAT_DIALOG_DATA) private data,
     private dialogRef: MatDialogRef<PaymentConfirmationComponent>,
     private dialog: MatDialog
   ) { }
@@ -44,12 +46,14 @@ export class PaymentConfirmationComponent implements OnInit {
   }
 
   dismiss() {
-    this.dialogRef.close(null);
+    this.dialogRef.close("yes");
   }
 
   makePayment(){
     this.createPaymentLogs();
     this.paymentPayLoad();
+    // this.service.postPayment(paymentPayLoad:PaymentPayLoad);
+    this.service.postPayment(this.paymentPayload);
     console.log(this.paymentPayload);
     //Hit the database with payment logs and reload the page with latest data
     this.dialogRef.close("yes");
@@ -60,6 +64,7 @@ export class PaymentConfirmationComponent implements OnInit {
     dialogConfig.width = "30%";
     dialogConfig.data = this.memberPaymentReceiptData;
     let dialogRef = this.dialog.open(MemberPaymentReceiptComponent, dialogConfig); 
+    this.dismiss();
   }
 
   paymentPayLoad(): void {
@@ -67,6 +72,7 @@ export class PaymentConfirmationComponent implements OnInit {
     this.paymentPayload = {
       memberId: this.memberId,
       total: this.total,
+      payStartMonth: this.startingPay,
       paymentLogs: this.paymentLogList
     }
   }
