@@ -141,7 +141,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = "60%";
+    dialogConfig.width = '80%';
+    dialogConfig.height= '90%'
     this.dialog.open(MemberComponent, dialogConfig);
   }
 
