@@ -1,10 +1,13 @@
 export interface MemberModel{
     memberId:number;
+    churchId: string;
     firstName:string;
     middleName: string;
     lastName:string;
     tier: number;
+    homePhoneNo: string;
     registrationDate: Date;
+    unpaidMonths: number;
     paymentLog: PaymentLog[];
 }
 

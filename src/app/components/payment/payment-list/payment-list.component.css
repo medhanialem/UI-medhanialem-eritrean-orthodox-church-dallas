@@ -4,6 +4,7 @@
     border: 1px solid #415CB0;
     color: #FFFFFF;
 }
+
 .blue:active {
     position: relative;
     top: 1px;
@@ -12,6 +13,7 @@
 .blue:hover {
     background-color: #5F85DB;
 }
+
 .button:hover, .auto_button:hover, .sm_button:hover {
     text-decoration: none;
 }
@@ -19,42 +21,94 @@
 .search-div,.search-form-field {
     margin-left: 0;
 }
+
 .matTable {
     max-width:100%;   
 }
 
+.search-form-field {
+    margin-top: 2px;
+}
+
 .pay-btn {
-    float: right;
+    float: left;
+    margin-left: 2%;
+    margin-top: 8px;
 }
 
-  .colMobile {
- 
-    /* padding-left: 1%; */
+/* .colMobile {
     padding-right: 1%;
-} 
+}  */
 
-.colSelect {
+mat-header-cell {
+    display:flex;
+    justify-content: left !important;
+    font-weight: bold;
+}
+    
+mat-cell{
+    display:flex;
+    justify-content: left !important;
+}
+
+#colSelect {
+    max-width: 2%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#church_id {
     max-width: 3%;
-   
-}
-.colKey {
-    max-width: 4%;
-    
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
-.monthJan{
-    padding-left: 1%;
+#name {
+    max-width: 20%;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
-.year-dpn{
-
-    background-color: white;
-    max-width: 10%;
-    
+#month {
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
 }
-/*
-.mat-form-field {
-    font-size: 14px;
-    width: 100%;
-  } */
-/***********************************************/
+
+#paidMonth {
+    color: darkgreen;
+}
+
+#notMemberMonth {
+    color: darkred;
+}
+
+#minusPlusBtn {
+    font-weight: bolder;
+}
+
+.notMinimumYear, .notMaximumYear {
+    color: darkblue;
+}
+
+#refreshYear {
+    font-weight: bolder;
+    color: darkblue;
+    margin-right: 50px;
+}
+
+mat-table {
+    margin-top: 1px;
+}
+/* .search-input {
+    height: 6px;
+} */
+
+mat-header-row {
+    min-height: 30px;
+    background-color: aliceblue;
+}
+
+.mat-row:nth-child(odd){
+    background-color:#f5f5f5;
+}

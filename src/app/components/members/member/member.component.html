@@ -3,12 +3,18 @@
   <span class="fill-remaining-space"></span>
   <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
 </mat-toolbar>
+<div class="divNewMember"> 
 <form [formGroup]="addMemberForm" class="normal-form" (submit)="onSubmit()">
   <mat-grid-list cols="2" rowHeight="300px">
     <mat-grid-tile>
       <div class="controls-container">
-        <input type="hidden" formControlName="$key">
-        <mat-form-field>
+        <!-- <input type="hidden" formControlName="$key"> -->
+        <div class="row">
+          <div class="col-12">
+              <button class="btn btn-primary">Robi</button>
+          </div>
+        </div>
+        <!-- <mat-form-field>
           <input formControlName="firstName" matInput placeholder="First name*">
           <mat-error>First name field is mandatory.</mat-error>
         </mat-form-field>
@@ -31,7 +37,7 @@
         <mat-form-field>
             <input formControlName="email" matInput placeholder="Email">
             <mat-error>Invalid email address.</mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -75,3 +81,5 @@
     </mat-grid-tile>  
   </mat-grid-list>
 </form>
+</div>
+

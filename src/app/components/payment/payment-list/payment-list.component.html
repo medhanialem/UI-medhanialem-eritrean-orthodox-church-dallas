@@ -1,37 +1,59 @@
 
-<div class="search-div">   
-    <mat-form-field class="search-form-field" floatLabel="never">
+<!-- <div class="search-div">    -->
+    <!-- <mat-form-field class="search-form-field" floatLabel="never">
       <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter($event.target.value)">
-      <!-- <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
         <mat-icon>close</mat-icon>
-      </button> -->
-    </mat-form-field>
-    <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
-        Pay
       </button>
-  </div>
+    </mat-form-field> -->
+    <!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+        Pay
+    </button> -->
+  <!-- </div> -->
   <!-- <mat-form-field>
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field> -->
-  
+ 
 <div class="mat-elevation-z8 payment-container">
     <!-- <mat-select [(value)]="year" formControlName="StatusCode">
         <mat-option *ngFor="let status of year" [value]="year.Value" >
                {{ status.Value }}
         </mat-option>
  </mat-select>   -->
- <mat-select [(value)]="selected" (selectionChange) = "getPaymentList()" placeholder="Year" class="year-dpn">
+ <!-- <mat-select [(value)]="selected" (selectionChange) = "getPaymentList()" placeholder="Year" class="year-dpn">
     <mat-option [value]="currentYear">{{currentYear}}</mat-option>
     <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
-  </mat-select>
- 
+  </mat-select> -->
+<hr/>
+<button mat-icon-button id="minusPlusBtn" [ngClass] = "minusBtnClass" [disabled]="year <= minimumYear" (click) = "minusYearClicked()">
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
+<label>{{year}}</label>
+<button mat-icon-button id="minusPlusBtn" [ngClass] = "plusBtnClass" [disabled]="year >= maximumYear" (click) = "plusYearClicked()">
+  <mat-icon>keyboard_arrow_right</mat-icon>
+</button>
+<button mat-icon-button id="refreshYear" (click) = "currentYearClicked()">
+  <mat-icon>autorenew</mat-icon>
+</button>
+
+<mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput class = "search-input" [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter($event.target.value)">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <hr/>
+<!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+    <mat-icon>monetization_on</mat-icon>
+    Pay
+</button> -->
 <mat-table [dataSource]="paymentListData" matSort>    
       <ng-container matColumnDef="select">
-          <mat-header-cell  *matHeaderCellDef class="colSelect">
+          <mat-header-cell  *matHeaderCellDef id="colSelect" class="colSelect">
             <!-- <mat-checkbox color="primary">
             </mat-checkbox> -->
           </mat-header-cell>
-          <mat-cell *matCellDef="let row" class='colSelect'>
+          <mat-cell *matCellDef="let row" id='colSelect'>
             <!-- <mat-checkbox color="primary">
             </mat-checkbox> -->
             <!-- <mat-radio-button color="primary"
@@ -47,208 +69,120 @@
            </mat-radio-button>
           </mat-cell>
         </ng-container>
-      <ng-container  matColumnDef="memberId">
+      <!-- <ng-container  matColumnDef="memberId">
           <mat-header-cell *matHeaderCellDef mat-sort-header class="colKey">No</mat-header-cell>
           <mat-cell *matCellDef="let element" class="colKey">{{element.memberId}}</mat-cell>
-      </ng-container>
-    <ng-container  matColumnDef="firstName" >
-        <mat-header-cell *matHeaderCellDef mat-sort-header>F.Name</mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="onEdit(element)">{{element.firstName}}</mat-cell>
+      </ng-container> -->
+    <ng-container  matColumnDef="churchId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header id="churchId">Church Id</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="churchId">{{element.churchId}}</mat-cell>
     </ng-container>
-    <ng-container  matColumnDef="middleName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Middle Name</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.middleName}}</mat-cell>
+    <ng-container  matColumnDef="name" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header id="name">Full Name</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="name" (click)="onEdit(element)">{{element.firstName + ' ' + element.middleName + ' ' + element.lastName}}</mat-cell>
     </ng-container>
-    <ng-container  matColumnDef="lastName">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
-        <mat-cell *matCellDef="let element">{{element.lastName}}</mat-cell>
-    </ng-container>
-    <ng-container  matColumnDef="tier">
-        <mat-header-cell  *matHeaderCellDef mat-sort-header class="colMobile">Tier</mat-header-cell>
-        <mat-cell  *matCellDef="let element" class="colMobile">{{element.tier}}</mat-cell>
-    </ng-container>
-
-    <ng-container  matColumnDef="Jan" >
-      <mat-header-cell *matHeaderCellDef class="monthJan">Jan</mat-header-cell>
-      <mat-cell *matCellDef="let element" class="monthJan">
-              <mat-checkbox disabled color="primary" [checked]="element.paymentLog[0].paymentLogId===null?0:1">
-             
-              </mat-checkbox>
-        </mat-cell>
+    <ng-container  matColumnDef="homePhoneNo">
+      <mat-header-cell  *matHeaderCellDef mat-sort-header class="homePhoneNo">Phone</mat-header-cell>
+      <mat-cell  *matCellDef="let element" class="homePhoneNo">{{element.homePhoneNo}}</mat-cell>
   </ng-container>
-    <ng-container  matColumnDef="Feb">
-        <mat-header-cell *matHeaderCellDef>Feb</mat-header-cell>
-        <mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
-        <mat-checkbox  color="primary" [checked]="element.paymentLog[1].paymentLogId===null?0:1">
-          </mat-checkbox>
+  <ng-container  matColumnDef="unpaidMonths">
+      <mat-header-cell *matHeaderCellDef id="month">Unpaid</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <label>{{element.unpaidMonths}}</label>
+        </mat-cell>
+    </ng-container>
+  <ng-container matColumnDef="Jan" >
+    <mat-header-cell *matHeaderCellDef id="month">January</mat-header-cell>
+      <mat-cell *matCellDef="let element" id="month">
+        <mat-icon id="paidMonth" *ngIf="element.paymentLog[0].paymentLogId!=null">done</mat-icon>
+        <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 1)">remove</mat-icon>
+      </mat-cell>
+  </ng-container>
+    <ng-container matColumnDef="Feb">
+        <mat-header-cell *matHeaderCellDef id="month">February</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[1].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 2)">remove</mat-icon>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="Mar">
+        <mat-header-cell *matHeaderCellDef id="month">March</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[2].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 3)">remove</mat-icon>
       </mat-cell>
     </ng-container>
-    <ng-container  matColumnDef="Mar">
-        <mat-header-cell *matHeaderCellDef>Mar</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[2].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
-    </ng-container>
-
     <ng-container  matColumnDef="April">
-        <mat-header-cell *matHeaderCellDef>April</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[3].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">April</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[3].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 4)">remove</mat-icon>
+       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="May">
-        <mat-header-cell *matHeaderCellDef>May</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[4].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">May</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[4].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 5)">remove</mat-icon>
+        </mat-cell>
     </ng-container>
-    
     <ng-container  matColumnDef="June">
-        <mat-header-cell *matHeaderCellDef>June</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[5].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">June</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[5].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 6)">remove</mat-icon>
+      </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="July">
-        <mat-header-cell *matHeaderCellDef>July</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[6].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">July</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[6].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 7)">remove</mat-icon>
+        </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Aug">
-        <mat-header-cell *matHeaderCellDef>Aug</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[7].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">August</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[7].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 8)">remove</mat-icon>
+      </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Sep">
-        <mat-header-cell *matHeaderCellDef>Sep</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[8].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">September</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[8].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 9)">remove</mat-icon>
+        </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Oct">
-        <mat-header-cell *matHeaderCellDef>Oct</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[9].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">October</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[9].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 10)">remove</mat-icon>
+        </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Nov">
-        <mat-header-cell *matHeaderCellDef>Nov</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[10].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">November</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[10].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 11)">remove</mat-icon>
+      </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Dec">
-        <mat-header-cell *matHeaderCellDef>Dec</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-            <mat-checkbox color="primary" [checked]="element.paymentLog[11].paymentLogId===null?0:1">
-              </mat-checkbox>
-          </mat-cell>
+      <mat-header-cell *matHeaderCellDef id="month">December</mat-header-cell>
+        <mat-cell *matCellDef="let element" id="month">
+          <mat-icon id="paidMonth" *ngIf="element.paymentLog[11].paymentLogId!=null">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 12)">remove</mat-icon>
+        </mat-cell>
     </ng-container>
-    
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
+    <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+        <mat-icon>monetization_on</mat-icon>
+        Proceed to payment
+    </button>
     <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
     showFirstLastButtons></mat-paginator>
    
-  </div>
-
-    
-
-
-
-
-
-
-
-<!-- <div class="mat-elevation-z8"> 
-  <mat-table [dataSource]="paymentListData" matSort class='matTable' >
-    <ng-container matColumnDef="select">
-      <mat-header-cell id = "registartion_select" *matHeaderCellDef class="colSelect">
-        <mat-checkbox color="primary">
-        </mat-checkbox>
-      </mat-header-cell>
-      <mat-cell id = "registartion_select" *matCellDef="let row" class='colSelect'>
-        <mat-checkbox color="primary">
-        </mat-checkbox>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="$key">
-      <mat-header-cell id = "registartion_id" *matHeaderCellDef mat-sort-header>No</mat-header-cell>
-      <mat-cell id = "registartion_id" *matCellDef="let element">{{ element.$key }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>First name</mat-header-cell>
-      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.firstName }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="middleName">
-      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
-      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.middleName }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell id = "registartion_name" *matHeaderCellDef mat-sort-header>Last name</mat-header-cell>
-      <mat-cell id = "registartion_name" *matCellDef="let element">{{ element.lastName }}</mat-cell>
-    </ng-container>
- 
-    <ng-container matColumnDef="mobile">
-      <mat-header-cell id = "registartion_mobile" *matHeaderCellDef>Mobile</mat-header-cell>
-      <mat-cell id = "registartion_mobile" *matCellDef="let element">{{ element.mobile }}</mat-cell>
-    </ng-container>
-   
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef id = "registartion_actions">
-
-      </mat-header-cell>
-      <mat-cell *matCellDef="let row" id = "registartion_actions">
-        <button mat-icon-button (click)="onEdit(row)">
-          <mat-icon>launch</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="onDelete(row.$key)">
-          <mat-icon>delete_outline</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="loading">
-      <mat-footer-cell *matFooterCellDef colspan="6">
-        Loading data...
-      </mat-footer-cell>
-    </ng-container>
-    <ng-container matColumnDef="noData">
-      <mat-footer-cell *matFooterCellDef colspan="6">
-        No data.
-      </mat-footer-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':paymentListData!=null}"></mat-footer-row>
-    <mat-footer-row *matFooterRowDef="['noData']"
-      [ngClass]="{'hide':!(paymentListData!=null && paymentListData.data.length==0)}"></mat-footer-row>
-  </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
-    showFirstLastButtons></mat-paginator>
-</div>  -->
-
-
-<!-- repaced-->
-<!-- <div class="search-div">
-  <button mat-raised-button (click)="onAddMember()">
-    <mat-icon>add</mat-icon>Member
-  </button>
-  <mat-form-field class="search-form-field" floatLabel="never">
-    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
-    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-</div> -->
+</div>

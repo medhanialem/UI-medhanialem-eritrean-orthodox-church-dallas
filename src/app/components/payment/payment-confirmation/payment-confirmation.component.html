@@ -1,0 +1,43 @@
+<mat-dialog-content>
+  <div class="example-container">
+    <mat-toolbar>
+      <span><label class="headerLabel">Confirm Payment</label></span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+    <div class="nameMonthTotal">
+        <table class="memberPaymentInfoTbl">
+          <tr>
+            <td id="leftLabels">Full Name</td>
+            <td id="value">{{fullName}}</td>
+          </tr>
+          <tr>
+            <td id="leftLabels">Church Id</td>
+            <td id="value">{{churchId}}</td>
+          </tr>
+          <tr>
+            <td id="leftLabels">Phone</td>
+            <td id="value">{{phone}}</td>
+          </tr>
+          <tr>
+            <td id="leftLabels">Tier</td>
+            <td id="value">{{tierId}}</td>
+          </tr>
+          <tr>
+            <td id="leftLabels">Total</td>
+            <td id="value">${{total}}</td>
+          </tr>
+          <tr>
+            <td id="leftLabels">Months</td>
+            <td id="value">{{months}}</td>
+          </tr>
+        </table>
+      </div>
+    <div class = "nameMonthTotal">
+      <span class = "confirmMessage">Are you sure you want to pay?</span>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button color='accent' (click)="dismiss()" class = "cancelBtn" cdkFocusInitial><mat-icon>cancel</mat-icon>No</button>
+  <button mat-raised-button (click)="makePayment()" color='primary'><mat-icon class = "yesBtn">done</mat-icon>Yes</button>
+</mat-dialog-actions>

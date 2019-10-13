@@ -22,6 +22,10 @@ import { PaymentListComponent } from './components/payment/payment-list/payment-
 import { PaymentDialogComponent } from './components/payment/payment-dialog/payment-dialog.component';
 import { MessageComponent } from './components/message/message.component';
 import { DatePipe } from '@angular/common';
+import { PaymentConfirmationComponent } from './components/payment/payment-confirmation/payment-confirmation.component';
+import { MemberPaymentReceiptComponent } from './components/payment/member-payment-receipt/member-payment-receipt.component';
+import { MemberPaymentPreviewComponent } from './components/payment/member-payment-preview/member-payment-preview.component';
+import { AddMemberDialogCloseComponent } from './components/members/add-member-dialog-close/add-member-dialog-close.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +42,11 @@ import { DatePipe } from '@angular/common';
     PaymentComponent,
     PaymentListComponent,
     PaymentDialogComponent,
-    MessageComponent
+    MessageComponent,
+    PaymentConfirmationComponent,
+    MemberPaymentReceiptComponent,
+    MemberPaymentPreviewComponent,
+    AddMemberDialogCloseComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +59,6 @@ import { DatePipe } from '@angular/common';
   ],
   providers: [MemberService,DatePipe],
   bootstrap: [AppComponent],
-  entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent, MessageComponent],
-  providers: [MemberService, DatePipe],
-  bootstrap: [AppComponent],
+  entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent, MessageComponent, PaymentConfirmationComponent, MemberPaymentReceiptComponent, MemberPaymentPreviewComponent, AddMemberDialogCloseComponent],
 })
 export class AppModule { }

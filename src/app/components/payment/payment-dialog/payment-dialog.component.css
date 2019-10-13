@@ -6,15 +6,67 @@
 }
 
 .example-container {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
   
-  .example-container > * {
-    width: 100%;
-  }
+.example-container > * {
+  width: 100%;
+}
   
+.mat-input-element {
+  width: 5%;
+}
 
-  .mat-input-element {
-    width: 5%;
-  }
+.nameMonthTotal {
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+#leftLabels {
+  padding-right: 10px;
+  padding-left: 5px;
+  font-weight: bolder;
+  width: 35%;
+  background-color: #f5f5f5;
+}
+
+#value {
+  padding-left: 10px;
+}
+
+.cancelBtn {
+  margin-right: 4%;
+}
+
+.payBtn {
+  color: white;
+}
+
+mat-dialog-actions {
+  margin-left: 18%;
+  padding-top: 0px;
+}
+
+.memberPaymentInfoTbl {
+  margin-left: 5%;
+  width: 80%
+}
+
+table {
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  margin-left: 35px;
+}
+
+table, th, td {
+  border: 1px solid lightblue;
+}
+
+.headerLabel {
+  padding-left: 13%;
+}
+
+.notMinimumMonth, .notMaximumMonth {
+  color: darkblue;
+}

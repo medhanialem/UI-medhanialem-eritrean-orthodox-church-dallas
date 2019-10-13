@@ -2,6 +2,7 @@
 export class Member {
     memberId: number;
     churchId: string; // Auto generated Id: MOECD-1
+    legacyId: string;
     firstName: string;
     middleName: string;
     lastName: string;

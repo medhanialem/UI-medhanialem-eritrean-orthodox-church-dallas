@@ -1,6 +1,7 @@
+<hr/>
 <div class="search-div">
-  <button mat-raised-button (click)="onAddMember()">
-    <mat-icon>add</mat-icon>Member
+  <button mat-raised-button (click)="onAddMember()" color="primary">
+    <mat-icon>person_add</mat-icon>{{" "}}Member
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">
     <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
@@ -8,13 +9,13 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-   <mat-checkbox color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
-   <mat-checkbox color="primary" class="sebekaGubae" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
-  <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0">
-    <mat-icon>message</mat-icon>Send
+   <mat-checkbox class = "sundaySchool" color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
+   <mat-checkbox class = "sebekaGubae" color="primary" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
+  <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0" color="primary">
+    <mat-icon>message</mat-icon>{{" "}}Send
   </button>
 </div>
-
+<hr/>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="memberListData" matSort class='matTable' >
     <ng-container matColumnDef="select">
@@ -35,8 +36,8 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="churchId">
-      <mat-header-cell id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
-      <mat-cell id = "church_id" *matCellDef="let element">{{ element.churchId + abc()}}</mat-cell>
+      <mat-header-cell class="church_id_header" id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
+      <mat-cell id = "church_id" *matCellDef="let element">{{ element.churchId }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="name">
       <mat-header-cell id = "registartion_name" *matHeaderCellDef>Full name</mat-header-cell>
@@ -85,10 +86,10 @@
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':memberListData!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
     <mat-footer-row *matFooterRowDef="['noData']"
-      [ngClass]="{'hide':!(memberListData!=null && memberListData.data.length==0)}"></mat-footer-row>
+      [ngClass]="{'hide':!((isLoading===false) && memberListData.data.length==0)}"></mat-footer-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
+  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
     showFirstLastButtons></mat-paginator>
 </div>

@@ -1,0 +1,16 @@
+<mat-dialog-content>
+  <div class="example-container">
+    <mat-toolbar>
+      <span>Receipt Of Payment</span>
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+    <div class = "nameMonthTotal">
+      <p id = "leftLabels">Thank you <label class = "name">{{ fullName }}</label> for the payment.</p>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="openPreviewWindow()" class = "previewBtn"><mat-icon>image_search</mat-icon>Preview</button>
+  <button mat-raised-button (click)="printReceipt()"><mat-icon>local_printshop</mat-icon>Print</button>
+  <button mat-raised-button color='accent' (click)="dismiss()"><mat-icon>clear</mat-icon>Close</button>
+</mat-dialog-actions>

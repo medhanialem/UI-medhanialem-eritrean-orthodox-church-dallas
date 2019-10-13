@@ -4,7 +4,6 @@ import { MemberModel, PaymentLog } from './member.model';
 import { of, Observable } from 'rxjs';
 import { TierPaymentLookUp, PaymentLookUp } from './paymentLookUps.model';
 import { HttpClient } from '@angular/common/http';
-import { ENGINE_METHOD_PKEY_ASN1_METHS } from 'constants';
 
 
 @Injectable({
@@ -18,28 +17,289 @@ export class PaymentService {
     
     paymentInformationByYear(year):void {
       this.$paymentList = of([]);
-      if (year === "2019") {
+      if (year === "2020") {
         this.paymentList = [{
           memberId: 1,
+          churchId: 'MOECD-1',
           firstName: 'Daniel',
           middleName: 'Tesfay',
           lastName: 'Kifle',
           registrationDate: new Date('2019-03-01'),
+          unpaidMonths: 12,
           tier:1,
+          homePhoneNo: '6419198902',
           paymentLog:[{
-            paymentLogId:1,
+            paymentLogId:null,
+            year:2020,
+            month:1,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:2,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:3,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:4,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:5,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:6,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:7,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:8,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:9,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:10,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:11,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:12,
+            amount:25
+          }
+    
+        ],
+        },
+        {
+          memberId: 2,
+          churchId: 'MOECD-2',
+          firstName: 'Robel',
+          middleName: 'G',
+          lastName: 'Woldu',
+          tier:1,
+          homePhoneNo: '2133529858',
+          registrationDate: new Date('2018-03-01'),
+          unpaidMonths: 12,
+          paymentLog:[{
+            paymentLogId:null,
+            year:2020,
+            month:1,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:2,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:3,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:4,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:5,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:6,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:7,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:8,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:9,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:10,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:11,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:12,
+            amount:25
+          }
+    
+        ],
+        },
+        {
+          memberId: 3,
+          churchId: 'MOECD-3',
+          firstName: 'Yodit',
+          middleName: 'G',
+          lastName: 'Kifle',
+          registrationDate: new Date('2019-05-01'),
+          unpaidMonths: 12,
+          tier:3,
+          homePhoneNo: '6419194444',
+          paymentLog:[{
+            paymentLogId:null,
+            year:2020,
+            month:1,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:2,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:3,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:4,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:5,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:6,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:7,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:8,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:9,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:10,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:11,
+            amount:25
+          },
+          {
+            paymentLogId:null,
+            year:2020,
+            month:12,
+            amount:25
+          }
+        ]
+        }
+      ];
+      this.$paymentList=of(this.paymentList);
+      }
+      else if (year === "2019") {
+        this.paymentList = [{
+          memberId: 1,
+          churchId: 'MOECD-1',
+          firstName: 'Daniel',
+          middleName: 'Tesfay',
+          lastName: 'Kifle',
+          registrationDate: new Date('2019-03-01'),
+          unpaidMonths: 9,
+          tier:1,
+          homePhoneNo: '6419198902',
+          paymentLog:[{
+            paymentLogId:null,
             year:2019,
             month:1,
             amount:25
           },
           {
-            paymentLogId:2,
+            paymentLogId:null,
             year:2019,
             month:2,
             amount:25
           },
           {
-            paymentLogId:3,
+            paymentLogId:9,
             year:2019,
             month:3,
             amount:25
@@ -103,11 +363,14 @@ export class PaymentService {
         },
         {
           memberId: 2,
+          churchId: 'MOECD-2',
           firstName: 'Robel',
           middleName: 'G',
           lastName: 'Woldu',
           tier:1,
+          homePhoneNo: '2133529858',
           registrationDate: new Date('2018-03-01'),
+          unpaidMonths: 7,
           paymentLog:[{
             paymentLogId:1,
             year:2019,
@@ -115,25 +378,25 @@ export class PaymentService {
             amount:25
           },
           {
-            paymentLogId:2,
+            paymentLogId:5,
             year:2019,
             month:2,
             amount:25
           },
           {
-            paymentLogId:3,
+            paymentLogId:9,
             year:2019,
             month:3,
             amount:25
           },
           {
-            paymentLogId:4,
+            paymentLogId:13,
             year:2019,
             month:4,
             amount:25
           },
           {
-            paymentLogId:5,
+            paymentLogId:17,
             year:2019,
             month:5,
             amount:25
@@ -185,79 +448,82 @@ export class PaymentService {
         },
         {
           memberId: 3,
+          churchId: 'MOECD-3',
           firstName: 'Yodit',
           middleName: 'G',
           lastName: 'Kifle',
           registrationDate: new Date('2019-05-01'),
+          unpaidMonths: 3,
           tier:3,
+          homePhoneNo: '6419194444',
           paymentLog:[{
-            paymentLogId:1,
+            paymentLogId:null,
             year:2019,
             month:1,
             amount:25
           },
           {
-            paymentLogId:2,
+            paymentLogId:null,
             year:2019,
             month:2,
             amount:25
           },
           {
-            paymentLogId:3,
+            paymentLogId:null,
             year:2019,
             month:3,
             amount:25
           },
           {
-            paymentLogId:4,
+            paymentLogId:null,
             year:2019,
             month:4,
             amount:25
           },
           {
-            paymentLogId:5,
+            paymentLogId:23,
             year:2019,
             month:5,
             amount:25
           },
           {
-            paymentLogId:6,
+            paymentLogId:27,
             year:2019,
             month:6,
             amount:25
           },
           {
-            paymentLogId:7,
+            paymentLogId:31,
             year:2019,
             month:7,
             amount:25
           },
           {
-            paymentLogId:8,
+            paymentLogId:35,
             year:2019,
             month:8,
             amount:25
           },
           {
-            paymentLogId:9,
+            paymentLogId:39,
             year:2019,
             month:9,
             amount:25
           },
           {
-            paymentLogId:10,
+            paymentLogId:null,
             year:2019,
             month:10,
             amount:25
           },
           {
-            paymentLogId:11,
+            paymentLogId:null,
             year:2019,
             month:11,
             amount:25
           },
           {
-            paymentLogId:12,
+            paymentLogId:null,
             year:2019,
             month:12,
             amount:25
@@ -271,11 +537,14 @@ export class PaymentService {
         this.paymentList = [
         {
           memberId: 2,
+          churchId: 'MOECD-2',
           firstName: 'Robel',
           middleName: 'G',
           lastName: 'Woldu',
           tier:1,
+          homePhoneNo: '2133529858',
           registrationDate: new Date('2018-03-01'),
+          unpaidMonths: 0,
           paymentLog:[{
             paymentLogId:null,
             year:2018,
@@ -289,61 +558,61 @@ export class PaymentService {
             amount:25
           },
           {
-            paymentLogId:3,
+            paymentLogId:9,
             year:2018,
             month:3,
             amount:25
           },
           {
-            paymentLogId:4,
+            paymentLogId:13,
             year:2018,
             month:4,
             amount:25
           },
           {
-            paymentLogId:5,
+            paymentLogId:17,
             year:2018,
             month:5,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:21,
             year:2018,
             month:6,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:25,
             year:2018,
             month:7,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:29,
             year:2018,
             month:8,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:34,
             year:2018,
             month:9,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:39,
             year:2018,
             month:10,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:43,
             year:2018,
             month:11,
             amount:25
           },
           {
-            paymentLogId:null,
+            paymentLogId:47,
             year:2018,
             month:12,
             amount:25
@@ -376,31 +645,38 @@ export class PaymentService {
         
       });
       return of(result);   
-
   }
- 
 
+  // postPayment(paymentPayLoad:PaymentPayLoad){
+  postPayment(paymentPayLoad){
+    this.paymentList.forEach(element => {
+      if(element.memberId==paymentPayLoad.memberId){
+        for (let i = 0; i < paymentPayLoad.paymentLogs.length; i++) {
+          element.paymentLog[paymentPayLoad.payStartMonth + i].paymentLogId = paymentPayLoad.paymentLogs[i].paymentLookupId;
+        }
+      }
+    });
+    this.$paymentList=of(this.paymentList);
+    console.log("$$$$$$$$$", this.$paymentList);
+  } 
  }
-
-
-
 
  let tierPaymentLookUps = [
   {
       tierId: 1,
       paymentLookUps : [
-          { paymentLookupId: 1, month: 1, year: 2018, amount: 10 },
-          { paymentLookupId: 5, month: 2, year: 2018, amount: 10 },
-          { paymentLookupId: 9, month: 3, year: 2018, amount: 10 },
-          { paymentLookupId: 13, month: 4, year: 2018, amount: 10 },
-          { paymentLookupId: 17, month: 5, year: 2018, amount: 10 },
-          { paymentLookupId: 21, month: 6, year: 2018, amount: 10 },
-          { paymentLookupId: 25, month: 7, year: 2018, amount: 10 },
-          { paymentLookupId: 29, month: 8, year: 2018, amount: 10 },
-          { paymentLookupId: 33, month: 9, year: 2018, amount: 10 },
-          { paymentLookupId: 37, month: 10, year: 2018, amount: 10 },
-          { paymentLookupId: 41, month: 11, year: 2018, amount: 10 },
-          { paymentLookupId: 45, month: 12, year: 2018, amount: 10 }
+          { paymentLookupId: 1, month: 1, year: 2019, amount: 10 },
+          { paymentLookupId: 5, month: 2, year: 2019, amount: 10 },
+          { paymentLookupId: 9, month: 3, year: 2019, amount: 10 },
+          { paymentLookupId: 13, month: 4, year: 2019, amount: 10 },
+          { paymentLookupId: 17, month: 5, year: 2019, amount: 10 },
+          { paymentLookupId: 21, month: 6, year: 2019, amount: 10 },
+          { paymentLookupId: 25, month: 7, year: 2019, amount: 10 },
+          { paymentLookupId: 29, month: 8, year: 2019, amount: 10 },
+          { paymentLookupId: 33, month: 9, year: 2019, amount: 10 },
+          { paymentLookupId: 37, month: 10, year: 2019, amount: 10 },
+          { paymentLookupId: 41, month: 11, year: 2019, amount: 10 },
+          { paymentLookupId: 45, month: 12, year: 2019, amount: 10 }
       ]
   },
   {

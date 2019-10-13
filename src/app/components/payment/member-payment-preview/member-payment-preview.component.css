@@ -1,0 +1,42 @@
+.paymentReceipt {
+    font-weight: bold;
+    text-align: center;
+}
+
+mat-dialog-actions {
+    margin-left: 35%;
+}
+
+table {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    margin-left: 35px;
+}
+
+table, th, td {
+    border: 1px solid lightblue;
+}
+
+#leftLabels {
+    font-weight: bold;
+    padding-right: 50px;
+    padding-left: 5px;
+    background-color: #f5f5f5;
+}
+
+#value {
+    padding-right: 50px;
+    padding-left: 5px;  
+}
+
+#month {
+    width: 3%;
+}
+
+#leftLabelsMonths {
+    padding-right: 2px;
+    padding-left: 2px;
+    width: 4%;
+    background-color: #f5f5f5;
+}
