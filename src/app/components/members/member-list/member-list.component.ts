@@ -38,6 +38,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns: string[] = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate', 'actions'];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isLoading = false;
   searchKey: string;
 
 
@@ -51,22 +52,31 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getMemberList() {
-    this.subscriptions.push(this.service.getMemberList().subscribe(
-      (
-        response => {
-          if (response != null) {
+    this.isLoading = true;
+    setTimeout(() => {
+      this.subscriptions.push(this.service.getMemberList().subscribe(
+        (
+          response => {
+            if (response != null) {
 
-            this.memberListData.data = response as Member[];
-            this.memberList = response as Member[];
-          } else {
-            this.memberListData.data = null;
+              this.memberListData.data = response as Member[];
+              this.memberList = response as Member[];
+            } else {
+              this.memberListData.data = null;
+            }
+          }),
+        (
+          error => {
+            console.log(error.message);
+            this.isLoading = false;
+          }),
+          () => {
+            this.isLoading = false;
           }
-        }),
-      (
-        error => {
-          console.log(error.message);
-        })
-    ));
+
+      ));
+    }
+    , 1000);
   }
 
 
@@ -136,13 +146,13 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.memberListData.data = this.filteredList;
    }
 
-   onAddMember(){
-    //this.service.initializeFormGroup();
+   onAddMember() {
+    // this.service.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '80%';
-    dialogConfig.height= '90%'
+    dialogConfig.height = '90%';
     this.dialog.open(MemberComponent, dialogConfig);
   }
 
@@ -155,8 +165,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dialog.open(MessageComponent, dialogConfig);
   }
 
-  abc(){
-    console.log("***** Repeating ******")
+  abc() {
+    console.log('***** Repeating ******');
   }
 
   ngOnDestroy(): void {

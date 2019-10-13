@@ -36,7 +36,7 @@
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="churchId">
-      <mat-header-cell id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
+      <mat-header-cell class="church_id_header" id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
       <mat-cell id = "church_id" *matCellDef="let element">{{ element.churchId }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="name">
@@ -86,10 +86,10 @@
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':memberListData!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
     <mat-footer-row *matFooterRowDef="['noData']"
-      [ngClass]="{'hide':!(memberListData!=null && memberListData.data.length==0)}"></mat-footer-row>
+      [ngClass]="{'hide':!((isLoading===false) && memberListData.data.length==0)}"></mat-footer-row>
   </mat-table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
+  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
     showFirstLastButtons></mat-paginator>
 </div>
