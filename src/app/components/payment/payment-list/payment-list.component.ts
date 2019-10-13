@@ -31,6 +31,7 @@ export class PaymentListComponent implements OnInit {
   searchKey: string;
   minusBtnClass: string = "notMinimumYear";
   plusBtnClass: string = "notMaximumYear";
+  isLoading = false;
 
   abc() {
     console.log(this.selectedrow);
@@ -53,9 +54,33 @@ export class PaymentListComponent implements OnInit {
   }
 
   getPaymentList() {
-    this.service.getPaymentList("" + this.year).subscribe(response => {
-      this.paymentListData.data = response as MemberModel[];
-    });
+
+    // this.service.getPaymentList("" + this.year).subscribe(response => {
+    //   this.paymentListData.data = response as MemberModel[];
+    // });
+
+    this.isLoading = true;
+    setTimeout(() => {
+      this.service.getPaymentList("" + this.year).subscribe(
+        (
+          response => {
+            this.paymentListData.data = response as MemberModel[];
+          }
+        ),
+        (
+          error => {
+            console.log(error.message);
+            this.isLoading = false;
+          }
+        ),
+        () => {
+          this.isLoading = false;
+        }
+
+      );
+    }
+    , 4000);
+
   }
 
   pay() {

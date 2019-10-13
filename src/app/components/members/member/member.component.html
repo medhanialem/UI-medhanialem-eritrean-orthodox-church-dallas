@@ -68,7 +68,7 @@
             </mat-radio-group>
           </div>
           <mat-form-field>
-            <input formControlName="registrationDate" matInput [matDatepicker]="picker" placeholder="Registration date">
+            <input formControlName="registrationDate" [min]="minRegistrationDate" [max]="maxRegistrationDate" matInput [matDatepicker]="picker" placeholder="Registration date">
             <mat-datepicker-toggle matSuffix [for] ="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error>Registration date is mandatory.</mat-error>

@@ -20,6 +20,8 @@ export class MemberComponent implements OnInit {
 
   displayRelationship: boolean = false;
   checkedDependent: boolean = false;
+  minRegistrationDate = new Date(1980, 0, 1);;
+  maxRegistrationDate = new Date();
 
   relationships = [
     {id: 1, value: 'Wife'},
