@@ -151,11 +151,22 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '80%';
-    dialogConfig.height = '90%';
+    dialogConfig.width = '50%';
+    dialogConfig.height = '70%';
+    dialogConfig.data = new Member();
     this.dialog.open(MemberComponent, dialogConfig);
   }
 
+
+  onEdit(row: Member){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.height = '70%';
+    dialogConfig.data = row;
+    this.dialog.open(MemberComponent, dialogConfig);
+  }
    onSendSMS() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

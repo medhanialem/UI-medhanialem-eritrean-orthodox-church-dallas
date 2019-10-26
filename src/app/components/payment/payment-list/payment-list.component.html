@@ -1,30 +1,5 @@
-
-<!-- <div class="search-div">    -->
-    <!-- <mat-form-field class="search-form-field" floatLabel="never">
-      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter($event.target.value)">
-      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </mat-form-field> -->
-    <!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
-        Pay
-    </button> -->
-  <!-- </div> -->
-  <!-- <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field> -->
- 
 <div class="mat-elevation-z8 payment-container">
-    <!-- <mat-select [(value)]="year" formControlName="StatusCode">
-        <mat-option *ngFor="let status of year" [value]="year.Value" >
-               {{ status.Value }}
-        </mat-option>
- </mat-select>   -->
- <!-- <mat-select [(value)]="selected" (selectionChange) = "getPaymentList()" placeholder="Year" class="year-dpn">
-    <mat-option [value]="currentYear">{{currentYear}}</mat-option>
-    <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
-  </mat-select> -->
-<hr/>
+<hr id="hr_payment_header1"/>
 <button mat-icon-button id="minusPlusBtn" [ngClass] = "minusBtnClass" [disabled]="year <= minimumYear" (click) = "minusYearClicked()">
   <mat-icon>keyboard_arrow_left</mat-icon>
 </button>
@@ -42,7 +17,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <hr/>
+  <hr id="hr_payment_header2"/>
 <!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
     <mat-icon>monetization_on</mat-icon>
     Pay
@@ -92,28 +67,28 @@
         </mat-cell>
     </ng-container>
   <ng-container matColumnDef="Jan" >
-    <mat-header-cell *matHeaderCellDef id="month">January</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef id="month">Jan</mat-header-cell>
       <mat-cell *matCellDef="let element" id="month">
         <mat-icon id="paidMonth" *ngIf="element.paymentLog[0].paymentLogId!=null">done</mat-icon>
         <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 1)">remove</mat-icon>
       </mat-cell>
   </ng-container>
     <ng-container matColumnDef="Feb">
-        <mat-header-cell *matHeaderCellDef id="month">February</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef id="month">Feb</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[1].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 2)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="Mar">
-        <mat-header-cell *matHeaderCellDef id="month">March</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef id="month">Mar</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[2].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 3)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="April">
-      <mat-header-cell *matHeaderCellDef id="month">April</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Apr</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[3].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 4)">remove</mat-icon>
@@ -127,56 +102,77 @@
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="June">
-      <mat-header-cell *matHeaderCellDef id="month">June</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Jun</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[5].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 6)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="July">
-      <mat-header-cell *matHeaderCellDef id="month">July</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Jul</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[6].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 7)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Aug">
-      <mat-header-cell *matHeaderCellDef id="month">August</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Aug</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[7].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 8)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Sep">
-      <mat-header-cell *matHeaderCellDef id="month">September</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Sep</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[8].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 9)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Oct">
-      <mat-header-cell *matHeaderCellDef id="month">October</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Oct</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[9].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 10)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Nov">
-      <mat-header-cell *matHeaderCellDef id="month">November</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Nov</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[10].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 11)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Dec">
-      <mat-header-cell *matHeaderCellDef id="month">December</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef id="month">Dec</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf="element.paymentLog[11].paymentLogId!=null">done</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 12)">remove</mat-icon>
         </mat-cell>
     </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}">
+    </mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+      [ngClass]="{'hide':!((isLoading===false) && paymentListData.data.length==0)}">
+    </mat-footer-row>
+
+
+
     </mat-table>
     <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
         <mat-icon>monetization_on</mat-icon>

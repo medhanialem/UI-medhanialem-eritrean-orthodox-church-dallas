@@ -102,4 +102,11 @@ export class MemberService {
   public getMemberList(): Observable<Member[]> {
     return this.$memberList;
   }
+
+  public saveMember(member: Member): Observable<number> {
+
+    // come back and replace this with the rest endpoint.
+    memberList.push(member);
+    return of(200);
+  }
 }

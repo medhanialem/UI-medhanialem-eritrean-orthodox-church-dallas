@@ -1,0 +1,65 @@
+.btn-dialog-close {
+    width: 45px;
+    min-width: 0px !important;
+    height: 40px;
+    padding: 0px !important;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.controls-container {
+    width: 100%;
+    padding: 5%;
+}
+
+.controls-container > * {
+    width: 100%;
+}
+
+.add-bottom-padding {
+    padding-bottom: 10px;
+}
+
+.button-row button {
+    margin: 5px;
+}
+
+.registrationDiv {
+    margin-top:20px;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dtRow{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.divGender{
+    margin-top: 19px;
+}
+
+.dtDependent{
+    margin-top: 40px;
+}
+
+.divButtons{
+    margin-top:40px;
+}
+
+#btnCancel{
+    margin-right: 10px;
+    width:110px;
+}
+
+#btnSave{
+margin-left:10px;
+width:110px;
+}
+
