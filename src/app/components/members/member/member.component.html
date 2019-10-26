@@ -1,85 +1,139 @@
 <mat-toolbar>
-  <span>{{addMemberForm.controls['$key'].value?"Modify Member": "New Member"}}</span>
+  <span>{{memberModel.memberId>0?"Modify Member": "New Member"}}</span>
   <span class="fill-remaining-space"></span>
-  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
 </mat-toolbar>
-<div class="divNewMember"> 
-<form [formGroup]="addMemberForm" class="normal-form" (submit)="onSubmit()">
-  <mat-grid-list cols="2" rowHeight="300px">
-    <mat-grid-tile>
-      <div class="controls-container">
-        <!-- <input type="hidden" formControlName="$key"> -->
-        <div class="row">
-          <div class="col-12">
-              <button class="btn btn-primary">Robi</button>
+<div class="divNewMember">
+  <form [formGroup]="addMemberForm" class="normal-form" (submit)="onSubmit()">
+    <div class="row registrationDiv">
+      <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="row col-lg-12 col-xl-12 dtRow">
+          <div class="col-lg-4  col-xl-4">
+            <mat-form-field>
+              <input formControlName="firstName" matInput placeholder="First name*">
+              <mat-error>First name field is mandatory.</mat-error>
+            </mat-form-field>
           </div>
-        </div>
-        <!-- <mat-form-field>
-          <input formControlName="firstName" matInput placeholder="First name*">
-          <mat-error>First name field is mandatory.</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input formControlName="middleName" matInput placeholder="Middle name*">
-          <mat-error>Middle name field is mandatory.</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <input formControlName="lastName" matInput placeholder="Last name*">
-            <mat-error>Last name field is mandatory.</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <input formControlName="mobile" matInput placeholder="Mobile*">
-            <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.required">Mobile field is mandatory.</mat-error>
-            <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.minlength">Please put valid number.</mat-error>
-        </mat-form-field>
-        <mat-form-field>
-            <input formControlName="address" matInput placeholder="Address">
-        </mat-form-field>
-        <mat-form-field>
-            <input formControlName="email" matInput placeholder="Email">
-            <mat-error>Invalid email address.</mat-error>
-        </mat-form-field> -->
-      </div>
-    </mat-grid-tile>
-    <mat-grid-tile>
-        <div class="controls-container">
-          <div class="add-bottom-padding">
-              <mat-radio-group formControlName="dependency">
-                <mat-radio-button value="1" (click)="displayRelationshipOnOff(false)" color="primary">Primary</mat-radio-button>
-                <mat-radio-button value="2" (click)="displayRelationshipOnOff(true)" color="primary">Dependent</mat-radio-button>
-              </mat-radio-group>
-          </div>
-          <mat-form-field *ngIf="displayRelationship">
-              <mat-select formControlName="relationship" placeholder="Relationship">
-                <ng-container *ngFor="let relation of relationships">
-                    <mat-option value="{{relation.id}}">{{relation.value}}</mat-option>
-                </ng-container>
-              </mat-select>
-          </mat-form-field>
-          <div class="add-bottom-padding">
-              <mat-radio-group formControlName="relationship">
-                <mat-checkbox color="primary">Sunday School</mat-checkbox>
-                <mat-checkbox [disabled]="displayRelationship" checked="checkedDependent" color="primary">Sebeka Gubae</mat-checkbox>
-              </mat-radio-group>
-          </div>
-          <div class="add-bottom-padding">
-            <mat-radio-group formControlName="gender">
-              <mat-radio-button value="1" color="primary">Male</mat-radio-button>
-              <mat-radio-button value="2" color="primary">Female</mat-radio-button>
-            </mat-radio-group>
-          </div>
-          <mat-form-field>
-            <input formControlName="registrationDate" [min]="minRegistrationDate" [max]="maxRegistrationDate" matInput [matDatepicker]="picker" placeholder="Registration date">
-            <mat-datepicker-toggle matSuffix [for] ="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error>Registration date is mandatory.</mat-error>
-          </mat-form-field>
-          <div class="button-row">
-            <button mat-raised-button color="primary" type="submit" [disabled]="addMemberForm.invalid">Submit</button>
-            <button mat-raised-button color="warn" (click)="onClear()">Clear</button>
-          </div>
-        </div>
-    </mat-grid-tile>  
-  </mat-grid-list>
-</form>
-</div>
 
+          <div class="col-lg-4  col-xl-4">
+            <mat-form-field>
+              <input formControlName="middleName" matInput placeholder="Middle name*">
+              <mat-error>Middle name field is mandatory.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4  col-xl-4">
+            <mat-form-field>
+              <input formControlName="lastName" matInput placeholder="Last name*">
+              <mat-error>Last name field is mandatory.</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row col-lg-12 col-xl-12 dtRow">
+            <div class="col-lg-4  col-xl-4 divGender">
+                <mat-radio-group formControlName="gender">
+                  <div class="row">
+                    <div class="col-lg-6 col-xl-6">
+                        <mat-radio-button  value="Male" color="primary">Male</mat-radio-button>
+                    </div>
+                    <div class="col-lg-6 col-xl-6">
+                        <mat-radio-button value="Female" color="primary">Female</mat-radio-button>
+                    </div>
+                  </div>
+                  </mat-radio-group>
+              </div>
+
+            <div class="col-lg-3  col-xl-3">
+                <mat-form-field>
+                  <input formControlName="mobile" matInput placeholder="Mobile*">
+                  <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.required">Mobile field is mandatory.
+                  </mat-error>
+                  <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.minlength">Please put valid number.</mat-error>
+                  <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.maxlength">Please put valid number.</mat-error>
+                </mat-form-field>
+              </div>
+
+          <div class="col-lg-5  col-xl-5">
+            <mat-form-field>
+              <input formControlName="email" matInput placeholder="Email">
+              <mat-error>Invalid email address.</mat-error>
+            </mat-form-field>
+          </div>
+         
+        </div>
+
+        <div class="row col-lg-12 col-xl-12 dtRow">
+          <div class="col-lg-8  col-xl-8">
+            <mat-form-field>
+              <input formControlName="streetAddress" matInput placeholder="Street Address*">
+              <mat-error>Street field is mandatory.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4  col-xl-4">
+            <mat-form-field>
+              <input formControlName="apartment" matInput placeholder="Apartment No.">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row col-lg-12 col-xl-12 dtRow">
+          <div class="col-lg-4  col-xl-4">
+            <mat-form-field>
+              <input formControlName="city" matInput placeholder="City*">
+              <mat-error>City field is mandatory.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-xl-4">
+            <mat-form-field>
+              <input formControlName="state" matInput placeholder="State*">
+              <mat-error>State field is mandatory.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4  col-xl-4">
+            <mat-form-field>
+              <input formControlName="zipCode" matInput placeholder="Zip Code*">
+              <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.required">Zip code field is mandatory.
+              </mat-error>
+              <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.minlength">Please put valid zip code.</mat-error>
+              <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.maxlength">Please put valid zip code.</mat-error>
+            </mat-form-field>
+          </div>
+        </div>       
+        <div class="row col-lg-12 col-xl-12 dtDependent">            
+              <div class="col-lg-6 col-xl-6">
+                  <div class="row">
+                      <div class="col-lg-6 col-xl-6">
+                          <mat-checkbox formControlName="sundaySchool" color="primary">Sunday School</mat-checkbox>
+                      </div>
+                      <div class="col-lg-6 col-xl-6">
+                          <mat-checkbox formControlName="sebekaGubae"  color="primary">Sebeka Gubae</mat-checkbox>
+                      </div>
+                    </div>      
+              </div>  
+              <div class="col-lg-6 col-xl-6" *ngIf="!(memberModel.memberId > 0)">
+                <mat-form-field>
+                  <input formControlName="registrationDate" [min]="minRegistrationDate" [max]="maxRegistrationDate"  matInput [matDatepicker]="picker" placeholder="Registration date">
+                  <mat-datepicker-toggle matSuffix [for] ="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-error>Registration date is mandatory.</mat-error>
+                </mat-form-field>
+              </div>        
+        </div>
+        <div class="row col-lg-12 col-xl-12 divButtons">            
+          <div class="col-lg-6 offset-4 col-xl-6 offset-4">
+              <div class="row">
+                  <div class="col-lg-12 col-xl-12">
+                      <button mat-raised-button color='warn' (click)="onClose()" type="reset" id="btnCancel">Cancel</button>
+                      <button mat-raised-button color="primary" type="submit" [disabled]="formValid()" id="btnSave">Save</button>
+                  </div>
+                </div>      
+          </div>          
+    </div>
+
+
+      </div>
+    </div>
+  </form>
+</div>

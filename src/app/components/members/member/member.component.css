@@ -25,3 +25,41 @@
 .button-row button {
     margin: 5px;
 }
+
+.registrationDiv {
+    margin-top:20px;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dtRow{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.divGender{
+    margin-top: 19px;
+}
+
+.dtDependent{
+    margin-top: 40px;
+}
+
+.divButtons{
+    margin-top:40px;
+}
+
+#btnCancel{
+    margin-right: 10px;
+    width:110px;
+}
+
+#btnSave{
+margin-left:10px;
+width:110px;
+}
+
