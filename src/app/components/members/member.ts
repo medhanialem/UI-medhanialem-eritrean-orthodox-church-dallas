@@ -22,8 +22,15 @@ export class Member {
     createdBy: number;
     updatedDate: Date;
     updatedBy: number;
-    tier: number;
+    tier: Tier;
     status: boolean;
     sebekaGubae: boolean;
     sundaySchool: boolean;
+}
+
+export class Tier {
+
+    tierId: number;
+    tierType: string;
+    description: string;
 }
