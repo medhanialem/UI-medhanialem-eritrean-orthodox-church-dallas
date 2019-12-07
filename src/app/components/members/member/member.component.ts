@@ -1,11 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatDialogConfig, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialogRef, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatSelect } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms' ;
 
 import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
 import { AddMemberDialogCloseComponent } from '../add-member-dialog-close/add-member-dialog-close.component';
-import { Member } from '../member';
+import { Member, Tier } from '../member';
+import { HttpResponseBase } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-member',
@@ -16,6 +19,9 @@ export class MemberComponent implements OnInit {
 
   addMemberForm: FormGroup;
   memberModel: Member;
+  tierList$: Observable<Tier[]>;
+  selectedTier: Tier = new Tier();
+  @ViewChild('TIER') tierControl: MatSelect;
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: Member,
@@ -24,6 +30,9 @@ export class MemberComponent implements OnInit {
     public dialogRef: MatDialogRef<MemberComponent>,
     private dialog: MatDialog) {
       this.memberModel = data;
+      if (data !== null && data.tier !== null && data.tier.description) {
+        this.selectedTier = data.tier;
+      }
       this.addMemberForm = fb.group({
         firstName: [data.firstName, Validators.required],
         middleName: [data.middleName, Validators.required],
@@ -38,7 +47,9 @@ export class MemberComponent implements OnInit {
         zipCode: [data.zipCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
         sundaySchool: [data.sundaySchool],
         sebekaGubae: [data.sebekaGubae],
-        registrationDate: [data.registrationDate, Validators.required]
+        registrationDate: [data.registrationDate, Validators.required],
+        tier: [this.selectedTier.description, Validators.required]
+
 
       });
 
@@ -50,11 +61,28 @@ export class MemberComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.getTierList();
   }
 
   onClear() {
 
+  }
+
+  onTierSelected() {
+    console.log(this.tierControl.value);
+    console.log(this.selectedTier);
+  }
+
+  getTierList() {
+
+    this.tierList$ = new Observable<Tier[]>();
+    this.tierList$ = this.service.getTierList().pipe(
+      map(
+        res => {
+          return res;
+        }
+      )
+    );
   }
 
   onSubmit() {
