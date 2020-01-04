@@ -5,7 +5,7 @@ import { MemberComponent } from '../member/member.component';
 import { MessageComponent } from '../../message/message.component';
 import { NotificationService } from '../shared/notification.service';
 import { DialogService } from '../shared/dialog.service';
-import { Member } from '../member';
+import { Member, Tier } from '../member';
 import { Subscription } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
@@ -153,18 +153,24 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
     dialogConfig.height = '70%';
-    dialogConfig.data = new Member();
-    this.dialog.open(MemberComponent, dialogConfig);
+    dialogConfig.data = new Member(new Tier());
+    const dialogRef = this.dialog.open(MemberComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(
+      () => {
+        this.getMemberList();
+      }
+    );
   }
 
 
-  onEdit(row: Member){
+  onEdit(row: Member) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
     dialogConfig.height = '70%';
     dialogConfig.data = row;
+    console.log(dialogConfig.data);
     this.dialog.open(MemberComponent, dialogConfig);
   }
    onSendSMS() {

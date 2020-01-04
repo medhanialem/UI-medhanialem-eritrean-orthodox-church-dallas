@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatSelect } from '@angular/material';
+import { MatDialogRef, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatSelect, MatOption, MatSelectChange } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms' ;
 
 import { MemberService } from '../shared/member.service';
@@ -31,7 +31,7 @@ export class MemberComponent implements OnInit {
     private dialog: MatDialog) {
       this.memberModel = data;
       if (data !== null && data.tier !== null && data.tier.description) {
-        this.selectedTier = data.tier;
+        this.selectedTier = data.tier as Tier;
       }
       this.addMemberForm = fb.group({
         firstName: [data.firstName, Validators.required],
@@ -48,7 +48,7 @@ export class MemberComponent implements OnInit {
         sundaySchool: [data.sundaySchool],
         sebekaGubae: [data.sebekaGubae],
         registrationDate: [data.registrationDate, Validators.required],
-        tier: [this.selectedTier.description, Validators.required]
+        tier: [this.selectedTier.tierId, Validators.required]
 
 
       });
@@ -68,9 +68,9 @@ export class MemberComponent implements OnInit {
 
   }
 
-  onTierSelected() {
-    console.log(this.tierControl.value);
-    console.log(this.selectedTier);
+  onTierSelected(event: MatSelectChange) {
+    this.selectedTier.tierId = event.source.value;
+    this.selectedTier.description = (event.source.selected as MatOption).viewValue;
   }
 
   getTierList() {
@@ -124,6 +124,10 @@ export class MemberComponent implements OnInit {
   }
 
   mapMemberDialogToMemberObject() {
+    const tier = new Tier();
+    tier.tierId = this.selectedTier.tierId;
+    tier.description = this.selectedTier.description;
+    this.memberModel.tier = tier;
     this.memberModel.firstName = this.addMemberForm.value.firstName;
     this.memberModel.middleName = this.addMemberForm.value.middleName;
     this.memberModel.lastName = this.addMemberForm.value.lastName;

@@ -22,15 +22,16 @@ export class Member {
     createdBy: number;
     updatedDate: Date;
     updatedBy: number;
-    tier: Tier;
     status: boolean;
     sebekaGubae: boolean;
     sundaySchool: boolean;
+    constructor(public tier: Tier) {
+
+    }
 }
 
 export class Tier {
 
     tierId: number;
-    tierType: string;
     description: string;
 }
