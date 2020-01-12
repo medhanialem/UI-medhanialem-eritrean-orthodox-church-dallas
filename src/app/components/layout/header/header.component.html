@@ -1,7 +1,15 @@
 <header class="header">
-  <div>
-    <!-- <img id="logo" src="assets/medhanialem_logo.jpg"> -->
-    <h1>CATHEDRAL ERITREAN ORTHODOX TEWAHDO MEDHANEALEM CHURCH</h1>
+  <div class="row">
+    <div class="col-lg-8 col-xl-8 col-sm-8 divHeading">
+      <h1>MEDHANEALEM</h1>
+      <h6>ERITREAN ORTHODOX TEWAHDO CHURCH</h6>
+    </div>
+    <div class="col-lg-4 col-xl-4 col-sm-4">
+      <div class='input-group userInfo' *ngIf="showHideLoggedInUser()">
+        <label class="lblUserName">Hello {{authService?.decodedToken().display_name}}</label>
+        <button mat-button color='primary' class="logoutLink" (click)='logOut()'>Logout</button>
+      </div>      
+    </div>    
   </div>
   <nav>
     <!--a routerLink="/">Home</a> | <a routerLink="/sundayschool">Sunday School</a> | <a routerLink="/about">About</a-->

@@ -9,6 +9,7 @@ import { Member, Tier } from '../member';
 import { HttpResponseBase } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-member',
@@ -21,14 +22,15 @@ export class MemberComponent implements OnInit {
   memberModel: Member;
   tierList$: Observable<Tier[]>;
   selectedTier: Tier = new Tier();
-  @ViewChild('TIER') tierControl: MatSelect;
+  @ViewChild('TIER', { static: true }) tierControl: MatSelect;
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: Member,
     public service: MemberService,
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef<MemberComponent>,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private authService: AuthenticationService) {
       this.memberModel = data;
       if (data !== null && data.tier !== null && data.tier.description) {
         this.selectedTier = data.tier as Tier;
@@ -144,12 +146,12 @@ export class MemberComponent implements OnInit {
 
     if (!(this.memberModel.memberId > 0)) {
       this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
-      this.memberModel.createdBy = 0;
+      this.memberModel.createdBy = this.authService.decodedToken().userId;
       this.memberModel.createdDate = new Date();
-      this.memberModel.updatedBy = 0;
+      this.memberModel.updatedBy = this.authService.decodedToken().userId;
       this.memberModel.updatedDate = new Date();
    } else {
-     this.memberModel.updatedBy = 0;
+     this.memberModel.updatedBy = this.authService.decodedToken().userId;
      this.memberModel.updatedDate = new Date();
    }
   }

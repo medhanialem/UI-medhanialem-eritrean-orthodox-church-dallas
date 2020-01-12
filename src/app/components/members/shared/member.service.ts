@@ -115,14 +115,19 @@ export class MemberService {
    // this.httpClient.get<Member[]>(this.url)
   }
 
-  public getTierList() : Observable<Tier[]> {
+  public getTierList(): Observable<Tier[]> {
     return this.tierList$;
-    //return this.httpClient.get<Tier[]>(`${this.baseUrl}tier`);
+    // return this.httpClient.get<Tier[]>(`${this.baseUrl}tier`);
   }
 
   public saveMember(member: Member): Observable<number> {
     // come back and replace this with the rest endpoint.
     memberList.push(member);
     return of(200);
+  }
+
+  public getAllUserNames(): Observable<Member[]> {
+    return this.memberList$;
+    // this.httpClient.get<Member[]>(this.url)
   }
 }

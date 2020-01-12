@@ -36,8 +36,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   filteredList: Member[];
 
   displayedColumns: string[] = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate', 'actions'];
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   isLoading = false;
   searchKey: string;
 
