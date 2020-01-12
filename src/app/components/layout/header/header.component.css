@@ -1,5 +1,5 @@
 .header {
-    background: #3C6478;
+    background: #9E9E9E;
     color: white;
     text-align: center;
     padding: 5px;
@@ -9,4 +9,24 @@
 .header a {
     color: #fff;
     text-decoration: none;
+}
+
+.divHeading {
+    text-align: left;
+    /* margin-left: 15px; */
+}
+
+.logoutLink {
+    margin-left: 20px;
+    font-size: 20px;
+    margin-top: -5px;
+}
+
+.lblUserName {
+    font-size: 20px;
+    margin-left: 50px;
+}
+
+.userInfo {
+margin-top: 45px;
 }

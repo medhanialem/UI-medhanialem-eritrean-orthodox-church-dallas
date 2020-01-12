@@ -21,7 +21,8 @@ import * as Material from '@angular/material';
         Material.MatDialogModule,
         Material.MatSelectModule,
         Material.MatCheckboxModule,
-        Material.MatIconModule
+        Material.MatIconModule,
+        Material.MatCardModule
     ],
     exports: [
         Material.MatTabsModule,
@@ -42,7 +43,8 @@ import * as Material from '@angular/material';
         Material.MatDialogModule,
         Material.MatSelectModule,
         Material.MatCheckboxModule,
-        Material.MatIconModule
+        Material.MatIconModule,
+        Material.MatCardModule
     ]
 })
 

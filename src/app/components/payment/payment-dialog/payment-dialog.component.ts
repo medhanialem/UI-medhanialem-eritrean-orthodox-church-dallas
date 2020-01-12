@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angu
 import { PaymentLookUp } from '../shared/paymentLookUps.model';
 import { PaymentService } from '../shared/payment.service';
 import { MemberModel } from '../shared/member.model';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
 
 @Component({

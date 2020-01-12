@@ -111,7 +111,7 @@
             <mat-checkbox formControlName="sebekaGubae" color="primary">Sebeka Gubae</mat-checkbox>
           </div>
           <div class="col-lg-3 col-xl-3 col-sm-12">
-            <mat-select (selectionChange)='onTierSelected()' placeholder="Tier" #TIER formControlName='tier' [(value)]='selectedTier.description'>
+            <mat-select (selectionChange)="onTierSelected($event)" placeholder="Tier" #TIER [(value)]="selectedTier.tierId" formControlName='tier'>
               <mat-option *ngFor="let tier of tierList$ | async" [value]='tier.tierId'>
                 {{tier.description}}
               </mat-option>

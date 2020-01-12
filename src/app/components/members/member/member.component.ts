@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatSelect } from '@angular/material';
+import { MatDialogRef, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatSelect, MatOption, MatSelectChange } from '@angular/material';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms' ;
 
 import { MemberService } from '../shared/member.service';
@@ -9,6 +9,7 @@ import { Member, Tier } from '../member';
 import { HttpResponseBase } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-member',
@@ -21,17 +22,18 @@ export class MemberComponent implements OnInit {
   memberModel: Member;
   tierList$: Observable<Tier[]>;
   selectedTier: Tier = new Tier();
-  @ViewChild('TIER') tierControl: MatSelect;
+  @ViewChild('TIER', { static: true }) tierControl: MatSelect;
   constructor(
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data: Member,
     public service: MemberService,
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef<MemberComponent>,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private authService: AuthenticationService) {
       this.memberModel = data;
       if (data !== null && data.tier !== null && data.tier.description) {
-        this.selectedTier = data.tier;
+        this.selectedTier = data.tier as Tier;
       }
       this.addMemberForm = fb.group({
         firstName: [data.firstName, Validators.required],
@@ -48,7 +50,7 @@ export class MemberComponent implements OnInit {
         sundaySchool: [data.sundaySchool],
         sebekaGubae: [data.sebekaGubae],
         registrationDate: [data.registrationDate, Validators.required],
-        tier: [this.selectedTier.description, Validators.required]
+        tier: [this.selectedTier.tierId, Validators.required]
 
 
       });
@@ -68,9 +70,9 @@ export class MemberComponent implements OnInit {
 
   }
 
-  onTierSelected() {
-    console.log(this.tierControl.value);
-    console.log(this.selectedTier);
+  onTierSelected(event: MatSelectChange) {
+    this.selectedTier.tierId = event.source.value;
+    this.selectedTier.description = (event.source.selected as MatOption).viewValue;
   }
 
   getTierList() {
@@ -124,6 +126,10 @@ export class MemberComponent implements OnInit {
   }
 
   mapMemberDialogToMemberObject() {
+    const tier = new Tier();
+    tier.tierId = this.selectedTier.tierId;
+    tier.description = this.selectedTier.description;
+    this.memberModel.tier = tier;
     this.memberModel.firstName = this.addMemberForm.value.firstName;
     this.memberModel.middleName = this.addMemberForm.value.middleName;
     this.memberModel.lastName = this.addMemberForm.value.lastName;
@@ -140,12 +146,12 @@ export class MemberComponent implements OnInit {
 
     if (!(this.memberModel.memberId > 0)) {
       this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
-      this.memberModel.createdBy = 0;
+      this.memberModel.createdBy = this.authService.decodedToken().userId;
       this.memberModel.createdDate = new Date();
-      this.memberModel.updatedBy = 0;
+      this.memberModel.updatedBy = this.authService.decodedToken().userId;
       this.memberModel.updatedDate = new Date();
    } else {
-     this.memberModel.updatedBy = 0;
+     this.memberModel.updatedBy = this.authService.decodedToken().userId;
      this.memberModel.updatedDate = new Date();
    }
   }

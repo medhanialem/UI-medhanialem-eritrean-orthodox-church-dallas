@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,10 @@ import { PaymentConfirmationComponent } from './components/payment/payment-confi
 import { MemberPaymentReceiptComponent } from './components/payment/member-payment-receipt/member-payment-receipt.component';
 import { MemberPaymentPreviewComponent } from './components/payment/member-payment-preview/member-payment-preview.component';
 import { AddMemberDialogCloseComponent } from './components/members/add-member-dialog-close/add-member-dialog-close.component';
+import { AuthenticationModule } from './components/authentication/authentication.module';
+import { MedhanieAlemGuard } from './shared/guard';
+import { AlertifyService } from './shared/alertify.service';
+import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,8 @@ import { AddMemberDialogCloseComponent } from './components/members/add-member-d
     PaymentConfirmationComponent,
     MemberPaymentReceiptComponent,
     MemberPaymentPreviewComponent,
-    AddMemberDialogCloseComponent
+    AddMemberDialogCloseComponent,
+    UserRegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -55,10 +60,15 @@ import { AddMemberDialogCloseComponent } from './components/members/add-member-d
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthenticationModule
   ],
-  providers: [MemberService,DatePipe],
+  providers: [MemberService, DatePipe, MedhanieAlemGuard, AlertifyService],
   bootstrap: [AppComponent],
-  entryComponents: [MemberComponent, MatConfirmDialogComponent,PaymentDialogComponent, MessageComponent, PaymentConfirmationComponent, MemberPaymentReceiptComponent, MemberPaymentPreviewComponent, AddMemberDialogCloseComponent],
+  entryComponents: [
+    MemberComponent, MatConfirmDialogComponent,
+    PaymentDialogComponent, MessageComponent,
+    PaymentConfirmationComponent, MemberPaymentReceiptComponent,
+     MemberPaymentPreviewComponent, AddMemberDialogCloseComponent],
 })
 export class AppModule { }

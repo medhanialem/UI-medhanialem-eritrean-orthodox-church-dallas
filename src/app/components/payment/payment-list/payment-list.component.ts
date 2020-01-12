@@ -26,8 +26,8 @@ export class PaymentListComponent implements OnInit {
   minimumYear: number = 2012
   maximumYear: number = new Date().getFullYear() + 1;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   searchKey: string;
   minusBtnClass: string = "notMinimumYear";
   plusBtnClass: string = "notMaximumYear";

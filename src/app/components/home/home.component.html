@@ -8,4 +8,7 @@
     <mat-tab label="Payment"> 
         <app-payment></app-payment>
     </mat-tab>
+    <mat-tab label="User Registration" *ngIf="hasAdminRole()">
+        <app-user-registration></app-user-registration>
+    </mat-tab>
 </mat-tab-group>
