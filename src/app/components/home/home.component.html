@@ -1,14 +1,14 @@
 <mat-tab-group color="accent" backgroundColor="primary">
-    <mat-tab label="Registration"> 
+    <mat-tab label="Members"> 
         <app-members></app-members> 
     </mat-tab>
     <!-- <mat-tab label="SMS"> 
         <app-sms></app-sms>
     </mat-tab> -->
-    <mat-tab label="Payment"> 
+    <mat-tab label="Payments"> 
         <app-payment></app-payment>
     </mat-tab>
-    <mat-tab label="User Registration" *ngIf="hasAdminRole()">
-        <app-user-registration></app-user-registration>
+    <mat-tab label="Users" *ngIf="hasAdminRole()">
+        <app-users></app-users>
     </mat-tab>
 </mat-tab-group>

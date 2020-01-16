@@ -1,0 +1,146 @@
+/* .search-div {
+    margin: 10px;
+} */
+
+.search-form-field {
+    width: 50%;
+    margin-left: 26px;
+    padding: 0px 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    max-height: 40px !important;
+}
+
+mat-header-cell {
+    font-weight: bold !important;
+    font-size: 15px;
+}
+
+mat-footer-row mat-footer-cell {
+    justify-content: center;
+    font-style: italic;
+}
+
+.hide {
+    display: none;
+}
+
+.search-form-field div.mat-form-field-underline {
+    display: none;
+}
+
+.search-form-field div.mat-form-field-infix {
+    border-top: 0px;
+}
+
+.search-form-field div.mat-form-field-wrapper {
+    padding-bottom: 0px;
+} 
+
+.search-form-field div.mat-form-field-suffix button{
+    height: 32px;
+    width: 32px;
+}
+
+.matTable {
+    width: 100%;
+}
+
+mat-header-cell {
+    display:flex;
+    justify-content: left !important;
+    font-weight: bold;
+}
+
+mat-cell{
+    display:flex;
+    justify-content: left !important;
+}
+
+mat-header-row {
+    min-height: 50px;
+    background-color: aliceblue;
+}
+
+.mat-row:nth-child(odd){
+    background-color:#f5f5f5;
+}
+
+#registartion_select {
+    max-width: 4%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#church_id {
+    max-width: 7%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_name {
+    max-width: 17%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_gender {
+    max-width: 7%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_mobile {
+    max-width: 7%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#registartion_address {
+    max-width: 35%;
+    margin-left: 3px;
+    margin-right: 2px;
+}
+
+.registartion_email {
+    max-width: 25%;
+    margin-left: 2px;
+    margin-right: 2px;
+    word-break: break-word;
+}
+
+#registartion_date {
+    max-width: 9%;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+#registartion_actions {
+    max-width: 5%;
+    margin-left: 2px;
+    margin-right: 2px;
+
+}
+
+.sebekaGubae {
+    padding-left: 25px;
+    padding-right: 35px;
+}
+
+.sundaySchool {
+    padding-left: 35px;
+}
+
+#hr_user_header1 {
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+
+#hr_user_header2 {
+    margin-top: 1px;
+    margin-bottom: 5px;
+}
+
+div.search-div .mat-raised-button {
+    height: 40px;
+    bottom: 5px;
+}
