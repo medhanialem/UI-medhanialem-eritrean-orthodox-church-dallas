@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MemberService } from '../members/shared/member.service';
-import { Member } from '../members/member';
-import { Roles } from '../authentication/roles';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Roles } from '../../authentication/roles';
+import { Member } from '../../members/member';
+import { MemberService } from '../../members/shared/member.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -18,12 +18,12 @@ export class UserRegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   constructor(private memberService: MemberService, private fb: FormBuilder) {
     this.registrationForm = fb.group({
-      user:[null,Validators.required],
+      user: [null, Validators.required],
       email: [null],
-      phoneNo:[null],
+      phoneNo: [null],
       password: [null, [Validators.required, Validators.minLength(5)]],
       confirmPassword: [null, [Validators.required, Validators.minLength(5)]],
-      roles:[null, Validators.required]
+      roles: [null, Validators.required]
     });
   }
 

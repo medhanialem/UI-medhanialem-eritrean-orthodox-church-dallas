@@ -29,7 +29,8 @@ import { AddMemberDialogCloseComponent } from './components/members/add-member-d
 import { AuthenticationModule } from './components/authentication/authentication.module';
 import { MedhanieAlemGuard } from './shared/guard';
 import { AlertifyService } from './shared/alertify.service';
-import { UserRegistrationComponent } from './components/user-registration/user-registration.component';
+import { UserRegistrationComponent } from './components/users/user-registration/user-registration.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { UserRegistrationComponent } from './components/user-registration/user-r
     MemberPaymentReceiptComponent,
     MemberPaymentPreviewComponent,
     AddMemberDialogCloseComponent,
-    UserRegistrationComponent
+    UserRegistrationComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
