@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/layout/header/header.component';
+import {HeaderComponent1 } from './components/layout/header/header.component1';
 import { AboutComponent } from './components/pages/about/about.component';
 import { SundaySchoolComponent } from './components/pages/sunday-school/sunday-school.component';
 import { HomeComponent } from './components/home/home.component';
@@ -16,7 +16,6 @@ import { MemberComponent } from './components/members/member/member.component';
 import { MemberService } from './components/members/shared/member.service';
 import { MemberListComponent } from './components/members/member-list/member-list.component';
 import { MatConfirmDialogComponent } from './components/members/mat-confirm-dialog/mat-confirm-dialog.component';
-import { SmsComponent } from './components/sms/sms.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
 import { PaymentDialogComponent } from './components/payment/payment-dialog/payment-dialog.component';
@@ -25,17 +24,22 @@ import { DatePipe } from '@angular/common';
 import { PaymentConfirmationComponent } from './components/payment/payment-confirmation/payment-confirmation.component';
 import { MemberPaymentReceiptComponent } from './components/payment/member-payment-receipt/member-payment-receipt.component';
 import { MemberPaymentPreviewComponent } from './components/payment/member-payment-preview/member-payment-preview.component';
-import { AddMemberDialogCloseComponent } from './components/members/add-member-dialog-close/add-member-dialog-close.component';
-import { AuthenticationModule } from './components/authentication/authentication.module';
+import { DialogCloseComponent } from './components/members/add-member-dialog-close/dialog-close.component';
 import { MedhanieAlemGuard } from './shared/guard';
 import { AlertifyService } from './shared/alertify.service';
-import { UserRegistrationComponent } from './components/users/user-registration/user-registration.component';
-import { UsersComponent } from './components/users/users.component';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { NavigationComponent } from './navigation/navigation.component';
+import { SidebarComponent } from './navigation/sidebar/sidebar.component';
+import { HeaderComponent } from './navigation/header/header.component';
+import { UserRegistrationComponent } from './users/user-registration/user-registration.component';
+import { UsersComponent } from './users/users.component';
+import { PaymentsGuard } from './shared/payments.guard';
+import { UsersGuard } from './shared/users.guard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
+    HeaderComponent1,
     AboutComponent,
     SundaySchoolComponent,
     HomeComponent,
@@ -43,7 +47,6 @@ import { UsersComponent } from './components/users/users.component';
     MemberComponent,
     MemberListComponent,
     MatConfirmDialogComponent,
-    SmsComponent,
     PaymentComponent,
     PaymentListComponent,
     PaymentDialogComponent,
@@ -51,9 +54,10 @@ import { UsersComponent } from './components/users/users.component';
     PaymentConfirmationComponent,
     MemberPaymentReceiptComponent,
     MemberPaymentPreviewComponent,
-    AddMemberDialogCloseComponent,
-    UserRegistrationComponent,
-    UsersComponent
+    DialogCloseComponent,
+    NavigationComponent,
+    SidebarComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -65,12 +69,12 @@ import { UsersComponent } from './components/users/users.component';
     ReactiveFormsModule,
     AuthenticationModule
   ],
-  providers: [MemberService, DatePipe, MedhanieAlemGuard, AlertifyService],
+  providers: [MemberService, DatePipe, MedhanieAlemGuard, AlertifyService, PaymentsGuard, UsersGuard],
   bootstrap: [AppComponent],
   entryComponents: [
     MemberComponent, MatConfirmDialogComponent,
     PaymentDialogComponent, MessageComponent,
     PaymentConfirmationComponent, MemberPaymentReceiptComponent,
-     MemberPaymentPreviewComponent, AddMemberDialogCloseComponent],
+     MemberPaymentPreviewComponent, DialogCloseComponent],
 })
 export class AppModule { }

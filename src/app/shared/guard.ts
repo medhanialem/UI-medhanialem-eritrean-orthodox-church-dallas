@@ -1,7 +1,7 @@
 import { CanLoad, Router, Route, UrlSegment, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { AuthenticationService } from '../components/authentication/authentication.service';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable()
 export class MedhanieAlemGuard implements CanActivate {
@@ -22,3 +22,5 @@ export class MedhanieAlemGuard implements CanActivate {
         return true;
     }
 }
+
+

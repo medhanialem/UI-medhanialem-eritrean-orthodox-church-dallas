@@ -1,0 +1,13 @@
+mat-sidenav-container, mat-sidenav-content, mat-sidenav
+{
+  height: 92%;
+  height: 92vh;
+}
+
+mat-sidenav{
+  flex: 1;
+}
+
+.clearfix{
+  padding:40px;
+}

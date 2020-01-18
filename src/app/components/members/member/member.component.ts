@@ -4,12 +4,12 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
-import { AddMemberDialogCloseComponent } from '../add-member-dialog-close/add-member-dialog-close.component';
 import { Member, Tier } from '../member';
 import { HttpResponseBase } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthenticationService } from '../../authentication/authentication.service';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
+import { DialogCloseComponent } from '../add-member-dialog-close/dialog-close.component';
 
 @Component({
   selector: 'app-member',
@@ -110,7 +110,7 @@ export class MemberComponent implements OnInit {
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
       dialogConfig.width = '30%';
-      const dialogRef = this.dialog.open(AddMemberDialogCloseComponent, dialogConfig);
+      const dialogRef = this.dialog.open(DialogCloseComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'yes') {
           this.dialogRef.close(null);
