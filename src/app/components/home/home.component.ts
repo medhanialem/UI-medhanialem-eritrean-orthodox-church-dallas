@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SharedModule } from '../../shared/shared.module';
-import { AuthenticationService } from '../authentication/authentication.service';
-import { Roles } from '../authentication/roles';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
+import { Roles } from 'src/app/shared/roles';
+
 
 @Component({
   selector: 'app-home',

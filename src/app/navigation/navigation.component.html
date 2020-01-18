@@ -1,0 +1,13 @@
+<div>
+    <app-header (sideBarToggle)="isExpanded=!isExpanded"></app-header>
+      <mat-sidenav-container autosize>
+      <mat-sidenav #sidenav role="navigation" mode="side" opened>
+        <app-sidebar [expanded]="isExpanded"></app-sidebar>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>

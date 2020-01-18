@@ -1,0 +1,74 @@
+<div class="usersContainer">
+  <hr id="hr_user_header1"/>
+  <div class="search-div">
+    <button mat-raised-button (click)="onAddUser()" color="primary">
+      <mat-icon>person_add</mat-icon>{{" "}}User
+    </button>
+    <mat-form-field class="search-form-field" floatLabel="never">
+      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-checkbox class = "showAllUsers" color="primary" [(ngModel)]="showAll" (change)="showAllUsers()">Show All</mat-checkbox>
+  </div>
+  <hr id="hr_user_header2"/>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="userListData" matSort class='matTable' >
+      <ng-container matColumnDef="userId">
+        <mat-header-cell class="user_id_header" id ="user_id" *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
+        <mat-cell id ="user_id" *matCellDef="let element">{{ element.userId }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell id = "user_fullName" *matHeaderCellDef>Full name</mat-header-cell>
+        <mat-cell id = "user_fullName" *matCellDef="let element">{{ element.firstName + ' ' +element.middleName+' '+ element.lastName }}</mat-cell>
+      </ng-container>    
+      <ng-container matColumnDef="email">
+        <mat-header-cell id="user_email" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+        <mat-cell id="user_email" *matCellDef="let element">{{ element.email }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="phoneNo">
+        <mat-header-cell id = "user_mobile" *matHeaderCellDef>Phone No.</mat-header-cell>
+        <mat-cell id = "user_mobile" *matCellDef="let element">{{ element.phoneNo }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell id="created_date" *matHeaderCellDef mat-sort-header>Created On</mat-header-cell>
+        <mat-cell id="created_date" *matCellDef="let element">{{ toShortDate(element.createdDate) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="updatedDate">
+        <mat-header-cell id="updated_date" *matHeaderCellDef mat-sort-header>Updated On</mat-header-cell>
+        <mat-cell id="updated_date" *matCellDef="let element">{{ toShortDate(element.updatedDate) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="roles">
+        <mat-header-cell id="user_roles" *matHeaderCellDef mat-sort-header>Roles</mat-header-cell>
+        <mat-cell id="user_roles" *matCellDef="let element">{{ getRoles(element) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef id = "user_actions">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let row" id = "user_actions">
+          <button mat-icon-button (click)="onEdit(row)">
+            <mat-icon>launch</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="onDeactivate(row.$key)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          Loading data...
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          No data.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>

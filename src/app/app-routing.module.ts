@@ -3,18 +3,44 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { SundaySchoolComponent } from './components/pages/sunday-school/sunday-school.component';
-import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { MedhanieAlemGuard } from './shared/guard';
+import { NavigationComponent } from './navigation/navigation.component';
+import { MembersComponent } from './components/members/members.component';
+import { PaymentListComponent } from './components/payment/payment-list/payment-list.component';
+import { PaymentComponent } from './components/payment/payment.component';
+import { UsersComponent } from './users/users.component';
+import { PaymentsGuard } from './shared/payments.guard';
+import { UsersGuard } from './shared/users.guard';
 
 const routes: Routes = [
-  {path: 'login',
-   loadChildren: () => import('./components/authentication/authentication.module').then(m => m.AuthenticationModule)
+
+  {
+    path: 'login', loadChildren:
+     () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
   },
-  {path: '', component: HomeComponent, canActivate: [MedhanieAlemGuard]},
-  {path: 'sundayschool', component: SundaySchoolComponent, canActivate: [MedhanieAlemGuard]},
-  {path: 'about', component: AboutComponent, canActivate: [MedhanieAlemGuard]}
+  {
+    path: '', component: NavigationComponent, canActivate: [MedhanieAlemGuard],
+    children: [
+      { path: '', redirectTo: '/members', pathMatch: 'full'},
+      {path: 'members', component: MembersComponent, canActivate: [MedhanieAlemGuard]},
+      {
+        path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad:[UsersGuard]
+      },
+      {path: 'payments', component: PaymentComponent, canActivate: [PaymentsGuard]},
+      {path: '**', redirectTo: '/members'}
+
+
+  ]}
 ];
 
+// [
+//   {path: 'login',
+//    loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
+//   },
+//   {path: '', component: HomeComponent, canActivate: [MedhanieAlemGuard]},
+//   {path: 'sundayschool', component: SundaySchoolComponent, canActivate: [MedhanieAlemGuard]},
+//   {path: 'about', component: AboutComponent, canActivate: [MedhanieAlemGuard]}
+// ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

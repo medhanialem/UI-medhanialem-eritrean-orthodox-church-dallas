@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar class="matToolBar">
   <span>{{memberModel.memberId>0?"Modify Member": "New Member"}}</span>
   <span class="fill-remaining-space"></span>
   <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
@@ -131,9 +131,9 @@
           <div class="col-lg-6 offset-4 col-xl-6 offset-4">
             <div class="row">
               <div class="col-lg-12 col-xl-12">
-                <button mat-raised-button color='warn' (click)="onClose()" type="reset" id="btnCancel">Cancel</button>
                 <button mat-raised-button color="primary" type="submit" [disabled]="formValid()"
                   id="btnSave">Save</button>
+                <button mat-raised-button color='warn' (click)="onClose()" type="reset" id="btnCancel">Cancel</button>
               </div>
             </div>
           </div>

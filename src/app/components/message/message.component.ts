@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms' ;
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NotificationService } from '../members/shared/notification.service';
 import { Member } from '../members/member';
+import { DialogCloseComponent } from '../members/add-member-dialog-close/dialog-close.component';
 
 @Component({
   selector: 'app-message',
@@ -16,7 +17,8 @@ export class MessageComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: Member[],
     public dialogRef: MatDialogRef<MessageComponent>,
     private http: HttpClient,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private dialog: MatDialog) {
       data.forEach(member => {
         this.phoneNumbersList.push(member.homePhoneNo);
       });
@@ -80,8 +82,25 @@ export class MessageComponent implements OnInit {
     });
   }
 
+  // onClose() {
+  //   this.dialogRef.close();
+  // }
+
   onClose() {
-    this.dialogRef.close();
+    if (this.messageForm.dirty) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '30%';
+      const dialogRef = this.dialog.open(DialogCloseComponent, dialogConfig);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'yes') {
+          this.dialogRef.close(null);
+        }
+      });
+    } else {
+      this.dialogRef.close(null);
+    }
   }
 
 }

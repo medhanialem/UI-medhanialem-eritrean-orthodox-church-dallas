@@ -1,6 +1,6 @@
 <hr id="hr_member_header1"/>
 <div class="search-div">
-  <button mat-raised-button (click)="onAddMember()" color="primary">
+  <button *ngIf="showAddEditDeleteMemberButtons()" mat-raised-button (click)="onAddMember()" color="primary">
     <mat-icon>person_add</mat-icon>{{" "}}Member
   </button>
   <mat-form-field class="search-form-field" floatLabel="never">

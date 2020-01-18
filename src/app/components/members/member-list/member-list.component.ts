@@ -9,6 +9,9 @@ import { Member, Tier } from '../member';
 import { Subscription } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
+import { AuthenticationService } from 'src/app/shared/authentication.service';
+import { Roles } from 'src/app/shared/roles';
+import { MembersAuthorizationGuard } from 'src/app/shared/members-authorization-guard';
 
 
 
@@ -25,7 +28,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
               private dialog: MatDialog,
               private notifiationService: NotificationService,
               private dialogService: DialogService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private authenticationService: AuthenticationService) { }
 
   private subscriptions: Subscription[] = [];
   selection = new SelectionModel<Member>(true, []);
@@ -35,7 +39,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   memberList: Member[];
   filteredList: Member[];
 
-  displayedColumns: string[] = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate', 'actions'];
+  displayedColumns: string[] = [];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   isLoading = false;
@@ -43,6 +47,13 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   ngOnInit() {
+    const showMemberActions = this.showAddEditDeleteMemberButtons();
+    if (showMemberActions) {
+      this.displayedColumns = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate', 'actions'];
+    } else {
+      this.displayedColumns = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate'];
+
+    }
     this.getMemberList();
     this.memberListData.paginator = this.paginator;
   }
@@ -182,8 +193,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dialog.open(MessageComponent, dialogConfig);
   }
 
-  abc() {
-    console.log('***** Repeating ******');
+  showAddEditDeleteMemberButtons(): boolean {
+    return this.authenticationService.userHasPermission(new MembersAuthorizationGuard(this.authenticationService));
   }
 
   ngOnDestroy(): void {
