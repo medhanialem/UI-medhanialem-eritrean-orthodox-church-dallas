@@ -92,8 +92,8 @@ mat-header-row {
 }
 
 #created_date {
-    max-width: 8%;
-    margin-left: 3px;
+    max-width: 9%;
+    margin-left: 10px;
     margin-right: 2px;
 }
 
@@ -110,9 +110,15 @@ mat-header-row {
     word-break: break-word;
 }
 
+#is_active {
+    max-width: 5%;
+    margin-left: 2px;
+}
+
 #user_actions {
     max-width: 6%;
-    margin-right: 5px;
+    margin-right: 10px;
+    margin-left: 3px;
 }
 
 .showAllUsers {

@@ -29,8 +29,8 @@ export class UserRegistrationComponent implements OnInit {
     private userService: UserService) {
     this.registrationForm = fb.group({
       user: [null, Validators.required],
-      email: [null],
-      phoneNo: [null],
+      email: new FormControl({value: null, disabled: true}),
+      phoneNo: new FormControl({value: null, disabled: true}),
       password: [null, [Validators.required, Validators.minLength(5)]],
       confirmPassword: [null],
       roles: [null, Validators.required]
@@ -79,7 +79,6 @@ export class UserRegistrationComponent implements OnInit {
   }
 
   populateUser() {
-
     this.user.firstName = this.registrationForm.value.user.firstName;
     this.user.middleName = this.registrationForm.value.user.middleName;
     this.user.lastName = this.registrationForm.value.user.lastName;
@@ -104,7 +103,6 @@ export class UserRegistrationComponent implements OnInit {
       dialogConfig.width = '30%';
       const dialogRef = this.dialog.open(DialogCloseComponent, dialogConfig);
       dialogRef.afterClosed().subscribe(result => {
-        console.log('Response...' + result);
         if (result === 'yes') {
           this.dialogRef.close(null);
         }

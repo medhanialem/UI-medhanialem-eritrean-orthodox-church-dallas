@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { UserModel } from './user.model';
 import { SelectionModel } from '@angular/cdk/collections';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @Component({
   selector: 'app-users',
@@ -20,7 +21,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   userList: UserModel[];
   showAll = false;
 
-  displayedColumns: string[] = [ 'userId', 'fullName', 'email', 'phoneNo', 'createdDate', 'updatedDate', 'roles', 'actions'];
+  displayedColumns: string[] = [ 'userId', 'fullName', 'email', 'phoneNo', 'createdDate', 'updatedDate', 'roles', 'isActive', 'actions'];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -85,7 +86,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   onAddUser() {
-  
+    this.onSearchClear();
+    this.showAll = false;
+    this.getUserList();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
@@ -93,6 +96,20 @@ export class UsersComponent implements OnInit, OnDestroy {
     dialogConfig.height = '69%';
 
     const dialogRef = this.dialog.open(UserRegistrationComponent, dialogConfig);
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(() => {
+      this.getUserList();
+    }));
+  }
+
+  onEdit(user: UserModel) {
+    console.log(user);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.disableClose = true;
+    dialogConfig.width = '40%';
+    dialogConfig.height = '69%';
+    dialogConfig.data = user;
+    const dialogRef = this.dialog.open(UserEditComponent, dialogConfig);
     this.subscriptions.push(dialogRef.afterClosed().subscribe(() => {
       this.getUserList();
     }));
