@@ -181,7 +181,6 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     dialogConfig.width = '50%';
     dialogConfig.height = '70%';
     dialogConfig.data = row;
-    console.log(dialogConfig.data);
     this.dialog.open(MemberComponent, dialogConfig);
   }
    onSendSMS() {

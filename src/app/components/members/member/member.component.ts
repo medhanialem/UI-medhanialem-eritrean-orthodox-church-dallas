@@ -6,7 +6,7 @@ import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
 import { Member, Tier } from '../member';
 import { HttpResponseBase } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { DialogCloseComponent } from '../add-member-dialog-close/dialog-close.component';
@@ -50,7 +50,7 @@ export class MemberComponent implements OnInit {
         sundaySchool: [data.sundaySchool],
         sebekaGubae: [data.sebekaGubae],
         registrationDate: [data.registrationDate, Validators.required],
-        tier: [this.selectedTier.tierId, Validators.required]
+        tier: [this.selectedTier, Validators.required]
 
 
       });
@@ -71,8 +71,8 @@ export class MemberComponent implements OnInit {
   }
 
   onTierSelected(event: MatSelectChange) {
-    this.selectedTier.tierId = event.source.value;
-    this.selectedTier.description = (event.source.selected as MatOption).viewValue;
+    this.selectedTier = event.source.value;
+    //this.selectedTier.description = (event.source.selected as MatOption).viewValue;
   }
 
   getTierList() {
@@ -127,11 +127,12 @@ export class MemberComponent implements OnInit {
   }
 
   mapMemberDialogToMemberObject() {
-    const tier = new Tier();
-    tier.tierId = this.selectedTier.tierId;
-    tier.description = this.selectedTier.description;
-    tier.tierType = 'tier3';
-    this.memberModel.tier = tier;
+    // const tier = new Tier();
+    // tier.tierId = this.selectedTier.tierId;
+    // tier.description = this.selectedTier.description;
+    //tier.tierType = 'tier3';
+    // this.memberModel.tier = tier;
+    this.memberModel.tier = this.selectedTier;
     this.memberModel.firstName = this.addMemberForm.value.firstName;
     this.memberModel.middleName = this.addMemberForm.value.middleName;
     this.memberModel.lastName = this.addMemberForm.value.lastName;

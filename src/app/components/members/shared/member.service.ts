@@ -6,10 +6,10 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 const tiers: Tier[] = [
-  {tierId: 1, description: 'Student'},
-  {tierId: 2, description: 'Single'},
-  {tierId: 3, description: 'Married'},
-  {tierId: 4, description: 'Voluntary'}
+  {tierId: 1, tierType: 'tier1', description: 'Student'},
+  {tierId: 2, tierType: 'tier1',description: 'Single'},
+  {tierId: 3, tierType: 'tier1',description: 'Married'},
+  {tierId: 4, tierType: 'tier1',description: 'Voluntary'}
 ];
 
 const memberList: Member[] = [
@@ -18,84 +18,84 @@ const memberList: Member[] = [
     homePhoneNo: '6419198902',    workPhoneNo: '', email: 'Daniel.Kifle@gmail.com',   streetAddress: '8901 Veller Ave',
     apartmentNo: '123',    city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),
     superId: null, relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),  updatedBy: 1,
-    tier: {tierId: 1, description: 'Student'},    status: true, sebekaGubae: true, sundaySchool: true
+    tier: {tierId: 1, tierType: 'tier1',description: 'Student'},    status: true, sebekaGubae: true, sundaySchool: true
   },
   {
     memberId: 2,    churchId: 'MCD-2', legacyId: '002',   firstName: 'LeteMariam',    middleName: 'TecleHaimanot',    lastName: 'TecleMariam',    gender: 'Female',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'LeteMariam.TecleMariam@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 1, description: 'Student'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 1, tierType: 'tier1',description: 'Student'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 3,    churchId: 'MCD-3', legacyId: '003',   firstName: 'Samsom',    middleName: 'S',    lastName: 'Negash',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'Daniel.Kifle@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 2, description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 2, tierType: 'tier1',description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 4,    churchId: 'MCD-4', legacyId: '004',   firstName: 'Yodit',    middleName: 'Kiflu',    lastName: 'Kifle',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '', email: 'Daniel.Kifle@gmail.com',   streetAddress: '8901 Veller Ave',
     apartmentNo: '123',    city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),
     superId: null, relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),  updatedBy: 1,
-    tier: {tierId: 2,  description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: false
+    tier: {tierId: 2,  tierType: 'tier1',description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: false
   },
   {
     memberId: 5,    churchId: 'MCD-5', legacyId: '005',   firstName: 'Robel',    middleName: 'TecleHaimanot',    lastName: 'TecleMariam',    gender: 'Female',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'LeteMariam.TecleMariam@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 1,  description: 'Student'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 1,  tierType: 'tier1',description: 'Student'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 6,    churchId: 'MCD-6',  legacyId: '006',  firstName: 'Temesghen',    middleName: 'S',    lastName: 'Habte',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'Daniel.Kifle@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 3, description: 'Married'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 3, tierType: 'tier1',description: 'Married'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 1,    churchId: 'MCD-1', legacyId: '001',   firstName: 'Daniel',    middleName: 'Tefera',    lastName: 'Kifle',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '', email: 'Daniel.Kifle@gmail.com',   streetAddress: '8901 Veller Ave',
     apartmentNo: '123',    city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),
     superId: null, relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),  updatedBy: 1,
-    tier: {tierId: 3, description: 'Married'},    status: true, sebekaGubae: true, sundaySchool: true
+    tier: {tierId: 3, tierType: 'tier1',description: 'Married'},    status: true, sebekaGubae: true, sundaySchool: true
   },
   {
     memberId: 2,    churchId: 'MCD-2', legacyId: '002',   firstName: 'LeteMariam',    middleName: 'TecleHaimanot',    lastName: 'TecleMariam',    gender: 'Female',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'LeteMariam.TecleMariam@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 1, description: 'Student'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 1, tierType: 'tier1',description: 'Student'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 3,    churchId: 'MCD-3', legacyId: '003',   firstName: 'Samsom',    middleName: 'S',    lastName: 'Negash',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'Daniel.Kifle@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 2,  description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 2,  tierType: 'tier1',description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 4,    churchId: 'MCD-4', legacyId: '004',   firstName: 'Yodit',    middleName: 'Kiflu',    lastName: 'Kifle',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '', email: 'Daniel.Kifle@gmail.com',   streetAddress: '8901 Veller Ave',
     apartmentNo: '123',    city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),
     superId: null, relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),  updatedBy: 1,
-    tier: {tierId: 4,   description: 'Voluntary'},    status: true, sebekaGubae: false, sundaySchool: false
+    tier: {tierId: 4,   tierType: 'tier1',description: 'Voluntary'},    status: true, sebekaGubae: false, sundaySchool: false
   },
   {
     memberId: 5,    churchId: 'MCD-5', legacyId: '005',   firstName: 'Robel',    middleName: 'TecleHaimanot',    lastName: 'TecleMariam',    gender: 'Female',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'LeteMariam.TecleMariam@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 4,  description: 'Voluntary'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 4,  tierType: 'tier1',description: 'Voluntary'},    status: true, sebekaGubae: false, sundaySchool: true
   },
   {
     memberId: 6,    churchId: 'MCD-6',  legacyId: '006',  firstName: 'Temesghen',    middleName: 'S',    lastName: 'Habte',    gender: 'Male',
     homePhoneNo: '6419198902',    workPhoneNo: '',    email: 'Daniel.Kifle@gmail.com',    streetAddress: '8901 Veller Ave',    apartmentNo: '123',
     city: 'Irving',  state: 'Texas',    zipCode: '75038',    registrationDate: new Date('4/13/2019'),    superId: null,
     relationShip: 'Self',    createdDate: new Date(), createdBy: 1,    updatedDate: new Date(),
-    updatedBy: 1,    tier: {tierId: 2, description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: true
+    updatedBy: 1,    tier: {tierId: 2, tierType: 'tier1',description: 'Single'},    status: true, sebekaGubae: false, sundaySchool: true
   }
 ];
 @Injectable({
@@ -120,8 +120,12 @@ export class MemberService {
   }
 
   public getTierList(): Observable<Tier[]> {
-    return this.tierList$;
-    // return this.httpClient.get<Tier[]>(`${this.baseUrl}tier`);
+    //return this.tierList$;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token')
+    });
+    return this.httpClient.get<Tier[]>(`${this.baseUrl}tiers`, {headers});
   }
 
   public saveMember(member: Member): Observable<Member> {
@@ -133,7 +137,7 @@ export class MemberService {
       Authorization: localStorage.getItem('token')
     });
     console.log(member);
-    return this.httpClient.post<Member>(`${this.baseUrl}members`, {member}, {headers});
+    return this.httpClient.post<Member>(`${this.baseUrl}members`, member, {headers});
   }
 
   public getAllUserNames(): Observable<Member[]> {
