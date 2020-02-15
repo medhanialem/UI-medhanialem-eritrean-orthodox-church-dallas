@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms' ;
 import { Member, Tier } from '../member';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -111,8 +111,12 @@ export class MemberService {
   constructor(private httpClient: HttpClient) { }
 
   public getMemberList(): Observable<Member[]> {
-    return this.memberList$;
-   // this.httpClient.get<Member[]>(this.url)
+    // return this.memberList$;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token')
+    });
+    return this.httpClient.get<Member[]>(`${this.baseUrl}members`, {headers});
   }
 
   public getTierList(): Observable<Tier[]> {
@@ -120,10 +124,16 @@ export class MemberService {
     // return this.httpClient.get<Tier[]>(`${this.baseUrl}tier`);
   }
 
-  public saveMember(member: Member): Observable<number> {
+  public saveMember(member: Member): Observable<Member> {
     // come back and replace this with the rest endpoint.
-    memberList.push(member);
-    return of(200);
+    //memberList.push(member);
+    //return of(200);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: localStorage.getItem('token')
+    });
+    console.log(member);
+    return this.httpClient.post<Member>(`${this.baseUrl}members`, {member}, {headers});
   }
 
   public getAllUserNames(): Observable<Member[]> {

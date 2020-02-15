@@ -91,6 +91,7 @@ export class MemberComponent implements OnInit {
 
     if (this.addMemberForm.valid) {
       this.mapMemberDialogToMemberObject();
+      console.log("+++++" + this.memberModel);
       this.service.saveMember(this.memberModel).subscribe(
         () => {
           this.dialogRef.close(null);
@@ -129,6 +130,7 @@ export class MemberComponent implements OnInit {
     const tier = new Tier();
     tier.tierId = this.selectedTier.tierId;
     tier.description = this.selectedTier.description;
+    tier.tierType = 'tier3';
     this.memberModel.tier = tier;
     this.memberModel.firstName = this.addMemberForm.value.firstName;
     this.memberModel.middleName = this.addMemberForm.value.middleName;
@@ -143,6 +145,7 @@ export class MemberComponent implements OnInit {
     this.memberModel.zipCode = this.addMemberForm.value.zipCode;
     this.memberModel.sebekaGubae = this.addMemberForm.value.sebekaGubae;
     this.memberModel.sundaySchool = this.addMemberForm.value.sundaySchool;
+    this.memberModel.churchId = 'MW123';
 
     if (!(this.memberModel.memberId > 0)) {
       this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;

@@ -34,4 +34,5 @@ export class Tier {
 
     tierId: number;
     description: string;
+    tierType: string;
 }
