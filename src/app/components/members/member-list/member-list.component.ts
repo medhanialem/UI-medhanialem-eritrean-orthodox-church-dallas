@@ -64,8 +64,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getMemberList() {
     this.isLoading = true;
-    setTimeout(() => {
-      this.subscriptions.push(this.service.getMemberList().subscribe(
+    this.subscriptions.push(this.service.getMemberList().subscribe(
         (
           response => {
             if (response != null) {
@@ -86,8 +85,6 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
       ));
-    }
-    , 1000);
   }
 
 
@@ -175,6 +172,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   onEdit(row: Member) {
+    console.log(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

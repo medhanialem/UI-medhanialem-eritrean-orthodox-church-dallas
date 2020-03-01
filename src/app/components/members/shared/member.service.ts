@@ -136,7 +136,6 @@ export class MemberService {
       'Content-Type': 'application/json',
       Authorization: localStorage.getItem('token')
     });
-    console.log(member);
     return this.httpClient.post<Member>(`${this.baseUrl}members`, member, {headers});
   }
 

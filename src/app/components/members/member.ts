@@ -32,7 +32,7 @@ export class Member {
 
 export class Tier {
 
-    tierId: number;
+    id: number;
     description: string;
     tierType: string;
 }

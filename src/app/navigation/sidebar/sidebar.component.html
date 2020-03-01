@@ -1,7 +1,7 @@
 <mat-nav-list>  
   <a mat-list-item >
     <mat-icon mat-list-icon >account_box</mat-icon>
-    <strong  *ngIf="expanded">{{authenticationService.decodedToken().display_name}}</strong>
+    <strong  *ngIf="expanded">{{authenticationService.decodedToken().sub}}</strong>
   </a>
   <mat-divider></mat-divider>
     <a mat-list-item  routerLink="/members" routerLinkActive="router-link-active">
