@@ -9,16 +9,16 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-   <mat-checkbox class = "sundaySchool" color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
+   <!-- <mat-checkbox class = "sundaySchool" color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
    <mat-checkbox class = "sebekaGubae" color="primary" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
   <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0" color="primary">
     <mat-icon>message</mat-icon>{{" "}}Send
-  </button>
+  </button> -->
 </div>
 <hr id="hr_member_header2"/>
 <div class="mat-elevation-z8">
   <mat-table [dataSource]="memberListData" matSort class='matTable' >
-    <ng-container matColumnDef="select">
+    <!-- <ng-container matColumnDef="select">
       <mat-header-cell *matHeaderCellDef  id="registartion_select">
         <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
@@ -34,7 +34,7 @@
                       [aria-label]="checkboxLabel(row)">
         </mat-checkbox>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
     <ng-container matColumnDef="churchId">
       <mat-header-cell class="church_id_header" id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
       <mat-cell id = "church_id" *matCellDef="let element">{{ element.churchId }}</mat-cell>

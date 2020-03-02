@@ -73,7 +73,7 @@ mat-header-row {
 }
 
 #church_id {
-    max-width: 7%;
+    max-width: 10%;
     margin-left: 2px;
     margin-right: 2px;
 }
@@ -111,7 +111,7 @@ mat-header-row {
 }
 
 #registartion_date {
-    max-width: 10%;
+    max-width: 12%;
     margin-left: 1px;
     margin-right: 2px;
 }

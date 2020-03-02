@@ -13,9 +13,6 @@ import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { Roles } from 'src/app/shared/roles';
 import { MembersAuthorizationGuard } from 'src/app/shared/members-authorization-guard';
 
-
-
-
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.component.html',
@@ -49,9 +46,9 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit() {
     const showMemberActions = this.showAddEditDeleteMemberButtons();
     if (showMemberActions) {
-      this.displayedColumns = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate', 'actions'];
+      this.displayedColumns = ['churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate', 'actions'];
     } else {
-      this.displayedColumns = ['select', 'churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate'];
+      this.displayedColumns = ['churchId', 'name', 'gender', 'homePhoneNo', 'address', 'email', 'registrationDate'];
 
     }
     this.getMemberList();
