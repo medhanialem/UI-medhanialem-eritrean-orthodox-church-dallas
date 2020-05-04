@@ -1,0 +1,45 @@
+.matToolBar {
+    background-color: #3f51b5;
+    color: white;
+    font-size: 25px;
+}
+
+.btn-dialog-close {
+    width: 45px;
+    min-width: 0px !important;
+    height: 40px;
+    padding: 0px !important;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+table {
+    border-radius: 20px;
+}
+
+td, .table_dependents {
+    border: solid 1px black;
+}
+
+.tr_header { 
+    background-color: aqua;
+}
+
+.divMoveMembers {
+    margin-top: 20px;
+}
+
+.divButtons {
+    margin-top: 20px;
+}
+
+#btnCancel{
+    margin-left: 10px;
+    width:110px;
+}
+
+.rightArrow {
+    margin-top: 5%;
+}

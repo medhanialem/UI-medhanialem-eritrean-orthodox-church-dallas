@@ -13,8 +13,7 @@ export class DialogCloseComponent implements OnInit {
   ngOnInit() {
   }
 
-  closeAddMemberDialog (response: string){
+  closeAddMemberDialog(response: string) {
     this.dialogRef.close(response);
   }
-  
 }

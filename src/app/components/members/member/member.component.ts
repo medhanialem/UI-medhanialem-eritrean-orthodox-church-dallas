@@ -6,7 +6,7 @@ import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
 import { Member, Tier } from '../member';
 import { HttpResponseBase } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { DialogCloseComponent } from '../add-member-dialog-close/dialog-close.component';
@@ -22,48 +22,66 @@ export class MemberComponent implements OnInit {
   memberModel: Member;
   tierList$: Observable<Tier[]>;
   selectedTier: Tier = new Tier();
+  selectedTierId;
+  action;
   @ViewChild('TIER', { static: true }) tierControl: MatSelect;
   constructor(
     private fb: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) private data: Member,
+    @Inject(MAT_DIALOG_DATA) private data,
     public service: MemberService,
-    private notificationService: NotificationService,
+    /*private notificationService: NotificationService,*/
     public dialogRef: MatDialogRef<MemberComponent>,
-    private dialog: MatDialog,
-    private authService: AuthenticationService) {
-      this.memberModel = data;
-      if (data !== null && data.tier !== null && data.tier.description) {
-        this.selectedTier = data.tier as Tier;
+    private dialog: MatDialog/*,
+    private authService: AuthenticationService*/) {
+      this.memberModel = data.member;
+      this.primaryOrDependent = data.primaryOrDependent;
+      this.populateDateInputs(this.primaryOrDependent);
+      this.action = data.action;
+      if (data.member !== null && data.member.tier !== null && data.member.tier.description) {
+        this.selectedTier = data.member.tier as Tier;
+        this.selectedTierId = data.member.tier.id;
       }
       this.addMemberForm = fb.group({
-        firstName: [data.firstName, Validators.required],
-        middleName: [data.middleName, Validators.required],
-        lastName: [data.lastName, Validators.required],
-        gender: [data.gender, Validators.required],
-        mobile: [data.homePhoneNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-        email: [data.email, Validators.email],
-        streetAddress: [data.streetAddress, Validators.required],
-        apartment: [data.apartmentNo],
-        city: [data.city, Validators.required],
-        state: [data.state, Validators.required],
-        zipCode: [data.zipCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
-        sundaySchool: [data.sundaySchool],
-        sebekaGubae: [data.sebekaGubae],
-        registrationDate: [data.registrationDate, Validators.required],
-        tier: [this.selectedTier.tierId, Validators.required]
-
-
+        firstName: [data.member.firstName, Validators.required],
+        middleName: [data.member.middleName, Validators.required],
+        lastName: [data.member.lastName, Validators.required],
+        gender: [data.member.gender, Validators.required],
+        marStatus: [data.member.maritalStatus],
+        mobile: [data.member.homePhoneNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+        email: [data.member.email, Validators.email],
+        streetAddress: [data.member.streetAddress, Validators.required],
+        apartment: [data.member.apartmentNo],
+        city: [data.member.city, Validators.required],
+        state: [data.member.state, Validators.required],
+        zipCode: [data.member.zipCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
+        oldChurchId: [data.member.oldChurchId, Validators.maxLength(3)],
+        sundaySchool: [data.member.sundaySchool],
+        sebekaGubae: [data.member.sebekaGubae],
+        // registrationDate: [(undefined !== data.member.registrationDate) ? data.member.registrationDate : new Date(), Validators.required],
+        // paymentStartDate: [(undefined !== data.member.paymentStartDate) ? data.member.paymentStartDate : new Date()],
+        registrationDate: [this.registrationDateForUI, Validators.required],
+        paymentStartDate: [this.paymentStartDateForUI],
+        tier: [this.selectedTier, Validators.required]
       });
 
      }
 
-  minRegistrationDate = new Date(1980, 0, 1);
-  maxRegistrationDate = new Date();
+  // minRegistrationDate = new Date(1980, 0, 1);
+  // maxRegistrationDate = new Date();
+  registrationDateForUI: Date;
+  paymentStartDateForUI: Date;
 
-
+  maritalStatuses: any[] = [
+    {value: 'SINGLE', displayValue: 'Single'},
+    {value: 'MARRIED', displayValue: 'Married'},
+    {value: 'WIDOWED', displayValue: 'Widowed'},
+    {value: 'DIVORCED', displayValue: 'Divorced'}
+  ];
+  primaryOrDependent;
 
   ngOnInit() {
     this.getTierList();
+    //this.enableDisableRegistrationDate();
   }
 
   onClear() {
@@ -71,7 +89,7 @@ export class MemberComponent implements OnInit {
   }
 
   onTierSelected(event: MatSelectChange) {
-    this.selectedTier.tierId = event.source.value;
+    //this.selectedTier = event.source.value;
     this.selectedTier.description = (event.source.selected as MatOption).viewValue;
   }
 
@@ -91,7 +109,7 @@ export class MemberComponent implements OnInit {
 
     if (this.addMemberForm.valid) {
       this.mapMemberDialogToMemberObject();
-      this.service.saveMember(this.memberModel).subscribe(
+      this.service.saveMember(this.memberModel, this.action).subscribe(
         () => {
           this.dialogRef.close(null);
         },
@@ -126,14 +144,12 @@ export class MemberComponent implements OnInit {
   }
 
   mapMemberDialogToMemberObject() {
-    const tier = new Tier();
-    tier.tierId = this.selectedTier.tierId;
-    tier.description = this.selectedTier.description;
-    this.memberModel.tier = tier;
+    this.memberModel.tier = this.selectedTier;
     this.memberModel.firstName = this.addMemberForm.value.firstName;
     this.memberModel.middleName = this.addMemberForm.value.middleName;
     this.memberModel.lastName = this.addMemberForm.value.lastName;
     this.memberModel.gender = this.addMemberForm.value.gender;
+    this.memberModel.maritalStatus = this.addMemberForm.value.marStatus;
     this.memberModel.email = this.addMemberForm.value.email;
     this.memberModel.homePhoneNo = this.addMemberForm.value.mobile;
     this.memberModel.streetAddress = this.addMemberForm.value.streetAddress;
@@ -143,16 +159,40 @@ export class MemberComponent implements OnInit {
     this.memberModel.zipCode = this.addMemberForm.value.zipCode;
     this.memberModel.sebekaGubae = this.addMemberForm.value.sebekaGubae;
     this.memberModel.sundaySchool = this.addMemberForm.value.sundaySchool;
+    this.memberModel.churchId = this.data.member.churchId;
+    this.memberModel.oldChurchId = this.addMemberForm.value.oldChurchId;
+    this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
+    this.memberModel.paymentStartDate = this.addMemberForm.value.paymentStartDate;
+    if (this.data.parentId !== undefined) {
+      this.memberModel.superId = this.data.parentId;
+    }
 
-    if (!(this.memberModel.memberId > 0)) {
-      this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
-      this.memberModel.createdBy = this.authService.decodedToken().userId;
-      this.memberModel.createdDate = new Date();
-      this.memberModel.updatedBy = this.authService.decodedToken().userId;
-      this.memberModel.updatedDate = new Date();
-   } else {
-     this.memberModel.updatedBy = this.authService.decodedToken().userId;
-     this.memberModel.updatedDate = new Date();
-   }
+    console.log(this.memberModel);
+    //if (!(this.memberModel.memberId > 0)) {
+      //this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
+      //this.memberModel.createdBy = this.authService.decodedToken().userId;
+      //this.memberModel.createdDate = new Date();
+      //this.memberModel.updatedBy = this.authService.decodedToken().userId;
+      //this.memberModel.updatedDate = new Date();
+   //} else {
+     //this.memberModel.updatedBy = this.authService.decodedToken().userId;
+     //this.memberModel.updatedDate = new Date();
+   //}
   }
+
+  populateDateInputs(primaryOrDependent: string) {
+    if (primaryOrDependent === 'primary') {
+      this.registrationDateForUI = this.memberModel.memberId > 0 ? new Date(this.memberModel.registrationDate) : new Date();
+      this.paymentStartDateForUI = this.memberModel.memberId > 0 && null != this.memberModel.paymentStartDate ? 
+      new Date(this.memberModel.paymentStartDate) : new Date();
+    } else if (primaryOrDependent === 'dependent') {
+      this.registrationDateForUI = null != this.memberModel.registrationDate ? new Date(this.memberModel.registrationDate) : new Date();
+      this.paymentStartDateForUI = null;
+    }
+  }
+
+  // enableDisableRegistrationDate() {
+  //   const ctrl = this.addMemberForm.get('registrationDate');
+  //   !(this.memberModel.memberId > 0) ? ctrl.enable() : ctrl.disable();
+  // }
 }

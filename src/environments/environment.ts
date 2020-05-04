@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/api/'
-
+  apiUrl: 'http://localhost:8091/'
+  // apiUrl: '/'
+  //apiUrl: 'http://test-env.dzf3hmcemf.us-east-1.elasticbeanstalk.com:8091/'
 };
 
 /*

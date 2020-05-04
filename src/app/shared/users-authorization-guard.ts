@@ -8,7 +8,10 @@ export class UsersAuthorizationGuard implements IAuthorizationGuard {
     }
     userHasPermission(): boolean {
         let showUser = false;
-        const role = this.authService.decodedToken().role.split(',');
+        let roles = this.authService.decodedToken().aud.replace('[','');
+        roles = roles.replace(']','');
+        roles = roles.replace(' ','');
+        const role = roles.split(',');
         role.forEach(element => {
             if (
                 element === Roles.abo_wenber_sebeka_gubae.toString() ||

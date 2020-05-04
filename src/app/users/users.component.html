@@ -53,14 +53,15 @@
           <button mat-icon-button (click)="onEdit(row)">
             <mat-icon>launch</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="onDeactivate(row.$key)">
+          <!-- <button mat-icon-button color="warn" (click)="onDeactivate(row.$key)">
             <mat-icon>delete_outline</mat-icon>
-          </button>
+          </button> -->
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="loading">
         <mat-footer-cell *matFooterCellDef colspan="6">
-          Loading data...
+          <!-- Loading data... -->
+          <img src="../../../assets/fading_squares.gif" alt="Loading image" height="40" width="150">
         </mat-footer-cell>
       </ng-container>
       <ng-container matColumnDef="noData">
@@ -68,6 +69,7 @@
           No data.
         </mat-footer-cell>
       </ng-container>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       

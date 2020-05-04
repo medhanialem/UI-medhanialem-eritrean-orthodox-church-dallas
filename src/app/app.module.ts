@@ -35,6 +35,9 @@ import { UserRegistrationComponent } from './users/user-registration/user-regist
 import { UsersComponent } from './users/users.component';
 import { PaymentsGuard } from './shared/payments.guard';
 import { UsersGuard } from './shared/users.guard';
+import { UserAuthorizationComponent } from './users/user-authorization/user-authorization.component';
+import { MoveMemberComponent } from './components/members/move-member/move-member.component';
+import { MatSelectSearchComponent } from './components/mat-select-search/mat-select-search.component';
 
 @NgModule({
   declarations: [
@@ -57,8 +60,12 @@ import { UsersGuard } from './shared/users.guard';
     DialogCloseComponent,
     NavigationComponent,
     SidebarComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserAuthorizationComponent,
+    MoveMemberComponent,
+    MatSelectSearchComponent
   ],
+
   imports: [
     BrowserModule,
     CoreModule,
@@ -69,12 +76,30 @@ import { UsersGuard } from './shared/users.guard';
     ReactiveFormsModule,
     AuthenticationModule
   ],
-  providers: [MemberService, DatePipe, MedhanieAlemGuard, AlertifyService, PaymentsGuard, UsersGuard],
+
+  providers: [
+    MemberService,
+    DatePipe,
+    MedhanieAlemGuard,
+    AlertifyService,
+    PaymentsGuard,
+    UsersGuard
+  ],
+
   bootstrap: [AppComponent],
   entryComponents: [
-    MemberComponent, MatConfirmDialogComponent,
-    PaymentDialogComponent, MessageComponent,
-    PaymentConfirmationComponent, MemberPaymentReceiptComponent,
-     MemberPaymentPreviewComponent, DialogCloseComponent],
+    MemberComponent,
+    MatConfirmDialogComponent,
+    PaymentDialogComponent,
+    MessageComponent,
+    PaymentConfirmationComponent,
+    MemberPaymentReceiptComponent,
+    MemberPaymentPreviewComponent,
+    DialogCloseComponent,
+    UserAuthorizationComponent,
+    MoveMemberComponent
+  ]
+
 })
+
 export class AppModule { }

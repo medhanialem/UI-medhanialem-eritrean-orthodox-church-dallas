@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import * as Material from '@angular/material';
+import { MatSelect } from '@angular/material';
 
 @NgModule ({
     imports: [
@@ -49,7 +50,10 @@ import * as Material from '@angular/material';
         Material.MatCardModule,
         Material.MatSidenavModule,
         Material.MatListModule
+    ],
+    providers: [
+        MatSelect
     ]
 })
 
-export class SharedModule {}
+export class SharedModule { }

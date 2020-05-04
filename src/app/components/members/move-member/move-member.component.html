@@ -1,0 +1,72 @@
+<mat-toolbar class="matToolBar">
+    <span>Move Member</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+      <mat-icon>clear</mat-icon>
+    </button>
+</mat-toolbar>
+
+<div class="divNewMember">
+  <form [formGroup]="moveMemberForm" class="normal-form" (submit)="onSubmit()">
+    <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12 divMoveMembers">
+
+      <div class="row col-lg-12 col-xl-12 divMembers">
+        <div class="col-lg-5 col-xl-5">
+          <table class = 'table_dependents'>
+            <tr class="tr_header">
+              <th>{{memberToBeMovedFullName}}</th>
+            </tr> 
+            <tr *ngFor="let dependent of dependentsMemberToBeMoved">
+              <td>{{dependent.firstName + ' ' + dependent.middleName + ' ' + dependent.lastName}}</td>
+            </tr>
+          </table>
+          
+        </div>
+
+        <div class="col-lg-2 col-xl-2 rightArrow">
+          =>
+        </div>
+
+        <div class="col-lg-5 col-xl-5">
+          <table class = 'table_dependents'>
+            <tr class="tr_header">
+              <th>
+              <mat-form-field>
+                <mat-label>Member To Be Moved To</mat-label>
+                <mat-select formControlName="memberToBeMovedToId" (selectionChange)="populateMemberToBeMovedFullDetail($event, 'memberToBeMovedTo')">
+                  <mat-option *ngFor="let member of memberToBeMovedToDropDownFormatedSorted" [value]="member.value">
+                    {{member.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <!-- <mat-form-field>
+                <mat-label>Member To Be Moved To</mat-label>
+                <app-mat-select-search formControlName="memberToBeMovedToId" (selectionChange)="populateMemberToBeMovedFullDetail($event, 'memberToBeMovedTo')">
+                  <mat-option *ngFor="let member of memberToBeMovedToDropDownFormatedSorted | async" [value]="member">
+                    {{member.viewValue}}
+                  </mat-option>
+                </app-mat-select-search>
+              </mat-form-field> -->
+              </th>
+            </tr> 
+            <tr *ngFor="let member of dependentsMemberToBeMovedTo">
+              <td>{{member.firstName + ' ' + member.middleName + ' ' + member.lastName}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row col-lg-12 col-xl-12 divButtons">
+        <div class="col-lg-6 offset-4 col-xl-6 offset-4">
+          <div class="row">
+            <div class="col-lg-12 col-xl-12">
+              <button mat-raised-button color="primary" type="submit" [disabled]="formValid() || !moveMemberForm.dirty"
+                id="btnSave">Move</button>
+              <button mat-raised-button color='warn' (click)="onClose()" type="reset" id="btnCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

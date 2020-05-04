@@ -1,0 +1,50 @@
+<div class="mainDiv">
+    <div class="row">
+      <!-- <div class="col-sm-12 col-md-3 col-lg-3">
+  
+      </div> -->
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <mat-card class='loginCard'>
+          <mat-card-content>
+            <form class="loginForm" [formGroup]="authorizeForm">
+              <div class='row'>
+                <div class="col-12">
+                    <p class="loginHeader">{{displayWarning}}</p>
+                    <mat-form-field class="memberField">
+                      <input matInput class="subjectField" [placeholder]="subject" [value]="subjectName" disabled="true">
+                    </mat-form-field>
+                  </div>
+                <div class="col-12">
+                  <mat-form-field class="userNameField">
+                    <input matInput formControlName="userName" placeholder="Email">
+                  </mat-form-field>
+                </div>
+                <div class="col-12">
+                  <mat-form-field class="passwordField">
+                    <input formControlName="password" matInput placeholder="Password" type="password"/>
+                  </mat-form-field>
+                </div>
+                <div class='col-12 row'>
+                  <!-- <div class="col-2">
+  
+                  </div> -->
+                  <div class="col-12 divButtons">
+                    <button mat-raised-button color='warn' class='btnLogin' [disabled]='confirmBtnDisabled()' (click)='onConfirm()'>{{btnActionLabel}}</button>
+                    <button mat-raised-button color='primary' class="btnClose" (click)='onClose(null)'>Close</button>
+                  </div>
+                  <!-- <div class="col-2">
+  
+                  </div> -->
+                  
+                </div>
+              </div>   
+            </form>
+          </mat-card-content>
+  
+        </mat-card>
+      </div>
+      <!-- <div class="col-sm-12 col-md-3 col-lg-3">
+        
+      </div> -->
+    </div>
+  </div>

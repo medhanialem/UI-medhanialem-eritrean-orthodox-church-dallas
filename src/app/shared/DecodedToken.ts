@@ -7,4 +7,6 @@ export interface DecodedToken {
     nbf: number;
     exp: number;
     iat: number;
+    aud: string;
+    sub: string;
 }
