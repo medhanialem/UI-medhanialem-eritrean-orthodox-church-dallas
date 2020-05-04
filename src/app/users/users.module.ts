@@ -7,9 +7,21 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
-declarations: [UsersRouting.components, UserEditComponent],
-imports: [UsersRouting, CommonModule, SharedModule, ReactiveFormsModule, FormsModule],
-entryComponents: [UserRegistrationComponent, UserEditComponent]
+declarations: [
+    UsersRouting.components,
+    UserEditComponent
+],
+imports: [
+    UsersRouting,
+    CommonModule,
+    SharedModule,
+    ReactiveFormsModule,
+    FormsModule
+],
+entryComponents: [
+    UserRegistrationComponent,
+    UserEditComponent
+]
 })
 
 export class UsersModule {

@@ -79,7 +79,7 @@ export class PaymentListComponent implements OnInit {
 
       );
     }
-    , 4000);
+    , 1000);
 
   }
 

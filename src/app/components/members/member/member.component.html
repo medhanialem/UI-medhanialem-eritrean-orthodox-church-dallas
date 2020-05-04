@@ -32,9 +32,9 @@
         </div>
 
         <div class="row col-lg-12 col-xl-12 dtRow">
-          <div class="col-lg-4  col-xl-4 divGender">
-            <mat-radio-group formControlName="gender">
-              <div class="row">
+            <div class="col-lg-4 col-xl-4 divGender">
+              <mat-radio-group formControlName="gender">
+                <div class="row">
                 <div class="col-lg-6 col-xl-6">
                   <mat-radio-button value="Male" color="primary">Male</mat-radio-button>
                 </div>
@@ -42,26 +42,52 @@
                   <mat-radio-button value="Female" color="primary">Female</mat-radio-button>
                 </div>
               </div>
-            </mat-radio-group>
-          </div>
+              </mat-radio-group>
+            </div>
+            <div class="col-lg-3 col-xl-3">
+              <mat-form-field>
+                <mat-label>Marital Status</mat-label>
+                <mat-select formControlName='marStatus'>
+                  <mat-option *ngFor="let maritalStatus of maritalStatuses" [value]="maritalStatus.value">
+                    {{maritalStatus.displayValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-5 c ol-xl-5 divGender">
+              <div class="row">
+                <div class="col-lg-6 col-xl-6">
+                  <mat-checkbox formControlName="sundaySchool" color="primary">Sunday School</mat-checkbox>
+                </div>
+                <div class="col-lg-6 col-xl-6">
+                  <mat-checkbox formControlName="sebekaGubae" color="primary">Sebeka Gubae</mat-checkbox>
+                </div>
+              </div>
+            </div>
+        </div>
 
-          <div class="col-lg-3  col-xl-3">
+        <div class="row col-lg-12 col-xl-12 dtDependent">
+          <div class="col-lg-3 col-xl-3">
+            <mat-form-field>
+              <input formControlName="oldChurchId" matInput placeholder="Old Church Id">
+              <mat-error *ngIf="addMemberForm.controls['oldChurchId'].errors?.maxlength">Please put valid old church id.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-xl-3">
             <mat-form-field>
               <input formControlName="mobile" matInput placeholder="Mobile*">
-              <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.required">Mobile field is mandatory.
-              </mat-error>
+              <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.required">Mobile field is mandatory.</mat-error>
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.minlength">Please put valid number.</mat-error>
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.maxlength">Please put valid number.</mat-error>
             </mat-form-field>
-          </div>
-
-          <div class="col-lg-5  col-xl-5">
+        </div>
+          <div class="col-lg-6 col-xl-6">
             <mat-form-field>
               <input formControlName="email" matInput placeholder="Email">
               <mat-error>Invalid email address.</mat-error>
             </mat-form-field>
           </div>
-
         </div>
 
         <div class="row col-lg-12 col-xl-12 dtRow">
@@ -79,7 +105,7 @@
         </div>
 
         <div class="row col-lg-12 col-xl-12 dtRow">
-          <div class="col-lg-4  col-xl-4">
+          <div class="col-lg-4 col-xl-4">
             <mat-form-field>
               <input formControlName="city" matInput placeholder="City*">
               <mat-error>City field is mandatory.</mat-error>
@@ -91,7 +117,7 @@
               <mat-error>State field is mandatory.</mat-error>
             </mat-form-field>
           </div>
-          <div class="col-lg-4  col-xl-4">
+          <div class="col-lg-4 col-xl-4">
             <mat-form-field>
               <input formControlName="zipCode" matInput placeholder="Zip Code*">
               <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.required">Zip code field is mandatory.
@@ -103,44 +129,63 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row col-lg-12 col-xl-12 dtDependent">
-          <div class="col-lg-3 col-xl-3 col-sm-12">
-            <mat-checkbox formControlName="sundaySchool" color="primary">Sunday School</mat-checkbox>
-          </div>
-          <div class="col-lg-3 col-xl-3 col-sm-12">
-            <mat-checkbox formControlName="sebekaGubae" color="primary">Sebeka Gubae</mat-checkbox>
-          </div>
-          <div class="col-lg-3 col-xl-3 col-sm-12">
-            <mat-select (selectionChange)="onTierSelected($event)" placeholder="Tier" #TIER [(ngModel)]="selectedTier.id" formControlName='tier'>
-              <mat-option *ngFor="let tier of tierList$ | async" [value]="tier.id">
-                {{tier.description}}
-              </mat-option>
-            </mat-select>
-          </div>
-          <div class="col-lg-3 col-xl-3 col-sm-12" *ngIf="!(memberModel.memberId > 0)">
+
+        <div class="row col-lg-12 col-xl-12 dtRow">
+          <!-- <div class="col-lg-4 col-xl-4 col-sm-12" id="registrationDatePicker" *ngIf="!(memberModel.memberId > 0)"> -->
+          <div class="col-lg-4 col-xl-4 col-sm-12" id="registrationDatePicker">
             <mat-form-field>
-              <input formControlName="registrationDate" [min]="minRegistrationDate" [max]="maxRegistrationDate" matInput
-                [matDatepicker]="picker" placeholder="Registration date">
+              <input formControlName="registrationDate" [(ngModel)] = "registrationDateForUI" 
+              matInput [matDatepicker]="picker" placeholder="Registration Date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error>Registration date is mandatory.</mat-error>
             </mat-form-field>
           </div>
+
+          <div class="col-lg-4 col-xl-4 col-sm-12" id="paymentStartDatePicker" *ngIf="primaryOrDependent === 'primary'">
+            <mat-form-field>
+              <input formControlName="paymentStartDate" matInput [matDatepicker]="paymentStartDatepicker" 
+              placeholder="Payment Start Date">
+              <mat-datepicker-toggle matSuffix [for]="paymentStartDatepicker"></mat-datepicker-toggle>
+              <mat-datepicker #paymentStartDatepicker></mat-datepicker>
+              <mat-error>Payment start date is mandatory.</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- <div class="col-lg-4 col-xl-4 col-sm-12" *ngIf="primaryOrDependent === 'primary'"> -->
+            <div class="col-lg-4 col-xl-4 col-sm-12">
+            <mat-form-field>
+              <mat-label>Tier*</mat-label>
+              <mat-select (selectionChange)="onTierSelected($event)" #TIER [(ngModel)]="selectedTier.id" formControlName='tier'>
+                <mat-option *ngFor="let tier of tierList$ | async" [value]="tier.id">
+                  {{tier.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- <div class="col-lg-4 col-xl-4 col-sm-12" id="registrationDatePicker">
+            <mat-form-field>
+              <input formControlName="registrationDate" [min]="minRegistrationDate" [max]="maxRegistrationDate" matInput
+                [matDatepicker]="registrationDate" placeholder="Registration date" [value]="registrationDateForUI">
+              <mat-datepicker-toggle matSuffix [for]="registrationDate"></mat-datepicker-toggle>
+              <mat-datepicker #registrationDate></mat-datepicker>
+              <mat-error>Registration date is mandatory.</mat-error>
+            </mat-form-field>
+          </div> -->
         </div>
+
         <div class="row col-lg-12 col-xl-12 divButtons">
           <div class="col-lg-6 offset-4 col-xl-6 offset-4">
             <div class="row">
               <div class="col-lg-12 col-xl-12">
-                <button mat-raised-button color="primary" type="submit" [disabled]="formValid()"
+                <button mat-raised-button color="primary" type="submit" [disabled]="formValid() || !addMemberForm.dirty"
                   id="btnSave">Save</button>
                 <button mat-raised-button color='warn' (click)="onClose()" type="reset" id="btnCancel">Cancel</button>
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
-    </div>
+    </div> 
   </form>
 </div>

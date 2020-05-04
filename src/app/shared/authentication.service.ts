@@ -6,7 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Roles } from './roles';
 import { IAuthorizationGuard } from './iAuthorization-Guard';
 import { environment } from 'src/environments/environment';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject, Observable, pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthenticationService {
   loginResponse: any;
   baseUrl = environment.apiUrl;
   private subscriptions: Subscription[] = [];
-  loginSucces = false;
+  loginSucces = new BehaviorSubject(false);
 
   jwtHelper = new JwtHelperService();
   constructor(private router: Router, private httpClient: HttpClient) { }
@@ -37,34 +38,23 @@ export class AuthenticationService {
     return !this.jwtHelper.isTokenExpired(localStorage.getItem('token'));
   }
 
-  signIn(userName: string, passWord: string): boolean {
-    this.loginForm = { username: userName, password: passWord };
-
+  signIn(userName: string, password: string): Observable<any> {
+    this.loginForm = {username: userName, password};
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
-      //Authorization: localStorage.getItem('token')
     });
 
-
-    this.subscriptions.push(this.httpClient.post<any>(`${this.baseUrl}api/auth/signin`, this.loginForm, {headers}).subscribe(
-      (
-        response => {
-            this.loginResponse = response;
-            localStorage.setItem('token', response.accessToken);
-            console.log(response);
-            this.loginSucces = true;
-        }),
-      (
-        error => {
-          console.log(error.message);
-          this.loginSucces = false;
-        }),
-        () => {
-        }
-
-    ));
-
-    return this.loginSucces;
+    return this.httpClient.post(`${this.baseUrl}api/auth/signin`, this.loginForm, {headers}).
+      pipe(
+        map((response: any) => {
+          if (response) {
+            localStorage.setItem('token', 'Bearer ' + response.accessToken);
+            return true;
+          } else {
+            return false;
+          }
+        })
+     );
   }
 
   userHasPermission(authorization: IAuthorizationGuard): boolean {
@@ -75,6 +65,19 @@ export class AuthenticationService {
     localStorage.clear();
     this.router.navigate(['/', 'login']);
   }
+
+  // authorize(userName: string, passWord: string): boolean {
+  //   this.loginForm = { username: userName, password: passWord };
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   });
+
+
+  //   return this.httpClient.post(`${this.baseUrl}api/auth/signin`, this.loginForm, {headers})
+  //   .map(response => response.json());
+  // }
+
 }
 
 export class LoginForm {

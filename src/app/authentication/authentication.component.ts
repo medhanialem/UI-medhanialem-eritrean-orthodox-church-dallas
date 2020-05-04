@@ -27,15 +27,37 @@ export class AuthenticationComponent implements OnInit {
   }
 
   onLogin() {
+    // if (this.loginForm.valid) {
+    //   if (this.authService.signIn(this.loginForm.value.userName, this.loginForm.value.password)) {
+    //     this.router.navigate(['/']);
+    //   } else {
+    //     this.alertify.error('Invalid username or password');
+    //   }
+    // } else {
+    //   console.log('invalid form');
+    // }
     if (this.loginForm.valid) {
-      if (this.authService.signIn(this.loginForm.value.userName, this.loginForm.value.password)) {
-        this.router.navigate(['/']);
-      } else {
-        this.alertify.error('Invalid username or password');
-      }
+      this.authService.signIn(this.loginForm.value.userName, this.loginForm.value.password).subscribe(
+        result => {
+          if (result === true)  {
+          this.router.navigate(['/']);
+          } else {
+          this.alertify.error('Invalid username or password');
+          }
+        },
+        (error) => {
+          console.log(error);
+          //this.alertify.error('There is an issue processing your request.');
+          this.alertify.error('Invalid username or password');
+        },
+        () => {
+          // on successfully competion - close loading spinner or things which need doing
+        }
+      );
     } else {
-      console.log('invalid form');
-    }
+        console.log('invalid form');
+      }
+
   }
 
   onClear() {

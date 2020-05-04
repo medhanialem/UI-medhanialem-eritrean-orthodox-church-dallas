@@ -153,7 +153,8 @@
 
     <ng-container matColumnDef="loading">
       <mat-footer-cell *matFooterCellDef colspan="6">
-        Loading data...
+        <!-- Loading data... -->
+        <img src="../../../assets/fading_squares.gif" alt="Loading image" height="40" width="150">
       </mat-footer-cell>
     </ng-container>
     <ng-container matColumnDef="noData">
@@ -181,4 +182,4 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
     showFirstLastButtons></mat-paginator>
    
-</div>
+  </div>

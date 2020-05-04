@@ -52,11 +52,13 @@ mat-form-field {
 }
 
 .dtDependent{
-    margin-top: 40px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .divButtons{
-    margin-top:40px;
+    margin-top: 10px;
+    margin-bottom: 5px;
 }
 
 #btnCancel{
@@ -69,3 +71,6 @@ margin-right:10px;
 width:110px;
 }
 
+/* #registrationDatePicker {
+    margin-top: -19px;
+} */

@@ -1,0 +1,59 @@
+.mainDiv{
+    background-color: rgb(224, 240, 198);
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.loginCard {
+    max-width: 370px;
+    max-height: 73%;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.loginHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-flow: column;
+    font-size: large;
+}
+
+.loginAvatar {
+    width: 130px;
+    height: 135px; 
+}
+
+.loginForm{
+    margin-top: 25px !important;
+}
+
+.memberField {
+    width: 100%;
+}
+
+.userNameField {
+    width: 100%;
+}
+
+.passwordField{
+    width: 100%;
+}
+
+.btnLogin {
+    width:45%;
+    margin-left: 5% !important;
+}
+
+.btnClose {
+    width:45%;
+    margin-left: 15px !important;
+}
+
+.divButtons{
+    margin-top: 10px;
+}
+
+.subjectField {
+    color: brown !important;
+}
