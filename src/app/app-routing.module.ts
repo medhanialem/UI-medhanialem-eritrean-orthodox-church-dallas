@@ -24,7 +24,10 @@ const routes: Routes = [
       { path: '', redirectTo: '/members', pathMatch: 'full'},
       {path: 'members', component: MembersComponent, canActivate: [MedhanieAlemGuard]},
       {
-        path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad:[UsersGuard]
+        path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [UsersGuard]
+      },
+      {
+        path: 'tiers', loadChildren: () => import('./tiers/tiers.module').then(m => m.TiersModule), canLoad: [UsersGuard]
       },
       {path: 'payments', component: PaymentComponent, canActivate: [PaymentsGuard]},
       {path: '**', redirectTo: '/members'}

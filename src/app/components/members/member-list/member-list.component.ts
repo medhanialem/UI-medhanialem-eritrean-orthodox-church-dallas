@@ -292,7 +292,6 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onEdit(row: Member, action: string, primaryOrDependentIdentifier: string) {
-    console.log(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

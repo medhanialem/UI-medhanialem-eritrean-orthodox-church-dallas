@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Roles } from 'src/app/shared/roles';
 import { PaymentsAuthorizationGuard } from 'src/app/shared/payments-authorization-guard';
 import { UsersAuthorizationGuard } from 'src/app/shared/users-authorization-guard';
+import { TiersAuthorizationGuard } from 'src/app/shared/tiers-authorization-guard';
 
 @Component({
   selector: 'app-sidebar',
@@ -35,5 +36,9 @@ export class SidebarComponent implements OnInit {
 
   showUsers(): boolean {
     return this.authenticationService.userHasPermission(new UsersAuthorizationGuard(this.authenticationService));
+  }
+
+  showTiers(): boolean {
+    return this.authenticationService.userHasPermission(new TiersAuthorizationGuard(this.authenticationService));
   }
 }

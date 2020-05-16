@@ -6,10 +6,11 @@ import { MemberService } from '../shared/member.service';
 import { NotificationService } from '../shared/notification.service';
 import { Member, Tier } from '../member';
 import { HttpResponseBase } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
 import { DialogCloseComponent } from '../add-member-dialog-close/dialog-close.component';
+import { TierService } from 'src/app/tiers/tier.service';
 
 @Component({
   selector: 'app-member',
@@ -18,6 +19,7 @@ import { DialogCloseComponent } from '../add-member-dialog-close/dialog-close.co
 })
 export class MemberComponent implements OnInit {
 
+  private subscriptions: Subscription[] = [];
   addMemberForm: FormGroup;
   memberModel: Member;
   tierList$: Observable<Tier[]>;
@@ -29,6 +31,7 @@ export class MemberComponent implements OnInit {
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) private data,
     public service: MemberService,
+    public tierService: TierService,
     /*private notificationService: NotificationService,*/
     public dialogRef: MatDialogRef<MemberComponent>,
     private dialog: MatDialog/*,
@@ -41,6 +44,12 @@ export class MemberComponent implements OnInit {
         this.selectedTier = data.member.tier as Tier;
         this.selectedTierId = data.member.tier.id;
       }
+      if (null !== data.member && null !== data.member.fatherPriest && undefined !== data.member.fatherPriest) {
+        this.selectedPriestFatherId = data.member.fatherPriest.memberId;
+      }
+
+      this.selectedRelationship = data.member.relationship;
+
       this.addMemberForm = fb.group({
         firstName: [data.member.firstName, Validators.required],
         middleName: [data.member.middleName, Validators.required],
@@ -61,7 +70,9 @@ export class MemberComponent implements OnInit {
         // paymentStartDate: [(undefined !== data.member.paymentStartDate) ? data.member.paymentStartDate : new Date()],
         registrationDate: [this.registrationDateForUI, Validators.required],
         paymentStartDate: [this.paymentStartDateForUI],
-        tier: [this.selectedTier, Validators.required]
+        tier: [this.selectedTier, Validators.required],
+        relationship: [this.selectedRelationship],
+        fatherPriest: [this.selectedPriestFatherId]
       });
 
      }
@@ -71,16 +82,41 @@ export class MemberComponent implements OnInit {
   registrationDateForUI: Date;
   paymentStartDateForUI: Date;
 
-  maritalStatuses: any[] = [
+  maritalStatuses: MaritalStatus[] = [
     {value: 'SINGLE', displayValue: 'Single'},
     {value: 'MARRIED', displayValue: 'Married'},
     {value: 'WIDOWED', displayValue: 'Widowed'},
     {value: 'DIVORCED', displayValue: 'Divorced'}
   ];
+
   primaryOrDependent;
+
+  relationships: Relationship[] = [
+    {value: 'Spouse', displayValue: 'Spouse'},
+    {value: 'Son', displayValue: 'Son'},
+    {value: 'Daughter', displayValue: 'Daughter'},
+    {value: 'Father', displayValue: 'Father'},
+    {value: 'Mother', displayValue: 'Mother'},
+    {value: 'Brother', displayValue: 'Brother'},
+    {value: 'Sister', displayValue: 'Sister'},
+    {value: 'Uncle', displayValue: 'Uncle'},
+    {value: 'Aunt', displayValue: 'Aunt'},
+    {value: 'Father In Law', displayValue: 'Father In Law'},
+    {value: 'Mother In Law', displayValue: 'Mother In Law'},
+    {value: 'Relative', displayValue: 'Relative'},
+    {value: 'Other', displayValue: 'Other'}
+  ];
+
+  priestFathersDropdownJSON: PreistFathersDropdownJSONFormat[] = [];
+
+  selectedRelationship: string;
+  priestFathers: Member[];
+  selectedPriestFatherId: number;
+  priestFatherMemberObject;
 
   ngOnInit() {
     this.getTierList();
+    this.getPriestFathersList();
     //this.enableDisableRegistrationDate();
   }
 
@@ -93,10 +129,18 @@ export class MemberComponent implements OnInit {
     this.selectedTier.description = (event.source.selected as MatOption).viewValue;
   }
 
+  onRelationshipSelected(event) {
+    this.selectedRelationship = event.value;
+  }
+
+  onPriestFatherSelected(event) {
+    this.selectedPriestFatherId = event.value;
+  }
+
   getTierList() {
 
     this.tierList$ = new Observable<Tier[]>();
-    this.tierList$ = this.service.getTierList().pipe(
+    this.tierList$ = this.tierService.getTierList().pipe(
       map(
         res => {
           return res;
@@ -105,6 +149,36 @@ export class MemberComponent implements OnInit {
     );
   }
 
+  getPriestFathersList() {
+    this.subscriptions.push(this.service.getPriestFathersList().subscribe(
+        (
+          response => {
+            if (response != null) {
+              this.priestFathers = response as Member[];
+            } else {
+              this.priestFathers = [];
+            }
+            this.populatePriestFathersDropdownJSON();
+          }),
+        (
+          error => {
+            console.log(error.message);
+          }),
+          () => {
+          }
+
+      ));
+  }
+
+  populatePriestFathersDropdownJSON() {
+    for(let i = 0; i < this.priestFathers.length; i++) {
+      this.priestFathersDropdownJSON.push(
+        {
+          value: this.priestFathers[i].memberId,
+          displayValue: this.priestFathers[i].firstName + ' ' + this.priestFathers[i].middleName + ' ' + this.priestFathers[i].lastName
+        });
+    }
+  }
   onSubmit() {
 
     if (this.addMemberForm.valid) {
@@ -163,11 +237,14 @@ export class MemberComponent implements OnInit {
     this.memberModel.oldChurchId = this.addMemberForm.value.oldChurchId;
     this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
     this.memberModel.paymentStartDate = this.addMemberForm.value.paymentStartDate;
+    this.buildPriestFatherMemberObject();
+    this.memberModel.fatherPriest = this.priestFatherMemberObject;
+    this.memberModel.relationship = this.selectedRelationship;
+
     if (this.data.parentId !== undefined) {
       this.memberModel.superId = this.data.parentId;
     }
 
-    console.log(this.memberModel);
     //if (!(this.memberModel.memberId > 0)) {
       //this.memberModel.registrationDate = this.addMemberForm.value.registrationDate;
       //this.memberModel.createdBy = this.authService.decodedToken().userId;
@@ -180,6 +257,14 @@ export class MemberComponent implements OnInit {
    //}
   }
 
+  buildPriestFatherMemberObject() {
+    for(let i=0; i < this.priestFathers.length; i++){
+      if (this.priestFathers[i].memberId === this.selectedPriestFatherId) {
+        this.priestFatherMemberObject = this.priestFathers[i];
+        break;
+      }
+    }
+  }
   populateDateInputs(primaryOrDependent: string) {
     if (primaryOrDependent === 'primary') {
       this.registrationDateForUI = this.memberModel.memberId > 0 ? new Date(this.memberModel.registrationDate) : new Date();
@@ -195,4 +280,25 @@ export class MemberComponent implements OnInit {
   //   const ctrl = this.addMemberForm.get('registrationDate');
   //   !(this.memberModel.memberId > 0) ? ctrl.enable() : ctrl.disable();
   // }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+    });
+  }
+}
+
+interface MaritalStatus {
+  value: string;
+  displayValue: string;
+}
+
+interface Relationship {
+  value: string;
+  displayValue: string;
+}
+
+interface PreistFathersDropdownJSONFormat {
+  value: number;
+  displayValue: string;
 }

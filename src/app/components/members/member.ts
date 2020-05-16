@@ -28,6 +28,8 @@ export class Member {
     status: string;
     sebekaGubae: boolean;
     sundaySchool: boolean;
+    fatherPriest: number;
+    relationship: string;
     constructor(public tier: Tier) {
 
     }

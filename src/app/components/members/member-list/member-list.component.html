@@ -130,7 +130,7 @@
             <th id = "registartion_address_dependent">Address</th>
             <th id = "registartion_email_dependent">Email</th>
             <th id = "registartion_date_dependent">Member Since</th>
-            <th id = "registartion_actions_dependent_header">Actions</th>
+            <th id = "registartion_actions_dependent_header" *ngIf="showAddEditDeleteMemberButtons()">Actions</th>
           </tr>
           <tr class="rows" *ngFor="let dependent of dependents">
             <td id = "registartion_name_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{dependent.firstName + ' ' +dependent.middleName+' '+ dependent.lastName }}</td>
@@ -140,7 +140,7 @@
             <td id = "registartion_address_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}' *ngIf="null == dependent.apartmentNo">{{ dependent.streetAddress + ' '+ dependent.city + ', ' + dependent.state + ' ' + dependent.zipCode}}</td>
             <td id = "registartion_email_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{dependent.email}}</td>
             <td id = "registartion_date" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{toShortDate(dependent.registrationDate)}}</td>
-            <td id = "registartion_actions_dependent">
+            <td id = "registartion_actions_dependent" *ngIf="showAddEditDeleteMemberButtons()">
               <button mat-icon-button title="Edit" (click)="onEdit(dependent, 'update', 'dependent')"><mat-icon>launch</mat-icon></button>
               <button mat-icon-button title="Move" color="warn" (click)="onMoveMember(dependent)"><mat-icon>people_outline</mat-icon></button>
               <button mat-icon-button title="Upgrade" (click)="onUpgrade(dependent)"><mat-icon>how_to_reg</mat-icon></button>

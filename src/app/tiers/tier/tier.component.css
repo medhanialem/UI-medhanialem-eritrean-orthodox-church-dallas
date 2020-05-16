@@ -1,0 +1,42 @@
+.btn-dialog-close {
+    width: 45px;
+    min-width: 0px !important;
+    height: 40px;
+    padding: 0px !important;
+}
+
+.matToolBar {
+    background-color: #3f51b5;
+    color: white;
+    font-size: 25px;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+.registrationForm{
+    margin-top: 40px !important;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.divButtons{
+    /* margin-left: 10%; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#btnCancel{
+    margin-left: 10px;
+    width:110px;
+}
+
+#btnSave{
+    margin-right:10px;
+    width:110px;
+}
