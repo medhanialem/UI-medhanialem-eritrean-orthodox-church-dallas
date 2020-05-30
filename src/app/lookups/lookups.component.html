@@ -1,0 +1,109 @@
+<hr id="hr_lookup_header_top"/>
+<button mat-icon-button id="minusBtn" [ngClass] = "minusBtnClass" [disabled]="year <= minimumYear" (click) = "minusYearClicked()">
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
+<label>{{year}}</label>
+<button mat-icon-button id="plusBtn" [ngClass] = "plusBtnClass" [disabled]="year >= maximumYear" (click) = "plusYearClicked()">
+  <mat-icon>keyboard_arrow_right</mat-icon>
+</button>
+<button mat-icon-button id="refreshYear" (click) = "currentYearClicked()">
+  <mat-icon>autorenew</mat-icon>
+</button>
+
+<button mat-icon-button id="minusBtnTier" [ngClass] = "minusTierBtnClass" [disabled]="tierIndex <= 0" (click) = "minusTierClicked()">
+  <mat-icon>keyboard_arrow_left</mat-icon>
+</button>
+<label>{{tierIndex}} - {{tierSize}}</label>
+<button mat-icon-button id="plusBtnTier" [ngClass] = "plusBtnTierClass" [disabled]="tierIndex >= tierSize" (click) = "plusTierClicked()">
+  <mat-icon>keyboard_arrow_right</mat-icon>
+</button>
+
+<mat-form-field id = 'tierSelect'>
+  <mat-label>Tier*</mat-label>
+  <mat-select (selectionChange)="onTierSelected($event)" [(ngModel)]="selectedTierId">
+    <mat-option *ngFor="let tier of tiersDropdownJSON" [value]="tier.value">
+      {{tier.displayValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-raised-button id = 'btnAddLookup' [disabled]="addBtnDisableFlag" (click)="onAddLookups('save')" color="primary">
+  <mat-icon>add_circle</mat-icon>{{" "}}Lookup
+</button>
+<button mat-raised-button id = 'btnEditLookup' [disabled]="editBtnDisableFlag" (click)="onEditLookups('update')" color="primary">
+  <mat-icon>launch</mat-icon>{{" "}}Lookup
+</button>
+<hr id="hr_lookup_header_bottom"/>
+
+<div class="mat-elevation-z8 payment-container">
+  <mat-table [dataSource]="lookupsListData" matSort class='matTable' multiTemplateDataRows>
+    <ng-container matColumnDef="id">
+      <mat-header-cell id="id" *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+      <mat-cell id = "id" *matCellDef="let element">{{ element.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="month">
+      <mat-header-cell id="month" *matHeaderCellDef mat-sort-header>Month</mat-header-cell>
+      <mat-cell id = "month" *matCellDef="let element">{{ convertToAlphabetMonth(element.month) }}</mat-cell>
+    </ng-container>
+    
+    <!-- <ng-container matColumnDef="year">
+      <mat-header-cell id = "year" *matHeaderCellDef>Year</mat-header-cell>
+      <mat-cell id = "year" *matCellDef="let element">{{ element.year }}</mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="amount">
+      <mat-header-cell id = "amount" *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+      <mat-cell id = "amount" *matCellDef="let element">{{ element.amount }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="revision">
+      <mat-header-cell id = "revision" *matHeaderCellDef>Revision</mat-header-cell>
+      <mat-cell id = "revision" *matCellDef="let element">V{{ element.revision }}</mat-cell>
+    </ng-container>
+    <!-- <ng-container matColumnDef="tierId">
+      <mat-header-cell id = "tierId" *matHeaderCellDef mat-sort-header>Tier Id</mat-header-cell>
+      <mat-cell id = "tierId" *matCellDef="let element">{{ element.tierId }}</mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="createdBy">
+      <mat-header-cell id="createdBy" *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+      <mat-cell id="createdBy" *matCellDef="let element">{{ element.createdBy }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="updatedBy">
+      <mat-header-cell id="updatedBy" *matHeaderCellDef mat-sort-header>Updated By</mat-header-cell>
+      <mat-cell id="updatedBy" *matCellDef="let element">{{ element.updatedBy }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="createdAt">
+      <mat-header-cell id="createdAt" *matHeaderCellDef mat-sort-header>Created At</mat-header-cell>
+      <mat-cell id="createdAt" *matCellDef="let element">{{ toShortDate(element.createdAt) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="updatedAt">
+      <mat-header-cell id="updatedAt" *matHeaderCellDef mat-sort-header>Updated At</mat-header-cell>
+      <mat-cell id="updatedAt" *matCellDef="let element">{{ toShortDate(element.updatedAt) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <!-- Loading data... -->
+        <img src="../../../assets/fading_squares.gif" alt="Loading image" height="40" width="150">
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+      [ngClass]="{'hide':!((isLoading===false) && lookupsListData.data.length==0)}"></mat-footer-row>
+
+  </mat-table>
+  
+  <!-- <mat-paginator 
+    [pageSizeOptions] = "[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" 
+    [pageSize]="10"
+    showFirstLastButtons>
+  </mat-paginator> -->
+    
+</div>

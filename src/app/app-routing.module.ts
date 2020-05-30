@@ -29,6 +29,9 @@ const routes: Routes = [
       {
         path: 'tiers', loadChildren: () => import('./tiers/tiers.module').then(m => m.TiersModule), canLoad: [UsersGuard]
       },
+      {
+        path: 'paymentLookUp', loadChildren: () => import('./lookups/lookups.module').then(m => m.LookupsModule), canLoad: [UsersGuard]
+      },
       {path: 'payments', component: PaymentComponent, canActivate: [PaymentsGuard]},
       {path: '**', redirectTo: '/members'}
 

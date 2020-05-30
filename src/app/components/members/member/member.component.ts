@@ -26,6 +26,8 @@ export class MemberComponent implements OnInit {
   selectedTier: Tier = new Tier();
   selectedTierId;
   action;
+  phoneMask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+
   @ViewChild('TIER', { static: true }) tierControl: MatSelect;
   constructor(
     private fb: FormBuilder,
@@ -40,6 +42,7 @@ export class MemberComponent implements OnInit {
       this.primaryOrDependent = data.primaryOrDependent;
       this.populateDateInputs(this.primaryOrDependent);
       this.action = data.action;
+
       if (data.member !== null && data.member.tier !== null && data.member.tier.description) {
         this.selectedTier = data.member.tier as Tier;
         this.selectedTierId = data.member.tier.id;
@@ -48,26 +51,33 @@ export class MemberComponent implements OnInit {
         this.selectedPriestFatherId = data.member.fatherPriest.memberId;
       }
 
+      if (this.action === 'save' && this.primaryOrDependent === 'dependent') {
+        this.selectedPriestFatherId = data.selectedParent.fatherPriest.memberId;
+      }
       this.selectedRelationship = data.member.relationship;
-
       this.addMemberForm = fb.group({
         firstName: [data.member.firstName, Validators.required],
         middleName: [data.member.middleName, Validators.required],
         lastName: [data.member.lastName, Validators.required],
         gender: [data.member.gender, Validators.required],
-        marStatus: [data.member.maritalStatus],
-        mobile: [data.member.homePhoneNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+        marStatus: [data.member.maritalStatus, Validators.required],
+        // mobile: [data.member.homePhoneNo, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+        mobile: [this.action === 'save' && this.primaryOrDependent === 'dependent' ?
+                        data.selectedParent.homePhoneNo : data.member.homePhoneNo, [Validators.required, Validators.minLength(14)]],
         email: [data.member.email, Validators.email],
-        streetAddress: [data.member.streetAddress, Validators.required],
-        apartment: [data.member.apartmentNo],
-        city: [data.member.city, Validators.required],
-        state: [data.member.state, Validators.required],
-        zipCode: [data.member.zipCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
+        streetAddress: [this.action === 'save' && this.primaryOrDependent === 'dependent' ?
+                data.selectedParent.streetAddress : data.member.streetAddress, Validators.required],
+        apartment: [this.action === 'save' && this.primaryOrDependent === 'dependent' ?
+                data.selectedParent.apartmentNo : data.member.apartmentNo],
+        city: [this.action === 'save' && this.primaryOrDependent === 'dependent' ?
+                data.selectedParent.city : data.member.city, Validators.required],
+        state: [this.action === 'save' && this.primaryOrDependent === 'dependent' ?
+                data.selectedParent.state : data.member.state, Validators.required],
+        zipCode: [this.action === 'save' && this.primaryOrDependent === 'dependent' ?
+              data.selectedParent.zipCode : data.member.zipCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
         oldChurchId: [data.member.oldChurchId, Validators.maxLength(3)],
         sundaySchool: [data.member.sundaySchool],
         sebekaGubae: [data.member.sebekaGubae],
-        // registrationDate: [(undefined !== data.member.registrationDate) ? data.member.registrationDate : new Date(), Validators.required],
-        // paymentStartDate: [(undefined !== data.member.paymentStartDate) ? data.member.paymentStartDate : new Date()],
         registrationDate: [this.registrationDateForUI, Validators.required],
         paymentStartDate: [this.paymentStartDateForUI],
         tier: [this.selectedTier, Validators.required],
@@ -117,11 +127,26 @@ export class MemberComponent implements OnInit {
   ngOnInit() {
     this.getTierList();
     this.getPriestFathersList();
+    if (this.action === 'save' && this.primaryOrDependent === 'dependent') {
+      this.selectDefaultDependentTier();
+    }
     //this.enableDisableRegistrationDate();
   }
 
   onClear() {
 
+  }
+
+  selectDefaultDependentTier() {
+    this.tierList$.subscribe(
+      (t) => {
+        for(let i = 0; i < t.length; i++) {
+          if (t[i].description === 'Dependent') {
+            this.selectedTier = t[i];
+            break;
+          }
+        }
+     });
   }
 
   onTierSelected(event: MatSelectChange) {

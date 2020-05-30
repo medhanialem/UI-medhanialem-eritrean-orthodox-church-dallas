@@ -147,23 +147,18 @@ export class TiersComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
           console.log('Deleting tier');
-          this.tierService.deleteTier(tier.id);
-          //this.getTierList();
-          // this.tierService.deleteTier(tier.id).subscribe(
-          //   () => {
-          //     this.getTierList();
-          //     this.alertify.success(
-          //       'Tier \' ' + tier.id + ' ' +
-          //       tier.description + ' ' + tier.tierType +
-          //       ' \' deleted successfully.'
-          //     );
-          //     console.log('Deleted tier: ' + tier);
-          //   },
-          //   (error) => {
-          //     this.getTierList();
-          //     console.log(error);
-          //   }
-          // );
+          this.tierService.deleteTier(tier.id).subscribe(
+            () => {
+              this.getTierList();
+              this.alertify.success('Tier \' ' + tier.id + ' ' + tier.description + ' ' + tier.tierType + ' \' deleted successfully.');
+              console.log('Deleted tier: ' + tier);
+            },
+            (error) => {
+              this.alertify.error('Unable to delete tier \'' + tier.description + ' ' + '\'');
+              this.getTierList();
+              console.log(error);
+            }
+          );
 
       } else if (result === false) {
         this.getTierList();

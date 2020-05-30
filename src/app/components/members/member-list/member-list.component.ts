@@ -49,6 +49,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   memberList: Member[];
   filteredList: Member[];
   // activeInactive = false;
+  selectedParent: Member;
 
   displayedColumns: string[] = [];
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -282,7 +283,12 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '55%';
     dialogConfig.height = '85%';
-    dialogConfig.data = { member: new Member(new Tier()), action: 'save', parentId: this.parentId, primaryOrDependent: primaryOrDependentIdentifier };
+    dialogConfig.data = { 
+      member: new Member(new Tier()),
+      action: 'save', parentId: this.parentId,
+      primaryOrDependent: primaryOrDependentIdentifier,
+      selectedParent: this.selectedParent
+    };
     const dialogRef = this.dialog.open(MemberComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(
       () => {
@@ -474,6 +480,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   fetchDependents(row) {
+    this.selectedParent = row;
     this.dependents = null;
     this.isLoading = true;
     this.parentId = row.memberId;

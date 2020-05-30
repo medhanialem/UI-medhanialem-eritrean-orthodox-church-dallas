@@ -122,6 +122,11 @@ export class MemberService {
 
   constructor(private httpClient: HttpClient) { }
 
+  public getMember(memberId: number): Observable<Member> {
+    const headers = this.getHttpHeaders();
+    return this.httpClient.get<Member>(`${this.baseUrl}members/` + memberId, {headers});
+  }
+
   public getMemberList(): Observable<Member[]> {
     // return this.memberList$;
     const headers = this.getHttpHeaders();

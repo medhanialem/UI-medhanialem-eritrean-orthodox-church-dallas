@@ -76,7 +76,8 @@
           </div>
           <div class="col-lg-3 col-xl-3">
             <mat-form-field>
-              <input formControlName="mobile" matInput placeholder="Mobile*">
+              <!-- <input formControlName="mobile" matInput type = "text" placeholder="Mobile*" [textMask]="{mask: phoneMask}" NumberOnly> -->
+              <input formControlName="mobile" matInput type = "text" placeholder="Mobile*" [textMask]="{mask: phoneMask}">
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.required">Mobile field is mandatory.</mat-error>
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.minlength">Please put valid number.</mat-error>
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.maxlength">Please put valid number.</mat-error>
@@ -119,7 +120,7 @@
           </div>
           <div class="col-lg-4 col-xl-4">
             <mat-form-field>
-              <input formControlName="zipCode" matInput placeholder="Zip Code*">
+              <input formControlName="zipCode" matInput placeholder="Zip Code*" NumberOnly>
               <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.required">Zip code field is mandatory.
               </mat-error>
               <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.minlength">Please put valid zip code.

@@ -1,0 +1,89 @@
+<mat-toolbar class="matToolBar">
+  <span>{{lookupsModel.length > 0 ? "Modify Lookup": "New Lookup"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
+    <mat-icon>clear</mat-icon>
+  </button>
+</mat-toolbar>
+<div class="divNewMember">
+  <form [formGroup]="registrationForm" class="registrationForm" (submit)="onSaveOrUpdate()">
+    <p>
+      {{selectedTierDescription}}
+      <input id = "amountInputGeneral" type = "text" formControlName="amountInputGeneral" (keyup) = "updateFields()" (focus)="formatCurrencyField($event)" [(ngModel)]="amountInputGeneral" NumberDecimalOnly autocomplete="off">
+      Year: {{year}}
+    </p>
+    <div class="row registrationDiv">
+        <div class="row col-lg-12 col-xl-12">
+          <table>
+            <tr>
+              <th id = "month">Month</th>
+              <th id = "amount">Amount</th>
+            </tr>
+            <tr>
+              <td id = "month">Jan</td>
+              <td id = "amount"><input formControlName="janInputAmount" [(ngModel)] = "janInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Feb</td>
+              <td id = "amount"><input formControlName="febInputAmount" [(ngModel)] = "febInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Mar</td>
+              <td id = "amount"><input formControlName="marInputAmount" [(ngModel)] = "marInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Apr</td>
+              <td id = "amount"><input formControlName="aprInputAmount" [(ngModel)] = "aprInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">May</td>
+              <td id = "amount"><input formControlName="mayInputAmount" [(ngModel)] = "mayInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Jun</td>
+              <td id = "amount"><input formControlName="junInputAmount" [(ngModel)] = "junInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Jul</td>
+              <td id = "amount"><input formControlName="julInputAmount" [(ngModel)] = "julInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Aug</td>
+              <td id = "amount"><input formControlName="augInputAmount" [(ngModel)] = "augInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Sep</td>
+              <td id = "amount"><input formControlName="sepInputAmount" [(ngModel)] = "sepInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Oct</td>
+              <td id = "amount"><input formControlName="octInputAmount" [(ngModel)] = "octInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Nov</td>
+              <td id = "amount"><input formControlName="novInputAmount" [(ngModel)] = "novInputAmount" autocomplete="off"></td>
+            </tr>
+            <tr>
+              <td id = "month">Dec</td>
+              <td id = "amount"><input formControlName="decInputAmount" [(ngModel)] = "decInputAmount" autocomplete="off"></td>
+            </tr>
+          </table>
+
+        </div>
+
+        <div class="row col-lg-12 col-xl-12 divButtons">
+          <div class="col-lg-6 offset-4 col-xl-6 offset-4">
+            <div class="row">
+              <div class="row col-lg-6 col-xl-6">
+                <button mat-raised-button color="primary" type="submit" [disabled]="saveLookupDisabled()" id="btnSave">Save</button>
+              </div>
+              <div class="row col-lg-6 col-xl-6">
+                <button mat-raised-button color='warn' (click)="onClose()" type="reset" id="btnCancel">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+  </form>
+</div>
