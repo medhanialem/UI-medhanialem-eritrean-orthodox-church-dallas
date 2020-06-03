@@ -15,11 +15,15 @@
   <hr id="hr_user_header2"/>
   <div class="mat-elevation-z8">
     <mat-table [dataSource]="userListData" matSort class='matTable' >
-      <ng-container matColumnDef="userId">
+      <!-- <ng-container matColumnDef="userId">
         <mat-header-cell class="user_id_header" id ="user_id" *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
         <mat-cell id ="user_id" *matCellDef="let element">{{ element.userId }}</mat-cell>
+      </ng-container> -->
+      <ng-container matColumnDef="userId">
+        <mat-header-cell class="user_id_header" id ="user_id" *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell id ="user_id" *matCellDef="let element">{{ element.id }}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="fullName">
+      <!-- <ng-container matColumnDef="fullName">
         <mat-header-cell id = "user_fullName" *matHeaderCellDef>Full name</mat-header-cell>
         <mat-cell id = "user_fullName" *matCellDef="let element">{{ element.firstName + ' ' +element.middleName+' '+ element.lastName }}</mat-cell>
       </ng-container>    
@@ -30,6 +34,22 @@
       <ng-container matColumnDef="phoneNo">
         <mat-header-cell id = "user_mobile" *matHeaderCellDef>Phone No.</mat-header-cell>
         <mat-cell id = "user_mobile" *matCellDef="let element">{{ element.phoneNo }}</mat-cell>
+      </ng-container> -->
+      <ng-container matColumnDef="userName">
+        <mat-header-cell id = "userName" *matHeaderCellDef>User Name</mat-header-cell>
+        <mat-cell id = "userName" *matCellDef="let element">{{ element.username }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="roles">
+        <mat-header-cell id="user_roles" *matHeaderCellDef mat-sort-header>Roles</mat-header-cell>
+        <mat-cell id="user_roles" *matCellDef="let element">{{ getRoles(element) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <mat-header-cell id="createdBy" *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+        <mat-cell id="createdBy" *matCellDef="let element">{{ element.createdBy }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="updatedBy">
+        <mat-header-cell id="updatedBy" *matHeaderCellDef mat-sort-header>updated By</mat-header-cell>
+        <mat-cell id="updatedBy" *matCellDef="let element">{{ element.updatedBy }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="createdDate">
         <mat-header-cell id="created_date" *matHeaderCellDef mat-sort-header>Created On</mat-header-cell>
@@ -39,13 +59,13 @@
         <mat-header-cell id="updated_date" *matHeaderCellDef mat-sort-header>Updated On</mat-header-cell>
         <mat-cell id="updated_date" *matCellDef="let element">{{ toShortDate(element.updatedDate) }}</mat-cell>
       </ng-container>
-      <ng-container matColumnDef="roles">
+      <!-- <ng-container matColumnDef="roles">
         <mat-header-cell id="user_roles" *matHeaderCellDef mat-sort-header>Roles</mat-header-cell>
         <mat-cell id="user_roles" *matCellDef="let element">{{ getRoles(element) }}</mat-cell>
-      </ng-container>
+      </ng-container> -->
       <ng-container matColumnDef="isActive">
         <mat-header-cell id="is_active" *matHeaderCellDef mat-sort-header>Active</mat-header-cell>
-        <mat-cell id="is_active" *matCellDef="let element">{{ element.isActive }}</mat-cell>
+        <mat-cell id="is_active" *matCellDef="let element">{{ element.active }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef id = "user_actions">Actions</mat-header-cell>

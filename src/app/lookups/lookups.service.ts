@@ -29,7 +29,6 @@ export class LookupsService {
     if (null != action && action.toLowerCase() === 'save') {
       return this.httpClient.post<LookupModel[]>(`${this.baseUrl}paymentlookups?tierId=` + tierId, lookUps, {headers});
     } else if (null != action && action.toLowerCase() === 'update') {
-      console.log('Action->>>>>>>>>>>', action);
       return this.httpClient.put<LookupModel[]>(`${this.baseUrl}paymentlookups`, lookUps, {headers});
     }
 
