@@ -6,6 +6,7 @@ import { Roles } from 'src/app/shared/roles';
 import { AuthenticationService } from '../shared/authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserModelResponse } from './user-registration/user-model-response';
+import { UserModelForUpdate } from './user-model-for-update';
 
 // const usersList: UserModel[] = [
 //     {
@@ -78,6 +79,11 @@ export class UserService {
   addUser(user: UserModel): Observable<number> {
     const headers = this.getHttpHeaders();
     return this.httpClient.post<number>(`${this.baseUrl}api/auth/signup`, user, {headers});
+  }
+
+  updateUser(user: UserModelForUpdate): Observable<number> {
+    const headers = this.getHttpHeaders();
+    return this.httpClient.post<number>(`${this.baseUrl}api/auth/updateUser`, user, {headers});
   }
 
   public getHttpHeaders() {

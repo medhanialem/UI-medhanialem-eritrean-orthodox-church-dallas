@@ -168,12 +168,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     }));
   }
 
-  onEdit(user: UserModel) {
+  onEdit(user: UserModelResponse) {
+    console.log(user);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = '40%';
-    dialogConfig.height = '69%';
+    dialogConfig.height = '54%';
     dialogConfig.data = user;
     const dialogRef = this.dialog.open(UserEditComponent, dialogConfig);
     this.subscriptions.push(dialogRef.afterClosed().subscribe(() => {

@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { Role } from 'src/app/shared/role';
 import { RoleService } from 'src/app/shared/role-service';
 import { UserModelResponse } from './user-model-response';
+import { AlertifyService } from 'src/app/shared/alertify.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -39,7 +40,8 @@ export class UserRegistrationComponent implements OnInit {
     private dialog: MatDialog,
     private dialogRef: MatDialogRef<UserRegistrationComponent>,
     private userService: UserService,
-    private roleService: RoleService) {
+    private roleService: RoleService,
+    private alertify: AlertifyService) {
     this.registrationForm = fb.group({
       user: [null, Validators.required],
       email: new FormControl({value: null, disabled: true} , [Validators.minLength(5), Validators.email]),
@@ -158,10 +160,12 @@ export class UserRegistrationComponent implements OnInit {
       this.subscriptions.push(this.userService.addUser(this.user).subscribe(
         (result) => {
           console.log(result);
+          this.alertify.success('Successfully registered ' + this.user.username);
           this.dialogRef.close(null);
         },
         (error) => {
           console.log(error);
+          this.alertify.error('Unable to register ' + this.user.username);
         },
         () => {}
       )
