@@ -10,13 +10,12 @@ import { Subscription } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
-import { Roles } from 'src/app/shared/roles';
 import { MembersAuthorizationGuard } from 'src/app/shared/members-authorization-guard';
-import { AuthenticationComponent } from 'src/app/authentication/authentication.component';
 import { UserAuthorizationComponent } from 'src/app/users/user-authorization/user-authorization.component';
 import { AlertifyService } from 'src/app/shared/alertify.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MoveMemberComponent } from '../move-member/move-member.component';
+import { TierService } from 'src/app/tiers/tier.service';
 
 @Component({
   selector: 'app-member-list',
@@ -39,7 +38,8 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
               private dialogService: DialogService,
               private datePipe: DatePipe,
               private authenticationService: AuthenticationService,
-              private alertify: AlertifyService) { }
+              private alertify: AlertifyService,
+              private tierService: TierService) { }
 
   private subscriptions: Subscription[] = [];
   selection = new SelectionModel<Member>(true, []);
@@ -48,7 +48,6 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   memberListData = new MatTableDataSource<Member>();
   memberList: Member[];
   filteredList: Member[];
-  // activeInactive = false;
   selectedParent: Member;
 
   displayedColumns: string[] = [];
@@ -67,6 +66,10 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     {value: 'All', displayValue: 'All'}
   ];
 
+  selectedTierId = 0;
+  tiersDropdownJSON: TiersDropdownJSONFormat[] = [];
+  tierList: Tier[];
+
   ngOnInit() {
     const showMemberActions = this.showAddEditDeleteMemberButtons();
     if (showMemberActions) {
@@ -81,74 +84,14 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.getMemberList();
     this.memberListData.paginator = this.paginator;
+    this.getTierList();
   }
 
   ngAfterViewInit(): void {
     this.memberListData.sort = this.sort;
   }
 
-  // getMemberList() {
-  //   this.memberListData.data = [];
-  //   this.isLoading = true;
-  //   this.subscriptions.push(this.service.getMemberList().subscribe(
-  //       (
-  //         response => {
-  //           if (response != null) {
-  //             this.memberListData.data = response as Member[];
-  //             this.memberList = response as Member[];
-  //           } else {
-  //             this.memberListData.data = null;
-  //           }
-  //         }),
-  //       (
-  //         error => {
-  //           console.log(error.message);
-  //           this.isLoading = false;
-  //         }),
-  //         () => {
-  //           this.isLoading = false;
-  //         }
-
-  //     ));
-  // }
-
-  // getMemberList() {
-  //   this.memberListData.data = [];
-  //   this.isLoading = true;
-  //   this.subscriptions.push(this.service.getMemberList().subscribe(
-  //       (
-  //         response => {
-  //           if (response != null) {
-  //             this.memberListData.data = response as Member[];
-  //             this.memberList = response as Member[];
-  //             this.filteredList = [];
-  //             if (this.activeInactive) {
-  //               this.filteredList = this.memberList;
-  //             } else {
-  //                 this.memberList.forEach(member => {
-  //                   if (member.status === 'ACTIVE') {
-  //                     this.filteredList.push(member);
-  //                   }
-  //                 });
-  //             }
-  //             this.memberListData.data = this.filteredList;
-  //           } else {
-  //             this.memberListData.data = null;
-  //           }
-  //         }),
-  //       (
-  //         error => {
-  //           console.log(error.message);
-  //           this.isLoading = false;
-  //         }),
-  //         () => {
-  //           this.isLoading = false;
-  //         }
-
-  //     ));
-  //  }
-
-   getMemberList() {
+  getMemberList() {
     this.memberListData.data = [];
     this.isLoading = true;
     this.subscriptions.push(this.service.getMemberList().subscribe(
@@ -157,23 +100,7 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
             if (response != null) {
               this.memberListData.data = response as Member[];
               this.memberList = response as Member[];
-              this.filteredList = [];
-              if (this.activeInactiveStatus === 'All') {
-                this.filteredList = this.memberList;
-              } else if (this.activeInactiveStatus === 'Active') {
-                  this.memberList.forEach(member => {
-                    if (member.status === 'ACTIVE') {
-                      this.filteredList.push(member);
-                    }
-                  });
-              } else if (this.activeInactiveStatus === 'Inactive') {
-                this.memberList.forEach(member => {
-                  if (member.status === 'INACTIVE') {
-                    this.filteredList.push(member);
-                  }
-                });
-            }
-              this.memberListData.data = this.filteredList;
+              this.filterMembersWithStatusTier();
             } else {
               this.memberListData.data = null;
             }
@@ -190,10 +117,39 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
       ));
    }
 
+   filterMembersWithStatusTier() {
+    this.filteredList = [];
+    if (this.selectedTierId === 0) {
+      if (this.activeInactiveStatus === 'All') {
+        this.filteredList = this.memberList;
+      } else {
+          this.memberList.forEach(member => {
+            if (member.status === this.activeInactiveStatus.toUpperCase()) {
+              this.filteredList.push(member);
+            }
+          });
+      }
+    } else {
+      if (this.activeInactiveStatus === 'All') {
+        this.memberList.forEach(member => {
+          if (member.tier.id === this.selectedTierId) {
+            this.filteredList.push(member);
+          }
+        });
+      } else {
+          this.memberList.forEach(member => {
+            if (member.status === this.activeInactiveStatus.toUpperCase() && member.tier.id === this.selectedTierId) {
+              this.filteredList.push(member);
+            }
+          });
+      }
+    }
+    this.memberListData.data = this.filteredList;
+   }
 
    onActiveInactiveDropDownChange(event) {
     this.activeInactiveStatus = event.value;
-    this.getMemberList();
+    this.filterMembersWithStatusTier();
    }
   /** Whether the number of selected elements matches the total number of rows. */
   // isAllSelected() {
@@ -505,9 +461,59 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
       ));
   }
 
+  onTierSelected(event) {
+    this.selectedTierId = event.value;
+    this.filterMembersWithStatusTier();
+  }
+
+  getTierList() {
+
+    this.subscriptions.push(this.tierService.getTierList().subscribe(
+      (
+        response => {
+          if (response != null) {
+            this.tierList = response as Tier[];
+          } else {
+            this.tierList = [];
+          }
+          this.populateTiersDropdownJSON();
+        }),
+      (
+        error => {
+          console.log(error.message);
+        }),
+        () => {
+        }
+
+    ));
+
+  }
+
+  populateTiersDropdownJSON() {
+    this.tiersDropdownJSON = [];
+    for(let i = 0; i < this.tierList.length; i++) {
+      this.tiersDropdownJSON.push(
+        {
+          value: this.tierList[i].id,
+          displayValue: this.tierList[i].description
+        });
+    }
+  }
+
+  refreshMemberListPage(): void {
+    this.selectedTierId = 0;
+    this.activeInactiveStatus = 'Active';
+    this.getMemberList();
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => {
       sub.unsubscribe();
     });
   }
+}
+
+interface TiersDropdownJSONFormat {
+  value: number;
+  displayValue: string;
 }

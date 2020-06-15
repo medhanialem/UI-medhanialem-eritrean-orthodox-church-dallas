@@ -9,9 +9,14 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
+
+  <button mat-icon-button title="Refresh" class = "refreshMemberListPage" (click) = "refreshMemberListPage()">
+    <mat-icon>autorenew</mat-icon>
+  </button>
+
   <!-- <mat-checkbox class = "activeInactive" color="primary" [(ngModel)]="activeInactive" (change)="getMemberList()">All (Active + Inactive)</mat-checkbox> -->
   <mat-form-field class = "activeInactive">
-    <mat-select (selectionChange) = onActiveInactiveDropDownChange($event) [(value)]="activeInactiveStatus" placeholder="Members">
+    <mat-select (selectionChange) = onActiveInactiveDropDownChange($event) [(value)]="activeInactiveStatus" placeholder="Status">
       <mat-option *ngFor="let memberStatus of memberStatuses" [value]="memberStatus.value">
         {{memberStatus.displayValue}}
       </mat-option>
@@ -22,6 +27,17 @@
   <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0" color="primary">
     <mat-icon>message</mat-icon>{{" "}}Send
   </button> -->
+
+  <mat-form-field class = 'tierSelect'>
+    <mat-label>Tier</mat-label>
+    <mat-select (selectionChange)="onTierSelected($event)" [(ngModel)]="selectedTierId">
+      <mat-option [value]="0">All</mat-option>
+      <mat-option *ngFor="let tier of tiersDropdownJSON" [value]="tier.value">
+        {{tier.displayValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
 </div>
 <hr id="hr_member_header2"/>
 <div class="mat-elevation-z8">

@@ -36,7 +36,7 @@ export class LookupsComponent implements OnInit, OnDestroy {
 
   tierList: Tier[];
   selectedTier: Tier = new Tier();
-  selectedTierId = 0;
+  selectedTierId = -1;
   tiersDropdownJSON: TiersDropdownJSONFormat[] = [];
   addBtnDisableFlag = true;
   editBtnDisableFlag = true;
@@ -236,12 +236,21 @@ export class LookupsComponent implements OnInit, OnDestroy {
     this.year--;
     this.determineMinusPlusYearBtnColor();
     this.getLookUpList();
+    this.disableBtns();
   }
 
   plusYearClicked(): void {
     this.year++;
     this.determineMinusPlusYearBtnColor();
     this.getLookUpList();
+    this.disableBtns();
+  }
+
+  disableBtns(): void {
+    if (this.selectedTierId === -1) {
+      this.addBtnDisableFlag = true;
+      this.editBtnDisableFlag = true;
+    }
   }
 
   currentYearClicked(): void {

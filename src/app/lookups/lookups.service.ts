@@ -29,7 +29,7 @@ export class LookupsService {
     if (null != action && action.toLowerCase() === 'save') {
       return this.httpClient.post<LookupModel[]>(`${this.baseUrl}paymentlookups?tierId=` + tierId, lookUps, {headers});
     } else if (null != action && action.toLowerCase() === 'update') {
-      return this.httpClient.put<LookupModel[]>(`${this.baseUrl}paymentlookups`, lookUps, {headers});
+      return this.httpClient.put<LookupModel[]>(`${this.baseUrl}paymentlookups?tierId=` + tierId, lookUps, {headers});
     }
 
     return null;

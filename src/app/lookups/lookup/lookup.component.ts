@@ -243,6 +243,7 @@ export class LookupComponent implements OnInit {
   populateLookupsForUpdate() {
     const currentMonth = new Date().getMonth();
     const currentYear = new Date().getFullYear();
+
     for (let i = 0; i < this.lookupsModel.length; i++) {
       const lookupModel: LookupModel = new LookupModel();
       let monthMatchFlag = false;
@@ -250,7 +251,6 @@ export class LookupComponent implements OnInit {
       lookupModel.month = i + 1;
       lookupModel.year = this.year;
       lookupModel.id = this.lookupsModel[i].id;
-      lookupModel.tier = this.lookupsModel[i].tier;
       lookupModel.revision = this.lookupsModel[i].revision;
       lookupModel.createdBy = this.lookupsModel[i].createdBy;
       lookupModel.createdAt = this.lookupsModel[i].createdAt;
@@ -379,15 +379,11 @@ export class LookupComponent implements OnInit {
   }
 
   onSaveOrUpdate() {
-    console.log('Inside edit onSaveOrUpdate()');
     if (this.registrationForm.valid) {
       if (this.action === 'save') {
         this.populateLookupsForCreate();
-        console.log(this.lookupsModelForCreate);
       } else {
-        console.log('Inside edit lookup:->>>>');
         this.populateLookupsForUpdate();
-        console.log(this.lookupsModelForUpdate);
       }
       this.lookupService.addLookUps(
         this.action === 'save' ? this.lookupsModelForCreate : this.lookupsModelForUpdate, this.tierId, this.action)
