@@ -45,20 +45,18 @@ export class ChangepasswordComponent implements OnInit {
           this.dialogRef.close(null);
         },
         (error) => {
-          console.log('error message'+error.message);
+          console.log(error);
           if (error instanceof HttpErrorResponse) {
-            const errorMessages = new Array<{ propName: string; errors: string }>();
             
             if (error.error.message === 'Incorrect Password!') {
-              this.alertify.error('Incorrect Password!');
-            }
-            if (error.error.message.includes('Confirm Password')) {
-              this.alertify.error('Password and Confirm Passworddo not match!');
+              this.alertify.error('Incorrect Password! Please provide correct password.');
+            } else if (error.error.message === 'Password and Confirm Password do not match!') {
+              this.alertify.error('Password and Confirm Password don\'t match!');
+            }else {
+              this.alertify.error('Server is unavailable. Please try again.');
             }
 
-          }
-          console.log(error);
-          this.alertify.error('Unable to change password ' );
+          } 
         },
         () => {}
       )

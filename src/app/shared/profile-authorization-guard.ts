@@ -17,7 +17,9 @@ export class ProfileAuthorizationGuard implements IAuthorizationGuard {
             if (
                 element === Roles.abo_wenber_sebeka_gubae.toString() ||
                 element === Roles.secretary.toString() ||
-                element === Roles.admin.toString()
+                element === Roles.admin.toString() ||
+                element === Roles.sebeka_gubae.toString() ||
+                element === Roles.sundaySchool.toString()
             ) {
                 showProfile = true;
                 return;
