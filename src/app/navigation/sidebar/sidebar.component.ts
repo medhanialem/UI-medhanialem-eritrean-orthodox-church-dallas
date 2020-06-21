@@ -6,6 +6,7 @@ import { PaymentsAuthorizationGuard } from 'src/app/shared/payments-authorizatio
 import { UsersAuthorizationGuard } from 'src/app/shared/users-authorization-guard';
 import { TiersAuthorizationGuard } from 'src/app/shared/tiers-authorization-guard';
 import { PaymentLookUpsAuthorizationGuard } from 'src/app/shared/payment-look-ups-authorization-guard';
+import { ProfileAuthorizationGuard } from 'src/app/shared/profile-authorization-guard';
 
 @Component({
   selector: 'app-sidebar',
@@ -45,5 +46,9 @@ export class SidebarComponent implements OnInit {
 
   showPaymentLookUp(): boolean {
     return this.authenticationService.userHasPermission(new PaymentLookUpsAuthorizationGuard(this.authenticationService));
+  }
+
+  showProfile(): boolean {
+    return this.authenticationService.userHasPermission(new ProfileAuthorizationGuard(this.authenticationService));
   }
 }

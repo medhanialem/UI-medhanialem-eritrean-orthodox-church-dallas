@@ -11,6 +11,8 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { UsersComponent } from './users/users.component';
 import { PaymentsGuard } from './shared/payments.guard';
 import { UsersGuard } from './shared/users.guard';
+import { ProfileGuard } from './shared/profile.guard';
+
 
 const routes: Routes = [
 
@@ -32,8 +34,11 @@ const routes: Routes = [
       {
         path: 'paymentLookUp', loadChildren: () => import('./lookups/lookups.module').then(m => m.LookupsModule), canLoad: [UsersGuard]
       },
+      {path: 'profile', loadChildren: () => import('./components/profile/profile.module').then(m => m.ProfileModule), canLoad: [ProfileGuard]},
+      
       {path: 'payments', component: PaymentComponent, canActivate: [PaymentsGuard]},
       {path: '**', redirectTo: '/members'}
+      
 
 
   ]}

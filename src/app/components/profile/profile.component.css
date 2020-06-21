@@ -1,0 +1,143 @@
+.usersContainer {
+    padding: 0 1rem;
+}
+.search-form-field {
+    width: 50%;
+    margin-left: 26px;
+    padding: 0px 10px;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    max-height: 40px !important;
+}
+
+mat-header-cell {
+    font-weight: bold !important;
+    font-size: 15px;
+}
+
+mat-footer-row mat-footer-cell {
+    justify-content: center;
+    font-style: italic;
+}
+
+.hide {
+    display: none;
+}
+
+.search-form-field div.mat-form-field-underline {
+    display: none;
+}
+
+.search-form-field div.mat-form-field-infix {
+    border-top: 0px;
+}
+
+.search-form-field div.mat-form-field-wrapper {
+    padding-bottom: 0px;
+} 
+
+.search-form-field div.mat-form-field-suffix button{
+    height: 32px;
+    width: 32px;
+}
+
+.matTable {
+    width: 100%;
+}
+
+mat-header-cell {
+    display:flex;
+    justify-content: left !important;
+    font-weight: bold;
+}
+
+mat-cell{
+    display:flex;
+    justify-content: left !important;
+}
+
+mat-header-row {
+    min-height: 50px;
+    background-color: aliceblue;
+}
+
+.mat-row:nth-child(odd){
+    background-color:#f5f5f5;
+}
+
+#user_id {
+    max-width: 8%;
+    margin-left: 2px;
+    margin-right: 1px;
+}
+
+#fullName {
+    max-width: 16%;
+    margin-left: 1px;
+    margin-right: 1px;
+    word-break: break-word;
+}
+
+#email {
+    max-width: 16%;
+    margin-left: 1px;
+    margin-right: 1px;
+    word-break: break-word;
+}
+
+#user_mobile {
+    max-width: 7%;
+    margin-left: 1px;
+    margin-right: 3px;
+}
+
+#created_date {
+    max-width: 9%;
+    margin-left: 10px;
+    margin-right: 2px;
+}
+
+#updated_date {
+    max-width: 9%;
+    margin-left: 2px;
+    margin-right: 1px;
+}
+
+#roles {
+    max-width: 28%;
+    margin-left: 2px;
+    margin-right: 1px;
+    word-break: break-word;
+}
+
+#is_active {
+    max-width: 5%;
+    margin-left: 2px;
+}
+
+#user_actions {
+    max-width: 6%;
+    margin-right: 10px;
+    margin-left: 3px;
+}
+
+.showAllUsers {
+    padding-left: 25px;
+    padding-right: 35px;
+}
+
+
+#hr_user_header1 {
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+
+#hr_user_header2 {
+    margin-top: 1px;
+    margin-bottom: 5px;
+}
+
+div.search-div .mat-raised-button {
+    height: 40px;
+    bottom: 5px;
+}

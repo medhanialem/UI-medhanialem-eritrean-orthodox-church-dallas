@@ -40,6 +40,9 @@ import { UserAuthorizationComponent } from './users/user-authorization/user-auth
 import { MoveMemberComponent } from './components/members/move-member/move-member.component';
 import { MatSelectSearchComponent } from './components/mat-select-search/mat-select-search.component';
 import { StrictNumberDirective } from './shared/strict-number-only-directive';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileGuard } from './shared/profile.guard';
+import { ChangepasswordComponent } from './components/profile/changepassword/changepassword.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,8 @@ import { StrictNumberDirective } from './shared/strict-number-only-directive';
     UserAuthorizationComponent,
     MoveMemberComponent,
     MatSelectSearchComponent,
-    StrictNumberDirective
+    StrictNumberDirective,
+
   ],
 
   imports: [
@@ -87,7 +91,8 @@ import { StrictNumberDirective } from './shared/strict-number-only-directive';
     MedhanieAlemGuard,
     AlertifyService,
     PaymentsGuard,
-    UsersGuard
+    UsersGuard,
+    ProfileGuard
   ],
 
   bootstrap: [AppComponent],
