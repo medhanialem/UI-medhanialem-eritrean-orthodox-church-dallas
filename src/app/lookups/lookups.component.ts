@@ -114,7 +114,7 @@ export class LookupsComponent implements OnInit, OnDestroy {
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = '38%';
-    dialogConfig.height = '85%';
+    dialogConfig.height = '95%';
     dialogConfig.data = {
       tierId: this.selectedTierId,
       action: 'save',
@@ -145,7 +145,7 @@ export class LookupsComponent implements OnInit, OnDestroy {
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;
     dialogConfig.width = '38%';
-    dialogConfig.height = '85%';
+    dialogConfig.height = '95%';
     dialogConfig.data = {
       lookups: this.lookupList,
       tierId: this.selectedTierId,

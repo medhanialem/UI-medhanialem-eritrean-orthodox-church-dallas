@@ -44,7 +44,6 @@ export class TierComponent implements OnInit {
       this.populateTier();
       this.tierService.addTier(this.tierModel, this.action).subscribe(
         (result) => {
-          console.log(result);
           this.dialogRef.close(true);
         },
         (error) => {

@@ -116,7 +116,7 @@ export class TiersComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       dialogRef.afterClosed().subscribe((result) => {
         if (result === true) {
-          console.log('Updating tier ->' + tier);
+          console.log('Updating tier ->', tier);
           this.getTierList();
           this.alertify.success('Tier updated successfully.');
         } else {

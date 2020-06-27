@@ -5,6 +5,7 @@ import { DialogCloseComponent } from 'src/app/components/members/add-member-dial
 import { AlertifyService } from 'src/app/shared/alertify.service';
 import { LookupModel } from '../lookups.model';
 import { LookupsService } from '../lookups.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lookup',
@@ -17,11 +18,14 @@ export class LookupComponent implements OnInit {
   lookupsModel: LookupModel[] = [];
   lookupsModelForCreate: LookupModel[] = [];
   lookupsModelForUpdate: LookupModel[] = [];
+  private subscriptions: Subscription [] = [];
+  lookupList: LookupModel[] = [];
 
   tierId;
   action;
   selectedTierDescription;
   year;
+  copiedPreviousYearLookup: any = '';
 
   janInputAmount;
   febInputAmount;
@@ -38,6 +42,7 @@ export class LookupComponent implements OnInit {
   amountInputGeneral;
 
   constructor(
+    private lookupsService: LookupsService,
     @Inject(MAT_DIALOG_DATA) private data,
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -70,7 +75,7 @@ export class LookupComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   populateMonthsAmount() {
     for (let i = 0; i < this.lookupsModel.length; i++) {
@@ -104,6 +109,7 @@ export class LookupComponent implements OnInit {
 
   updateFields() {
     const currentMonth = new Date().getMonth() + 1;
+    this.copiedPreviousYearLookup = '';
 
     if ((new Date().getFullYear() < this.year || this.action === 'save') || (new Date().getFullYear() < this.year && this.action === 'update')) {
       this.janInputAmount = this.registrationForm.value.amountInputGeneral;
@@ -423,6 +429,93 @@ export class LookupComponent implements OnInit {
 
   saveLookupDisabled() {
     return !this.registrationForm.valid || !this.registrationForm.dirty;
+  }
+
+  getLookUpListFromPreviousYear() {
+    this.subscriptions.push(
+        this.lookupsService.getLookUpList(this.tierId, this.year - 1).subscribe(
+          response => {
+            if (response != null) {
+              this.lookupList = response as LookupModel[];
+              this.populateCopiedLookups();
+              if (this.lookupList.length !== 0) {
+                this.copiedPreviousYearLookup = 'Copied from ' + (this.year - 1);
+              } else {
+                this.copiedPreviousYearLookup = 'Data NOT found from ' + (this.year - 1);
+              }
+            } else {
+              this.lookupList = [];
+            }
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => { }
+        )
+    );
+  }
+
+  populateCopiedLookups(): void {
+    this.amountInputGeneral = '';
+    this.registrationForm.markAsDirty();
+    this.lookupList.forEach( l => {
+      switch (l.month) {
+        case 1: {
+          this.janInputAmount = l.amount;
+          break;
+        }
+        case 2: {
+          this.febInputAmount = l.amount;
+          break;
+        }
+        case 3: {
+          this.marInputAmount = l.amount;
+          break;
+        }
+        case 4: {
+          this.aprInputAmount = l.amount;
+          break;
+        }
+        case 5: {
+          this.mayInputAmount = l.amount;
+          break;
+        }
+        case 6: {
+          this.junInputAmount = l.amount;
+          break;
+        }
+        case 7: {
+          this.julInputAmount = l.amount;
+          break;
+        }
+        case 8: {
+          this.augInputAmount = l.amount;
+          break;
+        }
+        case 9: {
+          this.sepInputAmount = l.amount;
+          break;
+        }
+        case 10: {
+          this.octInputAmount = l.amount;
+          break;
+        }
+        case 11: {
+          this.novInputAmount = l.amount;
+          break;
+        }
+        case 12: {
+          this.decInputAmount = l.amount;
+          break;
+        }
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+    });
   }
 
 }

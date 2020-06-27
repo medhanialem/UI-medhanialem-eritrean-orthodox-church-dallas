@@ -1,17 +1,34 @@
 <mat-toolbar class="matToolBar">
-  <span>{{lookupsModel.length > 0 ? "Modify Lookup": "New Lookup"}}</span>
+  <span>{{lookupsModel.length > 0 ? "Modify Lookups": "New Lookups"}}</span>
   <span class="fill-remaining-space"></span>
   <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1">
     <mat-icon>clear</mat-icon>
   </button>
 </mat-toolbar>
+<table id = "detail">
+  <tr id = "headerDetail">
+    <td id = "tierRowTD" class="tier_year"><b>Tier:</b> {{selectedTierDescription}}</td>
+    <td id = "tierRowTD" class="tier_year"><b>Year:</b> {{year}}</td>
+    <td id = "tierRowTD">
+      <button *ngIf = "action === 'save'" mat-raised-button color="primary" id="copyFromPreviousYear" (click) = "getLookUpListFromPreviousYear()" tabIndex="-1">
+        <mat-icon>file_copy</mat-icon> Copy from {{year -1}}
+      </button>
+    </td>
+  </tr>
+</table>
 <div class="divNewMember">
   <form [formGroup]="registrationForm" class="registrationForm" (submit)="onSaveOrUpdate()">
-    <p>
-      {{selectedTierDescription}}
-      <input id = "amountInputGeneral" type = "text" formControlName="amountInputGeneral" (keyup) = "updateFields()" (focus)="formatCurrencyField($event)" [(ngModel)]="amountInputGeneral" NumberDecimalOnly autocomplete="off">
-      Year: {{year}}
-    </p>
+    <table id = "detailInput">
+      <tr>
+        <td>
+          <b>Amount:</b> <input id = "amountInputGeneral" type = "text" formControlName="amountInputGeneral" (keyup) = "updateFields()" (focus)="formatCurrencyField($event)" [(ngModel)]="amountInputGeneral" NumberDecimalOnly autocomplete="off">
+        </td>
+        <td colspan="2" id = "copiedFromText">
+          <i>{{copiedPreviousYearLookup}}</i>
+        </td>
+      </tr>
+    </table>
+    
     <div class="row registrationDiv">
         <div class="row col-lg-12 col-xl-12">
           <table>

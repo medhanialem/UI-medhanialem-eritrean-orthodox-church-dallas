@@ -16,7 +16,7 @@
 }
 
 .registrationForm{
-    margin-top: 40px !important;
+    margin-top: 0px !important;
 }
 
 mat-form-field {
@@ -43,7 +43,7 @@ mat-form-field {
 
 
 table {
-    margin-left: 20px;
+    margin-left: 15px;
     border-collapse: collapse;
     width: 100%;
     margin-bottom: 20px;
@@ -99,7 +99,33 @@ tr:nth-child(odd) {
 }
 
 #amountInputGeneral { 
-    margin-left: 5%;
-    margin-right: 40px;
+    margin-left: 3px;
+    /* margin-right: 40px; */
     max-width: 80px;
+}
+
+#detail {
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+#copiedFromText {
+    padding-left: 40px;
+    padding-top: 5px;
+}
+
+.tier_year {
+    padding-top: 10px;
+}
+
+#tierRowTD {
+    width: 30%;
+}
+
+#detailInput {
+    margin-left: 0px;
+    margin-bottom: 1px;
+    border: solid #00e5ff 2px;
+    border-top: none;
 }
