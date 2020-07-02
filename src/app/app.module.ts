@@ -41,6 +41,7 @@ import { MoveMemberComponent } from './components/members/move-member/move-membe
 import { MatSelectSearchComponent } from './components/mat-select-search/mat-select-search.component';
 import { StrictNumberDirective } from './shared/strict-number-only-directive';
 import { ProfileGuard } from './shared/profile.guard';
+import { ReceiptsGuard } from './shared/receipts.guard';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { ProfileGuard } from './shared/profile.guard';
     AlertifyService,
     PaymentsGuard,
     UsersGuard,
-    ProfileGuard
+    ProfileGuard,
+    ReceiptsGuard
   ],
 
   bootstrap: [AppComponent],

@@ -2,13 +2,13 @@ import { IAuthorizationGuard } from './iAuthorization-Guard';
 import { Roles } from './roles';
 import { AuthenticationService } from './authentication.service';
 
-export class PaymentsAuthorizationGuard implements IAuthorizationGuard {
+export class ReceiptsAuthorizationGuard implements IAuthorizationGuard {
 
 
     constructor(public authService: AuthenticationService) {
     }
     userHasPermission(): boolean {
-        let showPayments = false;
+        let showReceipts = false;
         let roles = this.authService.decodedToken().aud.replace('[', '');
         roles = roles.replace(']', '');
         roles = roles.replace(' ', '');
@@ -19,11 +19,11 @@ export class PaymentsAuthorizationGuard implements IAuthorizationGuard {
                 element === Roles.secretary.toString() ||
                 element === Roles.admin.toString()
             ) {
-                showPayments = true;
+                showReceipts = true;
                 return;
             }
         });
-        return showPayments;
+        return showReceipts;
     }
 
 }

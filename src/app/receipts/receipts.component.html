@@ -1,0 +1,83 @@
+<div class="usersContainer">
+  <hr id="hr_user_header1"/>
+  <div class="search-div">
+    <!-- <button mat-raised-button (click)="onAddTier()" color="primary">
+      +<mat-icon>filter_center_focus</mat-icon>{{" "}}Tier
+    </button> -->
+    <mat-form-field class="search-form-field" floatLabel="never">
+      <!-- <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()"> -->
+      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="getReceipts()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  <hr id="hr_user_header2"/>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="receiptListData" matSort class='matTable' >
+      <ng-container matColumnDef="receiptId">
+        <mat-header-cell class="receiptId_header" id ="receiptId" *matHeaderCellDef mat-sort-header>Receipt Id</mat-header-cell>
+        <mat-cell id ="receiptId" *matCellDef="let element">{{ element.id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="churchId">
+        <mat-header-cell id = "churchId" *matHeaderCellDef>Church Id</mat-header-cell>
+        <mat-cell id = "churchId" *matCellDef="let element">{{ element.churchId}}</mat-cell>
+      </ng-container>    
+      <ng-container matColumnDef="fullName">
+        <mat-header-cell id="fullName" *matHeaderCellDef mat-sort-header>Full Name</mat-header-cell>
+        <mat-cell id="fullName" *matCellDef="let element">{{ element.fullName }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell id="total" *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+        <mat-cell id="total" *matCellDef="let element">{{ element.total }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <mat-header-cell id="phone" *matHeaderCellDef mat-sort-header>phone</mat-header-cell>
+        <mat-cell id="phone" *matCellDef="let element">{{ element.phone }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="parentReceipt">
+        <mat-header-cell id="parentReceipt" *matHeaderCellDef mat-sort-header>P.R.</mat-header-cell>
+        <mat-cell id="parentReceipt" *matCellDef="let element">{{ element.parentReceipt }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="voided">
+        <mat-header-cell id="voided" *matHeaderCellDef mat-sort-header>Voided</mat-header-cell>
+        <mat-cell id="voided" *matCellDef="let element">{{ element.voided }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <mat-header-cell id="createdBy" *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+        <mat-cell id="createdBy" *matCellDef="let element">{{ element.createdBy }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdDate">
+        <mat-header-cell id="createdDate" *matHeaderCellDef mat-sort-header>Created Date</mat-header-cell>
+        <mat-cell id="createdDate" *matCellDef="let element">{{ toShortDate(element.createdDate) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef id = "receipt_actions">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let row" id = "receipt_actions">
+          <button mat-icon-button title="Print" (click)="onPrint(row)">
+            <mat-icon>print</mat-icon>
+          </button>
+          <button mat-icon-button title="Refund" *ngIf = "!row.voided" color="warn" (click)="onRefundClicked(row)">
+            <mat-icon>refresh</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          <!-- Loading data... -->
+          <img src="../../../assets/fading_squares.gif" alt="Loading image" height="40" width="150">
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          No data.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>

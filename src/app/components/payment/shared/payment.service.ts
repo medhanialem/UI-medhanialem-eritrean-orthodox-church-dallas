@@ -630,21 +630,19 @@ export class PaymentService {
     // }
 
   getPaymentList(year): Observable<MemberModel[]> {
-    // this.paymentInformationByYear(year);
-    // return this.$paymentList;
     const headers = this.getHttpHeaders();
-    return this.httpClient.get<MemberModel[]>(`${this.baseUrl}getallpayment/` + year, {headers});
+    return this.httpClient.get<MemberModel[]>(`${this.baseUrl}monthlyPayment/getallpayment/` + year, {headers});
   }
 
   unpaidPreviousYearPaymentExist(memberId: number, paymentStartYear: number, year: number) {
     const headers = this.getHttpHeaders();
-    return this.httpClient.get<boolean>(`${this.baseUrl}previousYearPaymentExist?memberId=` + memberId + '&paymentStartYear=' + paymentStartYear + '&year=' + year, {headers});
+    return this.httpClient.get<boolean>(`${this.baseUrl}monthlyPayment/previousYearPaymentExist?memberId=` + memberId + '&paymentStartYear=' + paymentStartYear + '&year=' + year, {headers});
   }
 
   addPayment(paymentRequest: Paymentrequest): Observable<PaymentResponse> {
     console.log('inside add payment');
     const headers = this.getHttpHeaders();
-    return this.httpClient.post<PaymentResponse>(`${this.baseUrl}pay`, paymentRequest, {headers});
+    return this.httpClient.post<PaymentResponse>(`${this.baseUrl}monthlyPayment/pay`, paymentRequest, {headers});
   }
 
   public getHttpHeaders() {

@@ -12,9 +12,9 @@
       <mat-icon mat-list-icon>work</mat-icon>
       <p matLine class="sideBarSpan" *ngIf="expanded">Payments</p>
     </a>
-    <a mat-list-item *ngIf="showUsers()" (click)="onToggle($event)" routerLink="/users" routerLinkActive="router-link-active">
-      <mat-icon mat-list-icon>group_add</mat-icon>
-      <p matLine class="sideBarSpan" *ngIf="expanded">Users</p>
+    <a mat-list-item *ngIf="showReceipts()" (click)="onToggle($event)" routerLink="/receipts" routerLinkActive="router-link-active">
+      <mat-icon mat-list-icon>print</mat-icon>
+      <p matLine class="sideBarSpan" *ngIf="expanded">Print Receipt</p>
     </a>
     <a mat-list-item *ngIf="showTiers()" (click)="onToggle($event)" routerLink="/tiers" routerLinkActive="router-link-active">
       <mat-icon mat-list-icon>filter_center_focus</mat-icon>
@@ -23,6 +23,10 @@
     <a mat-list-item *ngIf="showPaymentLookUp()" (click)="onToggle($event)" routerLink="/paymentLookUp" routerLinkActive="router-link-active">
       <mat-icon mat-list-icon>menu_book</mat-icon>
       <p matLine class="sideBarSpan" *ngIf="expanded">Payment Lookup</p>
+    </a>
+    <a mat-list-item *ngIf="showUsers()" (click)="onToggle($event)" routerLink="/users" routerLinkActive="router-link-active">
+      <mat-icon mat-list-icon>group_add</mat-icon>
+      <p matLine class="sideBarSpan" *ngIf="expanded">Users</p>
     </a>
     <a mat-list-item (click)="logout()" routerLinkActive="router-link-active">
         <mat-icon mat-list-icon>input</mat-icon>
