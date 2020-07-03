@@ -1,9 +1,16 @@
 <div class="usersContainer">
   <hr id="hr_user_header1"/>
   <div class="search-div">
-    <!-- <button mat-raised-button (click)="onAddTier()" color="primary">
-      +<mat-icon>filter_center_focus</mat-icon>{{" "}}Tier
-    </button> -->
+    <button mat-icon-button id="minusBtn" [ngClass] = "minusBtnClass" [disabled]="year <= minimumYear" (click) = "minusYearClicked()">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
+    <label id = "selectedYear">{{year}}</label>
+    <button mat-icon-button id="plusBtn" [ngClass] = "plusBtnClass" [disabled]="year >= maximumYear" (click) = "plusYearClicked()">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
+    <button mat-icon-button id="refreshYear" (click) = "currentYearClicked()">
+      <mat-icon>autorenew</mat-icon>
+    </button>
     <mat-form-field class="search-form-field" floatLabel="never">
       <!-- <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()"> -->
       <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="getReceipts()">
@@ -28,7 +35,7 @@
       </ng-container>
       <ng-container matColumnDef="total">
         <mat-header-cell id="total" *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
-        <mat-cell id="total" *matCellDef="let element">{{ element.total }}</mat-cell>
+        <mat-cell id="total" *matCellDef="let element">{{ formatTotal(element) }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="phone">
         <mat-header-cell id="phone" *matHeaderCellDef mat-sort-header>phone</mat-header-cell>

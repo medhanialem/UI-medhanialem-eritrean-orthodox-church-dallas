@@ -95,7 +95,7 @@ export class PaymentListComponent implements OnInit {
       (
         response => {
           if (response) {
-            this.alertify.error('Unpaid previous YEAR payment exist.');
+            this.alertify.error('Unpaid payment exist for ' + (this.year - 1));
           } else {
             const dialogConfig = new MatDialogConfig();
             dialogConfig.disableClose = true;

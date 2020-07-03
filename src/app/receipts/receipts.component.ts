@@ -28,6 +28,10 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
   isLoading = false;
   searchKey = '';
   year = new Date().getFullYear();
+  minimumYear = 2020;
+  maximumYear: number = new Date().getFullYear() + 1;
+  minusBtnClass = 'notMinimumYear';
+  plusBtnClass = 'notMaximumYear';
 
   constructor(private receiptsService: ReceiptsService,
               private dialog: MatDialog,
@@ -71,12 +75,13 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
 
   onSearchClear() {
     this.searchKey = '';
-    this.applyFilter();
+    this.getReceipts();
+    // this.applyFilter();
   }
 
-  applyFilter() {
-    this.receiptListData.filter = this.searchKey.trim().toLowerCase();
-  }
+  // applyFilter() {
+  //   this.receiptListData.filter = this.searchKey.trim().toLowerCase();
+  // }
 
   onPrint() {
 
@@ -95,7 +100,7 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
       btnActionLabel: 'Refund Receipt'
     };
     const dialogRef = this.dialog.open(UserAuthorizationComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe(result => {
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
           console.log('Refunding monthly payment with receipt: ' + row.receiptId);
           this.receiptsService.refundMonthlyPayment(row.receiptId).subscribe(
@@ -119,7 +124,33 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
         console.log('DIDN\'T refund payment');
         this.alertify.error('Invalid password and hence can\'t refund for \'' + row.fullName + '\'');
       }
-    });
+    })
+    );
+  }
+
+  minusYearClicked(): void {
+    this.year--;
+    this.receiptList = [];
+    this.receiptListData.data = [];
+    this.getReceipts();
+  }
+
+  plusYearClicked(): void {
+    this.year++;
+    this.receiptList = [];
+    this.receiptListData.data = [];
+    this.getReceipts();
+  }
+
+  currentYearClicked(): void {
+    this.year = new Date().getFullYear();
+    this.receiptList = [];
+    this.receiptListData.data = [];
+    this.getReceipts();
+  }
+
+  formatTotal(row: MembershipReceiptHistory): string {
+    return row.total < 0 ? '-$' + (-1 * row.total) : '$' + row.total;
   }
 
   ngOnDestroy(): void {

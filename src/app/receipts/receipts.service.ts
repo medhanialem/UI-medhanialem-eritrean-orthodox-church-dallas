@@ -24,12 +24,14 @@ export class ReceiptsService {
       searchCriteria = '*all*';
     }
     const headers = this.getHttpHeaders();
-    return this.httpClient.get<MembershipReceiptHistory[]>(`${this.baseUrl}monthlyPayment/getReceipts/` + year + '/' + searchCriteria, {headers});
+    return this.httpClient.get<MembershipReceiptHistory[]>(
+      `${this.baseUrl}monthlyPayment/getReceipts/` + year + '/' + searchCriteria, {headers}
+    );
   }
 
   public refundMonthlyPayment(receiptId: number): Observable<PaymentResponse> {
     const headers = this.getHttpHeaders();
-    return this.httpClient.post<PaymentResponse>(`${this.baseUrl}monthlyPayment/refund/` + receiptId, {headers});
+    return this.httpClient.post<PaymentResponse>(`${this.baseUrl}monthlyPayment/refund/` + receiptId, null, {headers});
   }
 
 }
