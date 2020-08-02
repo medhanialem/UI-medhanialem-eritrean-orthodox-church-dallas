@@ -1,0 +1,34 @@
+.registrationDiv {
+    margin-top:20px;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dtRow{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.divButtons{
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+#btnCancel{
+    margin-left: 10px;
+    width:110px;
+}
+
+#btnSave{
+    margin-left: 20%;
+    margin-right:10px;
+    width:110px;
+}
+
+.emailIcon {
+    color: goldenrod;
+}

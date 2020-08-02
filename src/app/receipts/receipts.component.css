@@ -185,3 +185,24 @@ div.search-div .mat-raised-button {
 #selectedYear {
     color: brown;
 }
+
+.btnEmail {
+    color: goldenrod;
+}
+
+.btnPrint {
+    color: gray;
+}
+
+.monthlyTotal {
+    padding-left: 5px;
+}
+
+.refundedOriginal {
+    padding-left: 5px;
+    color: brown;
+}
+
+.refundTotal {
+    color: brown;
+}

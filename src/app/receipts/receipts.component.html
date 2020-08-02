@@ -35,7 +35,7 @@
       </ng-container>
       <ng-container matColumnDef="total">
         <mat-header-cell id="total" *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
-        <mat-cell id="total" *matCellDef="let element">{{ formatTotal(element) }}</mat-cell>
+        <mat-cell id="total" *matCellDef="let element" [ngClass] = "totalClass(element)">{{ formatTotal(element) }}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="phone">
         <mat-header-cell id="phone" *matHeaderCellDef mat-sort-header>phone</mat-header-cell>
@@ -60,8 +60,11 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef id = "receipt_actions">Actions</mat-header-cell>
         <mat-cell *matCellDef="let row" id = "receipt_actions">
-          <button mat-icon-button title="Print" (click)="onPrint(row)">
+          <button mat-icon-button title="Print" class = "btnPrint" (click)="onPrint(row)">
             <mat-icon>print</mat-icon>
+          </button>
+          <button mat-icon-button title="Email" class = "btnEmail" (click)="onSendEmail(row)">
+            <mat-icon>email</mat-icon>
           </button>
           <button mat-icon-button title="Refund" *ngIf = "!row.voided" color="warn" (click)="onRefundClicked(row)">
             <mat-icon>refresh</mat-icon>

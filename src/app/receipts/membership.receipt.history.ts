@@ -15,4 +15,5 @@ export class MembershipReceiptHistory {
     total: number;
     voided: boolean;
     year: number;
+    email: string;
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MembershipReceiptHistory } from './membership.receipt.history';
+import { EmailModel } from './email/email-model';
 
 @Injectable({ providedIn: 'root' })
 export class ReceiptsService {
@@ -32,6 +33,12 @@ export class ReceiptsService {
   public refundMonthlyPayment(receiptId: number): Observable<PaymentResponse> {
     const headers = this.getHttpHeaders();
     return this.httpClient.post<PaymentResponse>(`${this.baseUrl}monthlyPayment/refund/` + receiptId, null, {headers});
+  }
+
+  public sendEmail(emailObject: EmailModel): Observable<boolean> {
+    console.log(emailObject);
+    const headers = this.getHttpHeaders();
+    return this.httpClient.post<boolean>(`${this.baseUrl}monthlyPayment/sendEmail`, emailObject, {headers});
   }
 
 }

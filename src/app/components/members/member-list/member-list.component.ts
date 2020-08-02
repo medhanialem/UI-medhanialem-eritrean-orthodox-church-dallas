@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit, Input } from '@angular/core';
 import { MemberService } from '../shared/member.service';
 import { MatTableDataSource, MatSort, MatPaginator, MatDialog, MatDialogConfig } from '@angular/material';
 import { MemberComponent } from '../member/member.component';
@@ -6,7 +6,7 @@ import { MessageComponent } from '../../message/message.component';
 import { NotificationService } from '../shared/notification.service';
 import { DialogService } from '../shared/dialog.service';
 import { Member, Tier } from '../member';
-import { Subscription } from 'rxjs';
+import { Subscription, of, Observable } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
 import { DatePipe } from '@angular/common';
 import { AuthenticationService } from 'src/app/shared/authentication.service';
@@ -16,10 +16,12 @@ import { AlertifyService } from 'src/app/shared/alertify.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MoveMemberComponent } from '../move-member/move-member.component';
 import { TierService } from 'src/app/tiers/tier.service';
+import { CdkDetailRowDirective } from '../shared/cdk-detail-row.directive';
 
 @Component({
   selector: 'app-member-list',
-  templateUrl: './member-list.component.html',
+  // templateUrl: './member-list.component.html',
+  templateUrl: './member-list-old.component.html',
   styleUrls: ['./member-list.component.css'],
   animations: [
     trigger('detailExpand', [
@@ -69,6 +71,10 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedTierId = 0;
   tiersDropdownJSON: TiersDropdownJSONFormat[] = [];
   tierList: Tier[];
+
+  private openedRow: CdkDetailRowDirective;
+  @Input() singleChildRowDetail: boolean;
+  dependents$: Observable<Member[]>;
 
   ngOnInit() {
     const showMemberActions = this.showAddEditDeleteMemberButtons();
@@ -459,6 +465,26 @@ export class MemberListComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
       ));
+  }
+
+  isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
+  onToggleChange(cdkDetailRow: CdkDetailRowDirective, row): void {
+    if (
+      this.singleChildRowDetail &&
+      this.openedRow &&
+      this.openedRow.expanded
+    ) {
+      this.openedRow.toggle();
+    }
+    if (!row.close) {
+      row.close = true;
+    } else {
+      row.close = false;
+    }
+    if (cdkDetailRow.expanded) {
+      this.fetchDependents(row);
+    }
+    this.openedRow = cdkDetailRow.expanded ? cdkDetailRow : undefined;
   }
 
   onTierSelected(event) {

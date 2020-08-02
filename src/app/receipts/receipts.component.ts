@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog, MatTableDataSource, MatSort, MatPaginator, MatDialogConfig } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
 import { AlertifyService } from '../shared/alertify.service';
 import { UserAuthorizationComponent } from '../users/user-authorization/user-authorization.component';
 import { ReceiptsService } from './receipts.service';
 import { MembershipReceiptHistory } from './membership.receipt.history';
+import { EmailComponent } from './email/email.component';
 
 @Component({
   selector: 'app-receipts',
@@ -16,7 +16,6 @@ import { MembershipReceiptHistory } from './membership.receipt.history';
 export class ReceiptsComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription [] = [];
-  // selection = new SelectionModel<TierModel>(true, []);
   receiptListData = new MatTableDataSource<MembershipReceiptHistory>();
   receiptList: MembershipReceiptHistory[];
   showAll = false;
@@ -87,6 +86,33 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
 
   }
 
+  onSendEmail(row: MembershipReceiptHistory) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '30%';
+    dialogConfig.height = '22%';
+    dialogConfig.data = {
+      receiptId: row.receiptId,
+      email: row.email
+    };
+    const dialogRef = this.dialog.open(EmailComponent, dialogConfig);
+    this.subscriptions.push(dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        console.log('Sending receipt to email of : ' + row.fullName);
+        this.getReceipts();
+        this.alertify.success('Receipt successfully sent for \' ' + row.fullName + '\'');
+      } else if (result === false) {
+        this.getReceipts();
+        console.log('DIDN\'T send email to :' +  + row.fullName);
+        this.alertify.error('An error occured while sending an email for \'' + row.fullName + '\'');
+      } else {
+        this.alertify.error('Email send CANCLED for \'' + row.fullName + '\'');
+      }
+    })
+    );
+  }
+
   onRefundClicked(row: MembershipReceiptHistory) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -151,6 +177,16 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
 
   formatTotal(row: MembershipReceiptHistory): string {
     return row.total < 0 ? '-$' + (-1 * row.total) : '$' + row.total;
+  }
+
+  totalClass(row: MembershipReceiptHistory): string {
+    if (row.total < 0) {
+      return 'refundTotal';
+    } else if (row.voided) {
+        return 'refundedOriginal';
+    } else {
+      return 'monthlyTotal';
+    }
   }
 
   ngOnDestroy(): void {

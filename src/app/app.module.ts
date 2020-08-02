@@ -42,6 +42,10 @@ import { MatSelectSearchComponent } from './components/mat-select-search/mat-sel
 import { StrictNumberDirective } from './shared/strict-number-only-directive';
 import { ProfileGuard } from './shared/profile.guard';
 import { ReceiptsGuard } from './shared/receipts.guard';
+import { EmailComponent } from './receipts/email/email.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { CdkDetailRowDirective } from './components/members/shared/cdk-detail-row.directive';
 
 @NgModule({
   declarations: [
@@ -68,7 +72,11 @@ import { ReceiptsGuard } from './shared/receipts.guard';
     UserAuthorizationComponent,
     MoveMemberComponent,
     MatSelectSearchComponent,
-    StrictNumberDirective
+    StrictNumberDirective,
+    EmailComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    CdkDetailRowDirective
   ],
 
   imports: [
@@ -105,7 +113,9 @@ import { ReceiptsGuard } from './shared/receipts.guard';
     MemberPaymentPreviewComponent,
     DialogCloseComponent,
     UserAuthorizationComponent,
-    MoveMemberComponent
+    MoveMemberComponent,
+    EmailComponent,
+    ForgotPasswordComponent
   ]
 
 })

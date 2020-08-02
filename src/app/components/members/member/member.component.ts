@@ -196,12 +196,20 @@ export class MemberComponent implements OnInit {
   }
 
   populatePriestFathersDropdownJSON() {
+    this.priestFathersDropdownJSON.push(
+      {
+        value: -1,
+        displayValue: 'Please select a priest.'
+      }
+    );
+
     for(let i = 0; i < this.priestFathers.length; i++) {
       this.priestFathersDropdownJSON.push(
         {
           value: this.priestFathers[i].memberId,
           displayValue: this.priestFathers[i].firstName + ' ' + this.priestFathers[i].middleName + ' ' + this.priestFathers[i].lastName
-        });
+        }
+      );
     }
   }
   onSubmit() {

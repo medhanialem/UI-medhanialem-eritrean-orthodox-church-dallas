@@ -13,6 +13,7 @@ import { PaymentsGuard } from './shared/payments.guard';
 import { UsersGuard } from './shared/users.guard';
 import { ProfileGuard } from './shared/profile.guard';
 import { ReceiptsGuard } from './shared/receipts.guard';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,9 @@ const routes: Routes = [
   {
     path: 'login', loadChildren:
      () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
+    path: 'resetPassword/:token', component: ResetPasswordComponent
   },
   {
     path: '', component: NavigationComponent, canActivate: [MedhanieAlemGuard],
