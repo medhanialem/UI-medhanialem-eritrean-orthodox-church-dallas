@@ -22,6 +22,7 @@
     <mat-icon>monetization_on</mat-icon>
     Pay
 </button> -->
+
 <mat-table [dataSource]="paymentListData" matSort>    
       <ng-container matColumnDef="select">
           <mat-header-cell  *matHeaderCellDef id="colSelect" class="colSelect">
@@ -60,94 +61,94 @@
       <mat-header-cell  *matHeaderCellDef mat-sort-header class="homePhoneNo">Phone</mat-header-cell>
       <mat-cell  *matCellDef="let element" class="homePhoneNo">{{element.homePhoneNo}}</mat-cell>
   </ng-container>
-  <ng-container  matColumnDef="unpaidMonths">
+  <ng-container matColumnDef="unpaidMonths">
       <mat-header-cell *matHeaderCellDef id="month">Unpaid</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <label>{{element.unpaidMonths}}</label>
+          <label class="unpaidMonths">{{getUnpaidTotal(element.paymentStartDate, element.paymentLogs)}}</label>
         </mat-cell>
     </ng-container>
   <ng-container matColumnDef="Jan" >
     <mat-header-cell *matHeaderCellDef id="month">Jan</mat-header-cell>
       <mat-cell *matCellDef="let element" id="month">
-        <mat-icon id="paidMonth" *ngIf="element.paymentLog[0].paymentLogId!=null">done</mat-icon>
-        <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 1)">remove</mat-icon>
+        <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[0].paymentLogId != 0">done</mat-icon>
+        <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 1)">remove</mat-icon>
       </mat-cell>
   </ng-container>
     <ng-container matColumnDef="Feb">
         <mat-header-cell *matHeaderCellDef id="month">Feb</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[1].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 2)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[1].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 2)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="Mar">
         <mat-header-cell *matHeaderCellDef id="month">Mar</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[2].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 3)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[2].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 3)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="April">
       <mat-header-cell *matHeaderCellDef id="month">Apr</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[3].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 4)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[3].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 4)">remove</mat-icon>
        </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="May">
       <mat-header-cell *matHeaderCellDef id="month">May</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[4].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 5)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[4].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 5)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="June">
       <mat-header-cell *matHeaderCellDef id="month">Jun</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[5].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 6)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[5].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 6)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="July">
       <mat-header-cell *matHeaderCellDef id="month">Jul</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[6].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 7)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[6].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 7)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Aug">
       <mat-header-cell *matHeaderCellDef id="month">Aug</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[7].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 8)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 8)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Sep">
       <mat-header-cell *matHeaderCellDef id="month">Sep</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[8].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 9)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[8].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 9)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Oct">
       <mat-header-cell *matHeaderCellDef id="month">Oct</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[9].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 10)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[9].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf= "registrationAfterThisMonth(element.paymentStartDate, 10)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Nov">
       <mat-header-cell *matHeaderCellDef id="month">Nov</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[10].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 11)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = " element.paymentLogs[10].paymentLogId!= 0">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 11)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Dec">
       <mat-header-cell *matHeaderCellDef id="month">Dec</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf="element.paymentLog[11].paymentLogId!=null">done</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf="registrationAfterThisMonth(element.registrationDate.getUTCMonth()+1, element.registrationDate.getFullYear(), 12)">remove</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[11].paymentLogId != 0">done</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 12)">remove</mat-icon>
         </mat-cell>
     </ng-container>
 
@@ -172,14 +173,13 @@
       [ngClass]="{'hide':!((isLoading===false) && paymentListData.data.length==0)}">
     </mat-footer-row>
 
-
-
     </mat-table>
-    <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
+
+    <button mat-raised-button [disabled]="selectedrow==null" (click) = "proceedToPayment()" class="blue pay-btn">
         <mat-icon>monetization_on</mat-icon>
         Proceed to payment
     </button>
-    <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="5"
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
     showFirstLastButtons></mat-paginator>
    
   </div>

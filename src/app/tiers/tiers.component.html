@@ -1,0 +1,74 @@
+<div class="usersContainer">
+  <hr id="hr_user_header1"/>
+  <div class="search-div">
+    <button mat-raised-button (click)="onAddTier()" color="primary">
+      +<mat-icon>filter_center_focus</mat-icon>{{" "}}Tier
+    </button>
+    <mat-form-field class="search-form-field" floatLabel="never">
+      <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  <hr id="hr_user_header2"/>
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="tierListData" matSort class='matTable' >
+      <ng-container matColumnDef="tierId">
+        <mat-header-cell class="user_id_header" id ="tierId" *matHeaderCellDef mat-sort-header>Tier Id</mat-header-cell>
+        <mat-cell id ="tierId" *matCellDef="let element">{{ element.id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tierDescription">
+        <mat-header-cell id = "tierDescription" *matHeaderCellDef>Tier Description</mat-header-cell>
+        <mat-cell id = "tierDescription" *matCellDef="let element">{{ element.description}}</mat-cell>
+      </ng-container>    
+      <ng-container matColumnDef="tierType">
+        <mat-header-cell id="tierType" *matHeaderCellDef mat-sort-header>Tier Type</mat-header-cell>
+        <mat-cell id="tierType" *matCellDef="let element">{{ element.tierType }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <mat-header-cell id="createdBy" *matHeaderCellDef mat-sort-header>Created By</mat-header-cell>
+        <mat-cell id="createdBy" *matCellDef="let element">{{ element.createdBy }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="updatedBy">
+        <mat-header-cell id="updatedBy" *matHeaderCellDef mat-sort-header>Updated By</mat-header-cell>
+        <mat-cell id="updatedBy" *matCellDef="let element">{{ element.updatedBy }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="createdOn">
+        <mat-header-cell id="createdOn" *matHeaderCellDef mat-sort-header>Created On</mat-header-cell>
+        <mat-cell id="createdOn" *matCellDef="let element">{{ toShortDate(element.createdOn) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="updatedOn">
+        <mat-header-cell id="updatedOn" *matHeaderCellDef mat-sort-header>Updated On</mat-header-cell>
+        <mat-cell id="updatedOn" *matCellDef="let element">{{ toShortDate(element.updatedOn) }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef id = "user_actions">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let row" id = "user_actions">
+          <button mat-icon-button title="Update" (click)="onEditTier(row)">
+            <mat-icon>launch</mat-icon>
+          </button>
+          <button mat-icon-button title="Delete" color="warn" (click)="onDeleteTier(row)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="loading">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          <!-- Loading data... -->
+          <img src="../../../assets/fading_squares.gif" alt="Loading image" height="40" width="150">
+        </mat-footer-cell>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <mat-footer-cell *matFooterCellDef colspan="6">
+          No data.
+        </mat-footer-cell>
+      </ng-container>
+      <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>

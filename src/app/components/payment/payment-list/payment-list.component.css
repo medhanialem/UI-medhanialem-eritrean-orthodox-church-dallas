@@ -145,3 +145,9 @@ mat-footer-row mat-footer-cell {
     border-top-width: 6px;
     padding-bottom: 5px;
 }
+
+.unpaidMonths {
+    padding-left: 20px;
+    color: #5F85DB;
+    font-weight: bold;
+}

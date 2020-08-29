@@ -1,19 +1,20 @@
 export interface MemberModel{
-    memberId:number;
+    memberId: number;
     churchId: string;
-    firstName:string;
+    firstName: string;
     middleName: string;
-    lastName:string;
+    lastName: string;
     tier: number;
     homePhoneNo: string;
     registrationDate: Date;
+    paymentStartDate: Date;
     unpaidMonths: number;
-    paymentLog: PaymentLog[];
+    paymentLogs: PaymentLog[];
 }
 
-export interface PaymentLog{
-    paymentLogId:number;
-    year:number;
-    month:number;
-    amount:number;
+export interface PaymentLog {
+    paymentLogId: number;
+    year: number;
+    month: number;
+    amount: number;
 }

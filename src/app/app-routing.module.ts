@@ -11,6 +11,10 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { UsersComponent } from './users/users.component';
 import { PaymentsGuard } from './shared/payments.guard';
 import { UsersGuard } from './shared/users.guard';
+import { ProfileGuard } from './shared/profile.guard';
+import { ReceiptsGuard } from './shared/receipts.guard';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+
 
 const routes: Routes = [
 
@@ -19,17 +23,34 @@ const routes: Routes = [
      () => import('./authentication/authentication.module').then(m => m.AuthenticationModule)
   },
   {
+    path: 'resetPassword/:token', component: ResetPasswordComponent
+  },
+  {
     path: '', component: NavigationComponent, canActivate: [MedhanieAlemGuard],
     children: [
       { path: '', redirectTo: '/members', pathMatch: 'full'},
       {path: 'members', component: MembersComponent, canActivate: [MedhanieAlemGuard]},
       {
-        path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad:[UsersGuard]
+        path: 'users', loadChildren: () => import('./users/users.module').then(m => m.UsersModule), canLoad: [UsersGuard]
       },
-      {path: 'payments', component: PaymentComponent, canActivate: [PaymentsGuard]},
-      {path: '**', redirectTo: '/members'}
-
-
+      {
+        path: 'tiers', loadChildren: () => import('./tiers/tiers.module').then(m => m.TiersModule), canLoad: [UsersGuard]
+      },
+      {
+        path: 'paymentLookUp', loadChildren: () => import('./lookups/lookups.module').then(m => m.LookupsModule), canLoad: [UsersGuard]
+      },
+      {
+        path: 'profile', loadChildren: () => import('./components/profile/profile.module').then(m => m.ProfileModule), canLoad: [ProfileGuard]
+      },
+      {
+        path: 'payments', component: PaymentComponent, canActivate: [PaymentsGuard]
+      },
+      {
+        path: 'receipts', loadChildren: () => import('./receipts/receipts.module').then(m => m.ReceiptsModule), canLoad: [ReceiptsGuard]
+      },
+      {
+        path: '**', redirectTo: '/members'
+      }
   ]}
 ];
 

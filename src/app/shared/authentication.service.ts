@@ -20,6 +20,8 @@ export class AuthenticationService {
   baseUrl = environment.apiUrl;
   private subscriptions: Subscription[] = [];
   loginSucces = new BehaviorSubject(false);
+  resetPasswordForm: ResetPasswordForm;
+  forgotPasswordForm: PasswordResetRequestModel;
 
   jwtHelper = new JwtHelperService();
   constructor(private router: Router, private httpClient: HttpClient) { }
@@ -57,6 +59,24 @@ export class AuthenticationService {
      );
   }
 
+  forgotPassword(email: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    this.forgotPasswordForm = {email};
+    return this.httpClient.post(`${this.baseUrl}users/password-reset-request`, this.forgotPasswordForm, {headers});
+  }
+
+  resetPassword(urlToken: string, passWord: string, confirmPassWord: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    this.resetPasswordForm = {token: urlToken, password: passWord, confirmPassword: confirmPassWord};
+    console.log(this.resetPasswordForm);
+    return this.httpClient.post(`${this.baseUrl}api/auth/resetPassword?token=` + urlToken, this.resetPasswordForm, {headers});
+  }
+
   userHasPermission(authorization: IAuthorizationGuard): boolean {
     return authorization.userHasPermission();
   }
@@ -83,4 +103,14 @@ export class AuthenticationService {
 export class LoginForm {
   username: string;
   password: string;
+}
+
+export class ResetPasswordForm {
+  token: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export class PasswordResetRequestModel {
+  email: string;
 }

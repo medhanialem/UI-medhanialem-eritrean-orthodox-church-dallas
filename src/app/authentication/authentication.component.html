@@ -21,6 +21,11 @@
                   <input formControlName="password" matInput placeholder="Password" type="password"/>
                 </mat-form-field>
               </div>
+              <div class="col-12">
+                <button mat-button color="primary" class='btnResetPassword' (click)='onForgotPasswordBtn()' tabindex="-1">Forgot Password</button>
+                <label class = "resetSuccessLabel">{{resetPasswordLabelSuccess}}</label>
+                <label class = "resetFailureLabel">{{resetPasswordLabelFailure}}</label>
+              </div>
               <div class='col-12 row'>
                 <div class="col-2">
 

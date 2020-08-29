@@ -12,20 +12,20 @@
         <div class="row col-lg-12 col-xl-12 dtRow">
           <div class="col-lg-4  col-xl-4">
             <mat-form-field>
-              <input formControlName="firstName" matInput placeholder="First name*">
+              <input formControlName="firstName" matInput placeholder="First Name*">
               <mat-error>First name field is mandatory.</mat-error>
             </mat-form-field>
           </div>
 
           <div class="col-lg-4  col-xl-4">
             <mat-form-field>
-              <input formControlName="middleName" matInput placeholder="Middle name*">
+              <input formControlName="middleName" matInput placeholder="Middle Name*">
               <mat-error>Middle name field is mandatory.</mat-error>
             </mat-form-field>
           </div>
           <div class="col-lg-4  col-xl-4">
             <mat-form-field>
-              <input formControlName="lastName" matInput placeholder="Last name*">
+              <input formControlName="lastName" matInput placeholder="Last Name*">
               <mat-error>Last name field is mandatory.</mat-error>
             </mat-form-field>
           </div>
@@ -57,7 +57,7 @@
             <div class="col-lg-5 c ol-xl-5 divGender">
               <div class="row">
                 <div class="col-lg-6 col-xl-6">
-                  <mat-checkbox formControlName="sundaySchool" color="primary">Sunday School</mat-checkbox>
+                  <mat-checkbox formControlName="sundaySchool" color="primary">S.S. Member</mat-checkbox>
                 </div>
                 <div class="col-lg-6 col-xl-6">
                   <mat-checkbox formControlName="sebekaGubae" color="primary">Sebeka Gubae</mat-checkbox>
@@ -76,7 +76,8 @@
           </div>
           <div class="col-lg-3 col-xl-3">
             <mat-form-field>
-              <input formControlName="mobile" matInput placeholder="Mobile*">
+              <!-- <input formControlName="mobile" matInput type = "text" placeholder="Mobile*" [textMask]="{mask: phoneMask}" NumberOnly> -->
+              <input formControlName="mobile" matInput type = "text" placeholder="Mobile*" [textMask]="{mask: phoneMask}">
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.required">Mobile field is mandatory.</mat-error>
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.minlength">Please put valid number.</mat-error>
               <mat-error *ngIf="addMemberForm.controls['mobile'].errors?.maxlength">Please put valid number.</mat-error>
@@ -119,7 +120,7 @@
           </div>
           <div class="col-lg-4 col-xl-4">
             <mat-form-field>
-              <input formControlName="zipCode" matInput placeholder="Zip Code*">
+              <input formControlName="zipCode" matInput placeholder="Zip Code*" NumberOnly>
               <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.required">Zip code field is mandatory.
               </mat-error>
               <mat-error *ngIf="addMemberForm.controls['zipCode'].errors?.minlength">Please put valid zip code.
@@ -153,12 +154,22 @@
           </div>
 
           <!-- <div class="col-lg-4 col-xl-4 col-sm-12" *ngIf="primaryOrDependent === 'primary'"> -->
-            <div class="col-lg-4 col-xl-4 col-sm-12">
+          <div class="col-lg-4 col-xl-4 col-sm-12">
             <mat-form-field>
               <mat-label>Tier*</mat-label>
               <mat-select (selectionChange)="onTierSelected($event)" #TIER [(ngModel)]="selectedTier.id" formControlName='tier'>
                 <mat-option *ngFor="let tier of tierList$ | async" [value]="tier.id">
                   {{tier.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4 col-xl-4 col-sm-12" *ngIf="primaryOrDependent === 'dependent'">
+            <mat-form-field>
+              <mat-label>Relationship*</mat-label>
+              <mat-select (selectionChange)="onRelationshipSelected($event)" [(ngModel)]="selectedRelationship" formControlName='relationship'>
+                <mat-option *ngFor="let relationship of relationships" [value]="relationship.value">
+                  {{relationship.displayValue}}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -172,6 +183,20 @@
               <mat-error>Registration date is mandatory.</mat-error>
             </mat-form-field>
           </div> -->
+        </div>
+
+        <div class="row col-lg-12 col-xl-12 dtRow">
+          <div class="col-lg-6 col-xl-6">
+            <mat-form-field>
+              <mat-label>Priest Father</mat-label>
+              <!-- <mat-select (selectionChange)="onPriestFatherSelected($event)" [(ngModel)]="selectedPriestFather" formControlName="priestFather"> -->
+              <mat-select (selectionChange)="onPriestFatherSelected($event)" [(ngModel)]="selectedPriestFatherId" formControlName="fatherPriest">
+                <mat-option *ngFor="let priestFather of priestFathersDropdownJSON" [value]="priestFather.value">
+                  {{priestFather.displayValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
 
         <div class="row col-lg-12 col-xl-12 divButtons">

@@ -9,9 +9,9 @@ export class PaymentsAuthorizationGuard implements IAuthorizationGuard {
     }
     userHasPermission(): boolean {
         let showPayments = false;
-        let roles = this.authService.decodedToken().aud.replace('[','');
-        roles = roles.replace(']','');
-        roles = roles.replace(' ','');
+        let roles = this.authService.decodedToken().aud.replace('[', '');
+        roles = roles.replace(']', '');
+        roles = roles.replace(' ', '');
         const role = roles.split(',');
         role.forEach(element => {
             if (

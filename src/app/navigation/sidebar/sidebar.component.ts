@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { Roles } from 'src/app/shared/roles';
 import { PaymentsAuthorizationGuard } from 'src/app/shared/payments-authorization-guard';
 import { UsersAuthorizationGuard } from 'src/app/shared/users-authorization-guard';
+import { TiersAuthorizationGuard } from 'src/app/shared/tiers-authorization-guard';
+import { PaymentLookUpsAuthorizationGuard } from 'src/app/shared/payment-look-ups-authorization-guard';
+import { ProfileAuthorizationGuard } from 'src/app/shared/profile-authorization-guard';
+import { ReceiptsAuthorizationGuard } from 'src/app/shared/receipts-authorization-guard';
 
 @Component({
   selector: 'app-sidebar',
@@ -33,7 +37,23 @@ export class SidebarComponent implements OnInit {
    return this.authenticationService.userHasPermission(new PaymentsAuthorizationGuard(this.authenticationService));
   }
 
+  showReceipts(): boolean {
+    return this.authenticationService.userHasPermission(new ReceiptsAuthorizationGuard(this.authenticationService));
+   }
+
   showUsers(): boolean {
     return this.authenticationService.userHasPermission(new UsersAuthorizationGuard(this.authenticationService));
+  }
+
+  showTiers(): boolean {
+    return this.authenticationService.userHasPermission(new TiersAuthorizationGuard(this.authenticationService));
+  }
+
+  showPaymentLookUp(): boolean {
+    return this.authenticationService.userHasPermission(new PaymentLookUpsAuthorizationGuard(this.authenticationService));
+  }
+
+  showProfile(): boolean {
+    return this.authenticationService.userHasPermission(new ProfileAuthorizationGuard(this.authenticationService));
   }
 }

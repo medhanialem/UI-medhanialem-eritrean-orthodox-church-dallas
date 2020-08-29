@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +39,13 @@ import { UsersGuard } from './shared/users.guard';
 import { UserAuthorizationComponent } from './users/user-authorization/user-authorization.component';
 import { MoveMemberComponent } from './components/members/move-member/move-member.component';
 import { MatSelectSearchComponent } from './components/mat-select-search/mat-select-search.component';
+import { StrictNumberDirective } from './shared/strict-number-only-directive';
+import { ProfileGuard } from './shared/profile.guard';
+import { ReceiptsGuard } from './shared/receipts.guard';
+import { EmailComponent } from './receipts/email/email.component';
+import { ForgotPasswordComponent } from './authentication/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './authentication/reset-password/reset-password.component';
+import { CdkDetailRowDirective } from './components/members/shared/cdk-detail-row.directive';
 
 @NgModule({
   declarations: [
@@ -63,7 +71,12 @@ import { MatSelectSearchComponent } from './components/mat-select-search/mat-sel
     HeaderComponent,
     UserAuthorizationComponent,
     MoveMemberComponent,
-    MatSelectSearchComponent
+    MatSelectSearchComponent,
+    StrictNumberDirective,
+    EmailComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    CdkDetailRowDirective
   ],
 
   imports: [
@@ -74,7 +87,8 @@ import { MatSelectSearchComponent } from './components/mat-select-search/mat-sel
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AuthenticationModule
+    AuthenticationModule,
+    TextMaskModule
   ],
 
   providers: [
@@ -83,7 +97,9 @@ import { MatSelectSearchComponent } from './components/mat-select-search/mat-sel
     MedhanieAlemGuard,
     AlertifyService,
     PaymentsGuard,
-    UsersGuard
+    UsersGuard,
+    ProfileGuard,
+    ReceiptsGuard
   ],
 
   bootstrap: [AppComponent],
@@ -97,7 +113,9 @@ import { MatSelectSearchComponent } from './components/mat-select-search/mat-sel
     MemberPaymentPreviewComponent,
     DialogCloseComponent,
     UserAuthorizationComponent,
-    MoveMemberComponent
+    MoveMemberComponent,
+    EmailComponent,
+    ForgotPasswordComponent
   ]
 
 })

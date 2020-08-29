@@ -1,0 +1,195 @@
+<hr id="hr_member_header1"/>
+<div class="search-div">
+  <button *ngIf="showAddEditDeleteMemberButtons()" mat-raised-button (click)="onAddPrimaryMember('primary')" color="primary">
+    <mat-icon>person_add</mat-icon>{{" "}}Member
+  </button>
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button mat-icon-button title="Refresh" class = "refreshMemberListPage" (click) = "refreshMemberListPage()">
+    <mat-icon>autorenew</mat-icon>
+  </button>
+
+  <!-- <mat-checkbox class = "activeInactive" color="primary" [(ngModel)]="activeInactive" (change)="getMemberList()">All (Active + Inactive)</mat-checkbox> -->
+  <mat-form-field class = "activeInactive">
+    <mat-select (selectionChange) = onActiveInactiveDropDownChange($event) [(value)]="activeInactiveStatus" placeholder="Status">
+      <mat-option *ngFor="let memberStatus of memberStatuses" [value]="memberStatus.value">
+        {{memberStatus.displayValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+   <!-- <mat-checkbox class = "sundaySchool" color="primary" [(ngModel)]="sundaySchool" (change)="changeMatTableDataSource()">Sunday School</mat-checkbox>
+   <mat-checkbox class = "sebekaGubae" color="primary" [(ngModel)]="sebekaGubae" (change)="changeMatTableDataSource()">Sebeka Gubae</mat-checkbox>
+  <button mat-raised-button (click)="onSendSMS()" [disabled]="selection.selected.length==0" color="primary">
+    <mat-icon>message</mat-icon>{{" "}}Send
+  </button> -->
+
+  <mat-form-field class = 'tierSelect'>
+    <mat-label>Tier</mat-label>
+    <mat-select (selectionChange)="onTierSelected($event)" [(ngModel)]="selectedTierId">
+      <mat-option [value]="0">All</mat-option>
+      <mat-option *ngFor="let tier of tiersDropdownJSON" [value]="tier.value">
+        {{tier.displayValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+<hr id="hr_member_header2"/>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="memberListData" matSort class='matTable' multiTemplateDataRows>
+    <!-- <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef  id="registartion_select">
+        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()"
+                      >
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row" id='registartion_select'>
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="checkboxLabel(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="churchId">
+      <mat-header-cell class="church_id_header" id = "church_id" *matHeaderCellDef mat-sort-header>Church Id</mat-header-cell>
+      <mat-cell id = "church_id" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ element.churchId }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="oldChurchId">
+      <mat-header-cell class="oldChurch_id_header" id = "oldChurch_id" *matHeaderCellDef mat-sort-header>Old CId</mat-header-cell>
+      <mat-cell id = "oldChurch_id" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ element.oldChurchId }}</mat-cell>
+    </ng-container>
+    
+    <ng-container matColumnDef="name">
+      <mat-header-cell id = "registartion_name" *matHeaderCellDef>Full Name</mat-header-cell>
+      <mat-cell id = "registartion_name" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ element.firstName + ' ' +element.middleName+' '+ element.lastName }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="gender">
+      <mat-header-cell id = "registartion_gender" *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+      <mat-cell id = "registartion_gender" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ element.gender }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="homePhoneNo">
+      <mat-header-cell id = "registartion_mobile" *matHeaderCellDef>Phone No.</mat-header-cell>
+      <mat-cell id = "registartion_mobile" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ element.homePhoneNo }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+      <mat-header-cell id = "registartion_address" *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+      <mat-cell id = "registartion_address" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>
+        <span *ngIf="null != element.apartmentNo">{{ element.streetAddress + ' Apt '+ element.apartmentNo + ' '+ element.city + ', ' + element.state + ' ' + element.zipCode}}</span>
+        <span *ngIf="null == element.apartmentNo">{{ element.streetAddress + ' '+ element.city + ', ' + element.state + ' ' + element.zipCode}}</span>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell id="registartion_email" *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      <mat-cell id="registartion_email" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ element.email }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="registrationDate">
+      <mat-header-cell id="registartion_date" *matHeaderCellDef mat-sort-header>Member Since</mat-header-cell>
+      <mat-cell (click) = "$event.stopPropagation()" id="registartion_date" *matCellDef="let element" [ngClass] = '{"inActive": element.status === "INACTIVE"}'>{{ toShortDate(element.registrationDate) }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef id = "registartion_actions_main_member">Actions</mat-header-cell>
+      <mat-cell (click) = "$event.stopPropagation()" *matCellDef="let row" id = "registartion_actions_main_member">
+        <button mat-icon-button title="Edit" (click)="onEdit(row, 'update', 'primary')">
+          <mat-icon>launch</mat-icon>
+        </button>
+        <button mat-icon-button title="Move" color="warn" (click)="onMoveMember(row)">
+          <mat-icon>people_outline</mat-icon>
+        </button>
+        <button mat-icon-button title="Deactivate" color="warn" *ngIf = "row.status === 'ACTIVE'" (click)="onDelete(row)">
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+        <button mat-icon-button title="Reactivate" *ngIf = "row.status === 'INACTIVE'" (click)="onReactivate(row)">
+          <mat-icon>person_pin</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        <!-- Loading data... -->
+        <img src="../../../assets/fading_squares.gif" alt="Loading image" height="40" width="150">
+      </mat-footer-cell>
+    </ng-container>
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+
+    
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+    <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+    <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+      
+        <table class = "table">
+          <!-- <tr>
+            <td colspan="7"></td>
+          </tr>
+          <tr>
+            <td colspan="7"></td>
+          </tr> -->
+          <tr>
+            <th id = "registartion_name_dependent">Full Name</th>
+            <th id = "registartion_gender_dependent">Gender</th>
+            <th id = "registartion_mobile_dependent">Phone No.</th>
+            <th id = "registartion_address_dependent">Address</th>
+            <th id = "registartion_email_dependent">Email</th>
+            <th id = "registartion_date_dependent">Member Since</th>
+            <th id = "registartion_actions_dependent_header" *ngIf="showAddEditDeleteMemberButtons()">Actions</th>
+          </tr>
+          <tr class="rows" *ngFor="let dependent of dependents">
+            <td id = "registartion_name_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{dependent.firstName + ' ' +dependent.middleName+' '+ dependent.lastName }}</td>
+            <td id = "registartion_gender_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{dependent.gender}}</td>
+            <td id = "registartion_mobile_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{dependent.homePhoneNo}}</td>
+            <td id = "registartion_address_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}' *ngIf="null != dependent.apartmentNo">{{ dependent.streetAddress + ' Apt '+ dependent.apartmentNo + ' '+ dependent.city + ', ' + dependent.state + ' ' + dependent.zipCode}}</td>
+            <td id = "registartion_address_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}' *ngIf="null == dependent.apartmentNo">{{ dependent.streetAddress + ' '+ dependent.city + ', ' + dependent.state + ' ' + dependent.zipCode}}</td>
+            <td id = "registartion_email_dependent" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{dependent.email}}</td>
+            <td id = "registartion_date" [ngClass] = '{"inActive": dependent.status === "INACTIVE"}'>{{toShortDate(dependent.registrationDate)}}</td>
+            <td id = "registartion_actions_dependent" *ngIf="showAddEditDeleteMemberButtons()">
+              <button mat-icon-button title="Edit" (click)="onEdit(dependent, 'update', 'dependent')"><mat-icon>launch</mat-icon></button>
+              <button mat-icon-button title="Move" color="warn" (click)="onMoveMember(dependent)"><mat-icon>people_outline</mat-icon></button>
+              <button mat-icon-button title="Upgrade" (click)="onUpgrade(dependent)"><mat-icon>how_to_reg</mat-icon></button>
+              <button mat-icon-button title="Deactivate" color="warn" *ngIf = "dependent.status === 'ACTIVE'" (click)="onDelete(dependent)"><mat-icon>delete_outline</mat-icon></button>
+              <button mat-icon-button title="Reactivate" *ngIf = "dependent.status === 'INACTIVE'" (click)="onReactivate(dependent)"><mat-icon>person_pin</mat-icon></button>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="7">
+            <button class = "addMember_dependentBtn" *ngIf="showAddEditDeleteMemberButtons()" mat-raised-button (click)="onAddDependentMember('dependent')" color="primary">
+              <mat-icon>person_add</mat-icon>{{" "}}Dependent
+            </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-cell>
+  </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <!-- <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row> -->
+    <mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element" (click)=fetchDependents(element)>
+    </mat-row>
+
+    <mat-row style="overflow: hidden;" *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
+
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':!isLoading}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']"
+      [ngClass]="{'hide':!((isLoading===false) && memberListData.data.length==0)}"></mat-footer-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
+    showFirstLastButtons></mat-paginator>

@@ -1,0 +1,9 @@
+<div>
+    <mat-card>  
+        <mat-card-title><h3 matLine>Your Profile Page</h3></mat-card-title>
+        <p matLine> Email: {{authenticationService.decodedToken().sub}}</p>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="onChangePassword()">Change Password</button>
+        </mat-card-actions>
+    </mat-card> 
+  </div>

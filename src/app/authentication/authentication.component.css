@@ -18,23 +18,25 @@
     align-items: center;
     flex-flow: column;
 }
+
 .loginAvatar {
     width: 130px;
     height: 135px; 
-  }
+}
 
-  .loginForm{
+.loginForm{
     margin-top: 40px !important;
-  }
-  .userNameField{
-      width: 100%;
-  }
-  .passwordField{
+}
+
+.userNameField{
+    width: 100%;
+}
+.passwordField{
     width: 100%;
 }
 
 .btnLogin {
-width:50%;
+    width:50%;
 }
 
 .btnClear {
@@ -45,4 +47,18 @@ width:50%;
 .divButtons{
     text-align: center;
     margin-top: 40px;
+}
+
+.btnResetPassword {
+    font-weight: normal;
+    line-height: 0px;
+    padding-left: 0px;
+}
+
+.resetSuccessLabel {
+    color: green;
+}
+
+.resetFailureLabel {
+    color: red;
 }
