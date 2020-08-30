@@ -61,11 +61,12 @@ export class PaymentListComponent implements OnInit {
     this.subscriptions.push(this.service.getPaymentList('' + this.year).subscribe(
       (
         response => {
-          console.log(response);
           this.memberPaymentDetail = response as MemberModel[];
           this.memberPaymentDetail.forEach(mpd => {
-            mpd.paymentLogs = this.sortPaymentLogsPerMonth(mpd.paymentLogs as PaymentLog[]);
+            // mpd.paymentLogs = this.sortPaymentLogsPerMonth(mpd.paymentLogs as PaymentLog[]);
+            mpd.paymentLogs = this.populatePaymentLogsPerMonth(mpd.paymentLogs as PaymentLog[]);
           });
+          console.log(this.memberPaymentDetail);
           this.paymentListData.data = this.memberPaymentDetail;
         }
       ),
@@ -81,11 +82,36 @@ export class PaymentListComponent implements OnInit {
     ));
   }
 
-  sortPaymentLogsPerMonth(paymentLog: PaymentLog[]) {
-    return paymentLog.sort((a, b) => {
-      if (a.month < b.month) { return -1; }
-      if (a.month > b.month) { return 1; }
-    });
+  // sortPaymentLogsPerMonth(paymentLog: PaymentLog[]) {
+  //   return paymentLog.sort((a, b) => {
+  //     if (a.month < b.month) { return -1; }
+  //     if (a.month > b.month) { return 1; }
+  //   });
+  // }
+
+  /*
+   * This method is needed in order to make every incoming payment logs 12 (Jan - Dec)
+  */
+  populatePaymentLogsPerMonth(paymentLogs: PaymentLog[]): PaymentLog[] {
+    const updatedPaymentLogs: PaymentLog[] = [];
+
+    for (let i = 0; i < 12; i++) {
+      updatedPaymentLogs.push({paymentLogId: 0, year: this.year,  month: i, amount: 0});
+    }
+
+    for (let j = 0; j < paymentLogs.length; j++) {
+      for (let k = 0; k < updatedPaymentLogs.length; k++) {
+        if (paymentLogs[j].month === k + 1) {
+          updatedPaymentLogs[k].paymentLogId = paymentLogs[j].paymentLogId;
+          updatedPaymentLogs[k].year = paymentLogs[j].year;
+          updatedPaymentLogs[k].month = paymentLogs[j].month;
+          updatedPaymentLogs[k].amount = paymentLogs[j].amount;
+          break;
+        }
+      }
+    }
+
+    return updatedPaymentLogs;
   }
 
  // Check if there are unpaid payments before, then proceed with payment.

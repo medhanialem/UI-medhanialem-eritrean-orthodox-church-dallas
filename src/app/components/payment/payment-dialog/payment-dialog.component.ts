@@ -2,11 +2,12 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { PaymentLookUp } from '../shared/paymentLookUps.model';
 import { PaymentService } from '../shared/payment.service';
-import { MemberModel } from '../shared/member.model';
 import { PaymentConfirmationComponent } from '../payment-confirmation/payment-confirmation.component';
 import { LookupsService } from 'src/app/lookups/lookups.service';
 import { Subscription } from 'rxjs';
 import { LookupModel } from 'src/app/lookups/lookups.model';
+import { TierService } from 'src/app/tiers/tier.service';
+import { Tier } from '../../members/member';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -17,18 +18,14 @@ export class PaymentDialogComponent implements OnInit {
 
   constructor(
     private lookupsService: LookupsService,
-    // @Inject(MAT_DIALOG_DATA) private data: MemberModel,
     @Inject(MAT_DIALOG_DATA) private data,
     private dialogRef: MatDialogRef<PaymentDialogComponent>,
     private paymentService: PaymentService,
+    private tierService: TierService,
     private dialog: MatDialog
   ) { }
 
-  //selecteddata: null;
   fullName: string;
-  //months = 1;
-  //tierValue = 15;
-  //total = this.tierValue;
   minimumMonths = 0;
   maximumMonths = 0;
   total = 0;
@@ -41,7 +38,6 @@ export class PaymentDialogComponent implements OnInit {
   tierId: number;
   phone: string;
   paymentConfirmationData: {};
-  //paymentPayload: {};
   memberId: number;
   paymentLogList = [];
   minusBtnClass = 'minimumMonth';
@@ -49,10 +45,10 @@ export class PaymentDialogComponent implements OnInit {
   year: number;
   private subscriptions: Subscription [] = [];
   lookupList: LookupModel[] = [];
+  tier: Tier;
+  tierDescription: string;
 
   ngOnInit() {
-    // this.getPaymentLookupData();
-    //this.selecteddata=this.data;
     this.fullName = this.data.paymentDetail.firstName + ' ' + this.data.paymentDetail.middleName + ' ' + this.data.paymentDetail.lastName;
     this.paymentLogs = this.data.paymentDetail.paymentLogs;
     this.churchId = this.data.paymentDetail.churchId;
@@ -60,8 +56,26 @@ export class PaymentDialogComponent implements OnInit {
     this.phone = this.data.paymentDetail.homePhoneNo;
     this.memberId = this.data.paymentDetail.memberId;
     this.year = this.data.year;
-    this.determineMinimumMaximumMonths();
     this.getPaymentLookupData();
+    this.getTierDescription();
+    // this.determineMinimumMaximumMonths();
+  }
+
+  getTierDescription() {
+    this.subscriptions.push(
+      this.tierService.getTier(this.tierId).subscribe(
+        response => {
+          if (response != null) {
+            this.tier = response;
+            this.tierDescription = this.tier.description;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => { }
+      )
+  );
   }
 
   getPaymentLookupData() {
@@ -70,6 +84,8 @@ export class PaymentDialogComponent implements OnInit {
           response => {
             if (response != null) {
               this.lookupList = response as LookupModel[];
+              this.determineMinimumMaximumMonths();
+              console.log(this.lookupList);
             } else {
               this.lookupList = [];
             }
@@ -86,26 +102,6 @@ export class PaymentDialogComponent implements OnInit {
     this.dialogRef.close('loadPaymentList');
   }
 
-  // determineMinimumMaximumMonths(): void {
-  //   for (let i = 0; i < this.paymentLogs.length; i++) {
-  //     if (this.paymentLogs[i].paymentLogId == null
-  //       && this.verifyRegistrationDate(this.paymentLogs[i].month, this.paymentLookUps[i].year)) {
-  //       if (this.startingPay === -1) {
-  //         this.startingPay = i;
-  //         this.index = this.startingPay + 1;
-  //       }
-  //       this.maximumMonths++;
-  //     }
-  //   }
-  //   if (this.maximumMonths >= 1) {
-  //     this.minimumMonths = 1;
-  //     this.months = 1;
-  //     this.total += this.paymentLookUps[this.startingPay].amount;
-  //   } else {
-  //     this.months = 0;
-  //   }
-  // }
-
   determineMinimumMaximumMonths(): void {
     for (let i = 0; i < this.data.paymentDetail.paymentLogs.length; i++) {
       if (this.data.paymentDetail.paymentLogs[i].paymentLogId === 0
@@ -117,10 +113,12 @@ export class PaymentDialogComponent implements OnInit {
         this.maximumMonths++;
       }
     }
+    console.log(this.startingPay);
     if (this.maximumMonths >= 1) {
       this.minimumMonths = 1;
       this.months = 1;
-      this.total += this.data.paymentDetail.paymentLogs[this.startingPay].amount;
+      // this.total += this.data.paymentDetail.paymentLogs[this.startingPay].amount;
+      this.total += this.lookupList[this.startingPay].amount;
     } else {
       this.months = 0;
     }
@@ -138,39 +136,23 @@ export class PaymentDialogComponent implements OnInit {
 
   calculateTotalPlusMonthClicked(): void {
     if (this.months < this.maximumMonths) {
-      this.total += this.data.paymentDetail.paymentLogs[this.index].amount;
+      // this.total += this.data.paymentDetail.paymentLogs[this.index].amount;
+      this.total += this.lookupList[this.index].amount;
       this.index++;
       this.months++;
     }
     this.determineMinusPlusYearBtnColor();
   }
 
-  // calculateTotalPlusMonthClicked(): void {
-  //   if (this.months < this.maximumMonths) {
-  //     this.total += this.paymentLookUps[this.index].amount;
-  //     this.index++;
-  //     this.months++;
-  //   }
-  //   this.determineMinusPlusYearBtnColor();
-  // }
-
   calculateTotalMinusMonthClicked(): void {
     if (this.index > this.startingPay) {
       this.months--;
       this.index--;
-      this.total -= this.data.paymentDetail.paymentLogs[this.index].amount;
+      // this.total -= this.data.paymentDetail.paymentLogs[this.index].amount;
+      this.total -= this.lookupList[this.index].amount;
     }
     this.determineMinusPlusYearBtnColor();
   }
-
-  // calculateTotalMinusMonthClicked(): void {
-  //   if (this.index > this.startingPay) {
-  //     this.months--;
-  //     this.index--;
-  //     this.total -= this.paymentLookUps[this.index].amount;
-  //   }
-  //   this.determineMinusPlusYearBtnColor();
-  // }
 
   makePayment() {
     this.paymentConfirmation();

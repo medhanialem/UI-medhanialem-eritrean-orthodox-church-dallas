@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { of, Observable } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Tier } from '../components/members/member';
 
 @Injectable({ providedIn: 'root' })
 export class TierService {
@@ -22,6 +23,11 @@ export class TierService {
   public getTierList(): Observable<TierModel[]> {
     const headers = this.getHttpHeaders();
     return this.httpClient.get<TierModel[]>(`${this.baseUrl}tiers`, {headers});
+  }
+
+  public getTier(tierId: number): Observable<Tier> {
+    const headers = this.getHttpHeaders();
+    return this.httpClient.get<TierModel>(`${this.baseUrl}tiers/` + tierId, {headers});
   }
 
   addTier(tier: TierModel, action: string): Observable<TierModel> {
