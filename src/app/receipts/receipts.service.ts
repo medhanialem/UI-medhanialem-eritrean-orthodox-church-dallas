@@ -41,4 +41,11 @@ export class ReceiptsService {
     return this.httpClient.post<boolean>(`${this.baseUrl}monthlyPayment/sendEmail`, emailObject, {headers});
   }
 
+  public getPDF(receiptId: number){
+    const headers = this.getHttpHeaders();
+    
+    return this.httpClient.get<any>(`${this.baseUrl}monthlyPayment/viewreceipt/`+receiptId, {headers, 'responseType':'arraybuffer' as 'json'});
+    
+    }
+
 }
