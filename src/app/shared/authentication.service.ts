@@ -72,9 +72,8 @@ export class AuthenticationService {
       'Content-Type': 'application/json'
     });
 
-    this.resetPasswordForm = {token: urlToken, password: passWord, confirmPassword: confirmPassWord};
-    console.log(this.resetPasswordForm);
-    return this.httpClient.post(`${this.baseUrl}api/auth/resetPassword?token=` + urlToken, this.resetPasswordForm, {headers});
+    this.resetPasswordForm = {token: urlToken, enterNewPassword: passWord, confirmPassword: confirmPassWord};
+    return this.httpClient.post(`${this.baseUrl}users/passwordReset`, this.resetPasswordForm, {headers});
   }
 
   userHasPermission(authorization: IAuthorizationGuard): boolean {
@@ -107,7 +106,7 @@ export class LoginForm {
 
 export class ResetPasswordForm {
   token: string;
-  password: string;
+  enterNewPassword: string;
   confirmPassword: string;
 }
 

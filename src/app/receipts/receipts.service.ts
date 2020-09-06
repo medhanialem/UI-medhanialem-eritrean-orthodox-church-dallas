@@ -35,10 +35,10 @@ export class ReceiptsService {
     return this.httpClient.post<PaymentResponse>(`${this.baseUrl}monthlyPayment/refund/` + receiptId, null, {headers});
   }
 
-  public sendEmail(emailObject: EmailModel): Observable<boolean> {
+  public sendReceiptByEmail(emailObject: EmailModel): Observable<boolean> {
     console.log(emailObject);
     const headers = this.getHttpHeaders();
-    return this.httpClient.post<boolean>(`${this.baseUrl}monthlyPayment/sendEmail`, emailObject, {headers});
+    return this.httpClient.post<boolean>(`${this.baseUrl}monthlyPayment/sendReceiptByEmail`, emailObject, {headers});
   }
 
   public getPDF(receiptId: number){

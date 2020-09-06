@@ -33,7 +33,8 @@ export class ResetPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      console.log(params);
+      this.urlToken = params['token'];
+      console.log('token:' + params['token']);
     });
   }
 
@@ -41,11 +42,9 @@ export class ResetPasswordComponent implements OnInit {
     if (this.loginForm.valid) {
       this.authService.resetPassword(this.urlToken, this.loginForm.value.password, this.loginForm.value.confirmPassword).subscribe(
         result => {
-          if (result === true)  {
+          if (result['operationResult'] === 'SUCCESS')  {
             this.alertify.success('Password Reset Successful.');
             this.router.navigate(['/login']);
-          } else {
-          this.alertify.error('Invalid username or password');
           }
         },
         (error) => {

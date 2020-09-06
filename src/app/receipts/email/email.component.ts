@@ -33,7 +33,7 @@ export class EmailComponent implements OnInit {
   onSendEmail() {
     if (this.sendEmailForm.valid) {
       this.populateEmail();
-      this.receiptsService.sendEmail(this.emailModel).subscribe(
+      this.receiptsService.sendReceiptByEmail(this.emailModel).subscribe(
         (result) => {
           console.log(result);
           this.dialogRef.close(result);
