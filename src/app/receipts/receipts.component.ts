@@ -83,21 +83,20 @@ export class ReceiptsComponent implements OnInit, OnDestroy {
   // }
 
   onPrint(row: MembershipReceiptHistory) {
-    const receiptId= row.receiptId
-    this.receiptsService.getPDF(receiptId).subscribe((response)=>{
+    const receiptId = row.receiptId;
+    this.receiptsService.getPDF(receiptId).subscribe((response) => {
 
-      let file = new Blob([response], { type: 'application/pdf' });            
-      var fileURL = URL.createObjectURL(file);
+      const file = new Blob([response], { type: 'application/pdf' });
+      const fileURL = URL.createObjectURL(file);
       window.open(fileURL);
 
-    },(error) => {
+    }, (error) => {
       this.getReceipts();
       console.log(error);
       this.alertify.error('An error occured and hence can\'t view Receipt Id \'' + receiptId);
     }
   );
   }
-  
 
   onSendEmail(row: MembershipReceiptHistory) {
     const dialogConfig = new MatDialogConfig();

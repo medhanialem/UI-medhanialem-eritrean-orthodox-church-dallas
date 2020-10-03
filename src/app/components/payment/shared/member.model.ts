@@ -10,6 +10,7 @@ export interface MemberModel{
     paymentStartDate: Date;
     unpaidMonths: number;
     paymentLogs: PaymentLog[];
+    status: string;
 }
 
 export interface PaymentLog {
@@ -17,4 +18,5 @@ export interface PaymentLog {
     year: number;
     month: number;
     amount: number;
+    forgiven: boolean;
 }

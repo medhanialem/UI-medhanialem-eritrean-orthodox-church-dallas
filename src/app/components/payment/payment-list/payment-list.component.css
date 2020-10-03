@@ -91,6 +91,10 @@ mat-cell{
     color: darkgreen;
 }
 
+#assistedMonth {
+    color: darkblue;
+}
+
 #notMemberMonth {
     color: darkred;
 }
@@ -150,4 +154,8 @@ mat-footer-row mat-footer-cell {
     padding-left: 20px;
     color: #5F85DB;
     font-weight: bold;
+}
+
+.activeInactive {
+    padding-left: 50px;
 }

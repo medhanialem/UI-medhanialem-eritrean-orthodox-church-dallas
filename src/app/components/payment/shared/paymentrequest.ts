@@ -2,6 +2,7 @@ export class Paymentrequest {
     memberId: number;
     total: number;
     payments: MonthlyPaid[];
+    forgiven: boolean;
     constructor() {}
 }
 

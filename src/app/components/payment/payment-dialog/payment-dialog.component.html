@@ -42,6 +42,19 @@
               </button>
             </td>
           </tr>
+          <tr *ngIf="paymentType === 'forgiveness'">
+            <!-- <td id="leftLabels">Reason</td> -->
+            <td id="value" colspan="2">
+              <mat-form-field>
+                <mat-label>Write the reason for forgiveness</mat-label>
+                <textarea matInput
+                          cdkTextareaAutosize
+                          #autosize="cdkTextareaAutosize"
+                          cdkAutosizeMinRows="1"
+                          cdkAutosizeMaxRows="5"></textarea>
+              </mat-form-field>
+            </td>
+          </tr>
         </table>
       </div>
   </div>

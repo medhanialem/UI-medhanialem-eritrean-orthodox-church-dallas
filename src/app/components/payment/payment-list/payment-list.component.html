@@ -17,6 +17,15 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
+
+  <mat-form-field class = "activeInactive">
+    <mat-select (selectionChange) = onActiveInactiveDropDownChange($event) [(value)]="activeInactiveStatus" placeholder="Status">
+      <mat-option *ngFor="let memberStatus of memberStatuses" [value]="memberStatus.value">
+        {{memberStatus.displayValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  
   <hr id="hr_payment_header2"/>
 <!-- <button mat-raised-button [disabled]="selectedrow==null" (click) = "pay()" class="blue pay-btn">
     <mat-icon>monetization_on</mat-icon>
@@ -70,84 +79,96 @@
   <ng-container matColumnDef="Jan" >
     <mat-header-cell *matHeaderCellDef id="month">Jan</mat-header-cell>
       <mat-cell *matCellDef="let element" id="month">
-        <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[0].paymentLogId != 0">done</mat-icon>
+        <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[0].paymentLogId != 0 && element.paymentLogs[0].forgiven === false">done</mat-icon>
+        <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[0].forgiven === true">pan_tool</mat-icon>
         <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 1)">remove</mat-icon>
       </mat-cell>
   </ng-container>
     <ng-container matColumnDef="Feb">
         <mat-header-cell *matHeaderCellDef id="month">Feb</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[1].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[1].paymentLogId != 0 && element.paymentLogs[1].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[1].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 2)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="Mar">
         <mat-header-cell *matHeaderCellDef id="month">Mar</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[2].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[2].paymentLogId != 0 && element.paymentLogs[2].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[2].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 3)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="April">
       <mat-header-cell *matHeaderCellDef id="month">Apr</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[3].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[3].paymentLogId != 0 && element.paymentLogs[3].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[3].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 4)">remove</mat-icon>
        </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="May">
       <mat-header-cell *matHeaderCellDef id="month">May</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[4].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[4].paymentLogId != 0 && element.paymentLogs[4].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[4].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 5)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="June">
       <mat-header-cell *matHeaderCellDef id="month">Jun</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[5].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[5].paymentLogId != 0 && element.paymentLogs[5].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[5].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 6)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="July">
       <mat-header-cell *matHeaderCellDef id="month">Jul</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[6].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[6].paymentLogId != 0 && element.paymentLogs[6].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[6].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 7)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Aug">
       <mat-header-cell *matHeaderCellDef id="month">Aug</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[7].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[7].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 8)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Sep">
       <mat-header-cell *matHeaderCellDef id="month">Sep</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[8].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[8].paymentLogId != 0 && element.paymentLogs[8].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[8].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 9)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Oct">
       <mat-header-cell *matHeaderCellDef id="month">Oct</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[9].paymentLogId != 0 ">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[9].paymentLogId != 0 && element.paymentLogs[9].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[9].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf= "registrationAfterThisMonth(element.paymentStartDate, 10)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Nov">
       <mat-header-cell *matHeaderCellDef id="month">Nov</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = " element.paymentLogs[10].paymentLogId!= 0">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = " element.paymentLogs[10].paymentLogId!= 0 && element.paymentLogs[10].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[10].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 11)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Dec">
       <mat-header-cell *matHeaderCellDef id="month">Dec</mat-header-cell>
         <mat-cell *matCellDef="let element" id="month">
-          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[11].paymentLogId != 0">done</mat-icon>
+          <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[11].paymentLogId != 0 && element.paymentLogs[11].forgiven === false">done</mat-icon>
+          <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[11].forgiven === true">pan_tool</mat-icon>
           <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 12)">remove</mat-icon>
         </mat-cell>
     </ng-container>
@@ -175,10 +196,14 @@
 
     </mat-table>
 
-    <button mat-raised-button [disabled]="selectedrow==null" (click) = "proceedToPayment()" class="blue pay-btn">
+    <button mat-raised-button [disabled]="selectedrow==null" (click) = "proceedToPayment('regular')" class="blue pay-btn">
         <mat-icon>monetization_on</mat-icon>
-        Proceed to payment
+        Proceed To Payment
     </button>
+    <button mat-raised-button [disabled]="selectedrow==null || disableForgivenessBtn" (click) = "proceedToPayment('forgiveness')" class="blue pay-btn">
+      <mat-icon>monetization_on</mat-icon>
+      Forgive Payment
+  </button>
     <mat-paginator [pageSizeOptions]="[5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100]" [pageSize]="10"
     showFirstLastButtons></mat-paginator>
    

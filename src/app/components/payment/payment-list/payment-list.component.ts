@@ -27,7 +27,6 @@ export class PaymentListComponent implements OnInit {
   //currentYear = new Date().getFullYear();
   //selected = new Date().getFullYear();
   selectedrow: MemberModel = null;
-  //years: any[]=[2018,2017,2016,2015,2014,2013];
   year: number = new Date().getFullYear();
   minimumYear = 2020;
   maximumYear: number = new Date().getFullYear() + 1;
@@ -40,6 +39,15 @@ export class PaymentListComponent implements OnInit {
   isLoading = false;
   private subscriptions: Subscription[] = [];
   memberPaymentDetail: MemberModel[] = [];
+  filteredList: MemberModel[] = [];
+  disableForgivenessBtn: boolean;
+
+  activeInactiveStatus = 'Active';
+  memberStatuses: any[] = [
+    {value: 'Active', displayValue: 'Active'},
+    {value: 'Inactive', displayValue: 'Inactive'},
+    {value: 'All', displayValue: 'All'}
+  ];
 
   ngOnInit() {
     this.getPaymentList();
@@ -66,8 +74,9 @@ export class PaymentListComponent implements OnInit {
             // mpd.paymentLogs = this.sortPaymentLogsPerMonth(mpd.paymentLogs as PaymentLog[]);
             mpd.paymentLogs = this.populatePaymentLogsPerMonth(mpd.paymentLogs as PaymentLog[]);
           });
-          console.log(this.memberPaymentDetail);
           this.paymentListData.data = this.memberPaymentDetail;
+          this.activeInactiveStatus = 'Active';
+          this.filterPaymentsByMemberStatus();
         }
       ),
       (
@@ -94,9 +103,8 @@ export class PaymentListComponent implements OnInit {
   */
   populatePaymentLogsPerMonth(paymentLogs: PaymentLog[]): PaymentLog[] {
     const updatedPaymentLogs: PaymentLog[] = [];
-
     for (let i = 0; i < 12; i++) {
-      updatedPaymentLogs.push({paymentLogId: 0, year: this.year,  month: i, amount: 0});
+      updatedPaymentLogs.push({paymentLogId: 0, year: this.year,  month: i, amount: 0, forgiven: false});
     }
 
     for (let j = 0; j < paymentLogs.length; j++) {
@@ -106,6 +114,7 @@ export class PaymentListComponent implements OnInit {
           updatedPaymentLogs[k].year = paymentLogs[j].year;
           updatedPaymentLogs[k].month = paymentLogs[j].month;
           updatedPaymentLogs[k].amount = paymentLogs[j].amount;
+          updatedPaymentLogs[k].forgiven = paymentLogs[j].forgiven;
           break;
         }
       }
@@ -115,7 +124,7 @@ export class PaymentListComponent implements OnInit {
   }
 
  // Check if there are unpaid payments before, then proceed with payment.
-  proceedToPayment() {
+  proceedToPayment(type: string) {
     this.service.unpaidPreviousYearPaymentExist(
       this.selectedrow.memberId, (new Date(this.selectedrow.paymentStartDate)).getFullYear(), this.year).subscribe(
       (
@@ -127,7 +136,7 @@ export class PaymentListComponent implements OnInit {
             dialogConfig.disableClose = true;
             dialogConfig.autoFocus = true;
             dialogConfig.width = '30%';
-            dialogConfig.data = { paymentDetail: this.selectedrow, year: this.year};
+            dialogConfig.data = { paymentDetail: this.selectedrow, year: this.year, paymentType: type};
             const dialogRef = this.dialog.open(PaymentDialogComponent, dialogConfig);
             dialogRef.afterClosed().subscribe(payResponse => {
               if (payResponse === 'loadPaymentList') {
@@ -155,8 +164,12 @@ export class PaymentListComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
-    this.selectedrow = row;
+    // this.selectedrow = row;
     // let dialogRef=this.dialog.open(PaymentDialogComponent, {width:"60%",data:row});
+    const unpaidMonths = this.getUnpaidTotal(row.paymentStartDate, row.paymentLogs);
+    unpaidMonths === 0 ? this.selectedrow = null : this.selectedrow = row;
+    // Disable forgive payment btn
+    (12 - (new Date().getUTCMonth() + 1)) >= unpaidMonths ? this.disableForgivenessBtn = true : this.disableForgivenessBtn = false;
   }
 
   applyFilter(filterValue: string) {
@@ -236,6 +249,25 @@ export class PaymentListComponent implements OnInit {
       this.plusBtnClass = 'notMaximumYear';
     }
   }
+
+  onActiveInactiveDropDownChange(event) {
+    this.activeInactiveStatus = event.value;
+    this.filterPaymentsByMemberStatus();
+  }
+
+  filterPaymentsByMemberStatus() {
+    this.filteredList = [];
+    if (this.activeInactiveStatus === 'All') {
+        this.filteredList = this.memberPaymentDetail;
+    } else {
+        this.memberPaymentDetail.forEach(mpd => {
+          if (mpd.status === this.activeInactiveStatus.toUpperCase()) {
+            this.filteredList.push(mpd);
+          }
+        });
+    }
+    this.paymentListData.data = this.filteredList;
+   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => {

@@ -36,6 +36,7 @@ export class PaymentConfirmationComponent implements OnInit {
   memberPaymentReceiptData = {};
   yesBtnClicked = '';
   year: number;
+  forgiven: boolean;
 
   ngOnInit() {
     this.memberId = this.data.memberId;
@@ -49,6 +50,7 @@ export class PaymentConfirmationComponent implements OnInit {
     this.index = this.data.index;
     this.paymentLookUps = this.data.paymentLookUps;
     this.year = this.data.year;
+    this.data.paymentType === 'forgiveness' ? this.forgiven = true : this.forgiven = false;
     console.log(this.data);
   }
 
@@ -98,6 +100,7 @@ export class PaymentConfirmationComponent implements OnInit {
     this.paymentPayload.memberId = this.memberId;
     this.paymentPayload.total = this.total;
     this.paymentPayload.payments = this.paymentLogList;
+    this.paymentPayload.forgiven = this.forgiven;
   }
 
   createPaymentLogs(): void {

@@ -47,6 +47,7 @@ export class PaymentDialogComponent implements OnInit {
   lookupList: LookupModel[] = [];
   tier: Tier;
   tierDescription: string;
+  paymentType: string;
 
   ngOnInit() {
     this.fullName = this.data.paymentDetail.firstName + ' ' + this.data.paymentDetail.middleName + ' ' + this.data.paymentDetail.lastName;
@@ -56,6 +57,7 @@ export class PaymentDialogComponent implements OnInit {
     this.phone = this.data.paymentDetail.homePhoneNo;
     this.memberId = this.data.paymentDetail.memberId;
     this.year = this.data.year;
+    this.paymentType = this.data.paymentType;
     this.getPaymentLookupData();
     this.getTierDescription();
     // this.determineMinimumMaximumMonths();
@@ -85,7 +87,6 @@ export class PaymentDialogComponent implements OnInit {
             if (response != null) {
               this.lookupList = response as LookupModel[];
               this.determineMinimumMaximumMonths();
-              console.log(this.lookupList);
             } else {
               this.lookupList = [];
             }
@@ -110,10 +111,15 @@ export class PaymentDialogComponent implements OnInit {
           this.startingPay = i;
           this.index = this.startingPay + 1;
         }
+        // if the paymentLog of i <= the current Month #
         this.maximumMonths++;
       }
     }
-    console.log(this.startingPay);
+
+    if (this.paymentType === 'forgiveness') {
+      this.maximumMonths = (new Date().getUTCMonth() + 1) - this.index + 1;
+    }
+
     if (this.maximumMonths >= 1) {
       this.minimumMonths = 1;
       this.months = 1;
@@ -182,7 +188,8 @@ export class PaymentDialogComponent implements OnInit {
       index: this.index,
       paymentLookUps: this.lookupList,
       startingPay: this.startingPay,
-      year: this.year
+      year: this.year,
+      paymentType: this.paymentType
     };
   }
 
