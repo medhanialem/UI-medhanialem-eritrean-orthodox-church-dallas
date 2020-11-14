@@ -38,7 +38,7 @@ import { PaymentsGuard } from './shared/payments.guard';
 import { UsersGuard } from './shared/users.guard';
 import { UserAuthorizationComponent } from './users/user-authorization/user-authorization.component';
 import { MoveMemberComponent } from './components/members/move-member/move-member.component';
-import { MatSelectSearchComponent } from './components/mat-select-search/mat-select-search.component';
+// import { MatSelectSearchComponent } from './components/mat-select-search/mat-select-search.component';
 import { StrictNumberDirective } from './shared/strict-number-only-directive';
 import { ProfileGuard } from './shared/profile.guard';
 import { ReceiptsGuard } from './shared/receipts.guard';
@@ -71,7 +71,7 @@ import { CdkDetailRowDirective } from './components/members/shared/cdk-detail-ro
     HeaderComponent,
     UserAuthorizationComponent,
     MoveMemberComponent,
-    MatSelectSearchComponent,
+    // MatSelectSearchComponent,
     StrictNumberDirective,
     EmailComponent,
     ForgotPasswordComponent,

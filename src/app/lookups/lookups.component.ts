@@ -140,7 +140,8 @@ export class LookupsComponent implements OnInit, OnDestroy {
     ));
   }
 
-  onEditLookups(tier: LookupModel) {
+  // onEditLookups(tier: LookupModel) {
+  onEditLookups(action: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     dialogConfig.disableClose = true;

@@ -49,4 +49,7 @@ export class MemberPaymentPreviewComponent implements OnInit {
   markMonths() {
 
   }
+  printReceipt(){
+    
+  }
 }
