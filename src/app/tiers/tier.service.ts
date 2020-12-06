@@ -22,7 +22,7 @@ export class TierService {
 
   public getTierList(): Observable<TierModel[]> {
     const headers = this.getHttpHeaders();
-    return this.httpClient.get<TierModel[]>(`${this.baseUrl}tiers`, {headers});
+    return this.httpClient.get<TierModel[]>(`${this.baseUrl}tiers/`, {headers});
   }
 
   public getTier(tierId: number): Observable<Tier> {

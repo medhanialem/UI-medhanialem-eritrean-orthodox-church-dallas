@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:8091/'
-  apiUrl: '/api/'
+  apiUrl: 'http://localhost:8091/api/'
+  // apiUrl: '/api/'
   // apiUrl: 'http://medhanialemapplication-env.eba-c4bnmfpy.us-east-1.elasticbeanstalk.com:8091/'
 };
 

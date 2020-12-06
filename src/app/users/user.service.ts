@@ -78,12 +78,12 @@ export class UserService {
 
   addUser(user: UserModel): Observable<number> {
     const headers = this.getHttpHeaders();
-    return this.httpClient.post<number>(`${this.baseUrl}api/auth/signup`, user, {headers});
+    return this.httpClient.post<number>(`${this.baseUrl}auth/signup`, user, {headers});
   }
 
   updateUser(user: UserModelForUpdate): Observable<number> {
     const headers = this.getHttpHeaders();
-    return this.httpClient.post<number>(`${this.baseUrl}api/auth/updateUser`, user, {headers});
+    return this.httpClient.post<number>(`${this.baseUrl}auth/updateUser`, user, {headers});
   }
 
   public getHttpHeaders() {

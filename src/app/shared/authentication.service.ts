@@ -46,7 +46,7 @@ export class AuthenticationService {
       'Content-Type': 'application/json'
     });
 
-    return this.httpClient.post(`${this.baseUrl}api/auth/signin`, this.loginForm, {headers}).
+    return this.httpClient.post(`${this.baseUrl}auth/signin`, this.loginForm, {headers}).
       pipe(
         map((response: any) => {
           if (response) {
