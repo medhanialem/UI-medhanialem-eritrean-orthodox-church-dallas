@@ -103,7 +103,7 @@ export class PaymentListComponent implements OnInit {
   */
   populatePaymentLogsPerMonth(paymentLogs: PaymentLog[]): PaymentLog[] {
     const updatedPaymentLogs: PaymentLog[] = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 1; i < 13; i++) {
       updatedPaymentLogs.push({paymentLogId: 0, year: this.year,  month: i, amount: 0, forgiven: false});
     }
 
