@@ -57,7 +57,7 @@ export class MemberComponent implements OnInit {
       this.selectedRelationship = data.member.relationship;
       this.addMemberForm = fb.group({
         firstName: [data.member.firstName, Validators.required],
-        middleName: [data.member.middleName, Validators.required],
+        middleName: [data.member.middleName],
         lastName: [data.member.lastName, Validators.required],
         gender: [data.member.gender, Validators.required],
         marStatus: [data.member.maritalStatus, Validators.required],
