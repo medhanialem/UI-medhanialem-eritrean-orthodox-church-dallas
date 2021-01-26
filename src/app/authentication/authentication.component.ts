@@ -13,10 +13,17 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
   styleUrls: ['./authentication.component.css'],
 })
 export class AuthenticationComponent implements OnInit {
+
   private subscriptions: Subscription [] = [];
   loginForm: FormGroup;
   resetPasswordLabelSuccess = '';
   resetPasswordLabelFailure = '';
+
+  options = {
+    componentRestrictions : {
+      country: ['AU']
+    }
+  };
 
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
@@ -94,6 +101,10 @@ export class AuthenticationComponent implements OnInit {
     this.loginForm.reset();
     this.resetPasswordLabelSuccess = '';
     this.resetPasswordLabelFailure = '';
+  }
+
+  public handleAddressChange(address: any) {
+    // Do some stuff
   }
 
   ngOnDestroy(): void {

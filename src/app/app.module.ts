@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -88,7 +89,8 @@ import { CdkDetailRowDirective } from './components/members/shared/cdk-detail-ro
     FormsModule,
     ReactiveFormsModule,
     AuthenticationModule,
-    TextMaskModule
+    TextMaskModule,
+    GooglePlaceModule
   ],
 
   providers: [

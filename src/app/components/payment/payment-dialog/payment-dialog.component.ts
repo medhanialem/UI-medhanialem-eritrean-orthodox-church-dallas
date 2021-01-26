@@ -48,6 +48,7 @@ export class PaymentDialogComponent implements OnInit {
   tier: Tier;
   tierDescription: string;
   paymentType: string;
+  unpaidMonths = 0;
 
   ngOnInit() {
     this.fullName = this.data.paymentDetail.firstName + ' ' + this.data.paymentDetail.middleName + ' ' + this.data.paymentDetail.lastName;
@@ -117,7 +118,14 @@ export class PaymentDialogComponent implements OnInit {
     }
 
     if (this.paymentType === 'forgiveness') {
-      this.maximumMonths = (new Date().getUTCMonth() + 1) - this.index + 1;
+      // this.maximumMonths = (new Date().getUTCMonth() + 1) - this.index + 1;
+      if (this.data.paymentDetail.paymentLogs[0].year === new Date().getFullYear()) {
+        this.maximumMonths = new Date().getUTCMonth() + 1 - this.index + 1;
+      }
+      else if (this.data.paymentDetail.paymentLogs[0].year < new Date().getFullYear()) {
+        this.maximumMonths = this.data.unpaidMonths;
+      }
+
     }
 
     if (this.maximumMonths >= 1) {
@@ -189,7 +197,8 @@ export class PaymentDialogComponent implements OnInit {
       paymentLookUps: this.lookupList,
       startingPay: this.startingPay,
       year: this.year,
-      paymentType: this.paymentType
+      paymentType: this.paymentType//,
+      // remark: (this.paymentType === '') ? : '';
     };
   }
 

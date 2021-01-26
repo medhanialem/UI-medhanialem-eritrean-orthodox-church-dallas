@@ -46,12 +46,14 @@
             <!-- <td id="leftLabels">Reason</td> -->
             <td id="value" colspan="2">
               <mat-form-field>
-                <mat-label>Write the reason for forgiveness</mat-label>
+                <!-- <mat-label>Write the reason for forgiveness</mat-label> -->
                 <textarea matInput
+                          placeholder="Write the reason for forgiveness"
                           cdkTextareaAutosize
                           #autosize="cdkTextareaAutosize"
                           cdkAutosizeMinRows="1"
-                          cdkAutosizeMaxRows="5"></textarea>
+                          cdkAutosizeMaxRows="5">
+                </textarea>
               </mat-form-field>
             </td>
           </tr>

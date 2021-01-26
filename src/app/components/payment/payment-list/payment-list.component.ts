@@ -41,6 +41,7 @@ export class PaymentListComponent implements OnInit {
   memberPaymentDetail: MemberModel[] = [];
   filteredList: MemberModel[] = [];
   disableForgivenessBtn: boolean;
+  unpaidMonths = 0;
 
   activeInactiveStatus = 'Active';
   memberStatuses: any[] = [
@@ -136,7 +137,7 @@ export class PaymentListComponent implements OnInit {
             dialogConfig.disableClose = true;
             dialogConfig.autoFocus = true;
             dialogConfig.width = '30%';
-            dialogConfig.data = { paymentDetail: this.selectedrow, year: this.year, paymentType: type};
+            dialogConfig.data = { paymentDetail: this.selectedrow, year: this.year, paymentType: type, unpaidMonths: this.unpaidMonths};
             const dialogRef = this.dialog.open(PaymentDialogComponent, dialogConfig);
             dialogRef.afterClosed().subscribe(payResponse => {
               if (payResponse === 'loadPaymentList') {
@@ -166,10 +167,23 @@ export class PaymentListComponent implements OnInit {
     dialogConfig.width = '60%';
     // this.selectedrow = row;
     // let dialogRef=this.dialog.open(PaymentDialogComponent, {width:"60%",data:row});
-    const unpaidMonths = this.getUnpaidTotal(row.paymentStartDate, row.paymentLogs);
-    unpaidMonths === 0 ? this.selectedrow = null : this.selectedrow = row;
+    this.unpaidMonths = this.getUnpaidTotal(row.paymentStartDate, row.paymentLogs);
+    this.unpaidMonths === 0 ? this.selectedrow = null : this.selectedrow = row;
     // Disable forgive payment btn
-    (12 - (new Date().getUTCMonth() + 1)) >= unpaidMonths ? this.disableForgivenessBtn = true : this.disableForgivenessBtn = false;
+    // (12 - (new Date().getUTCMonth() + 1)) >= unpaidMonths ? 
+    // this.disableForgivenessBtn = true : this.disableForgivenessBtn = false;
+
+    if (row.paymentLogs[0].year <= new Date().getFullYear() && row.paymentLogs[new Date().getUTCMonth()].paymentLogId != 0) {
+      this.disableForgivenessBtn = true;
+    }
+
+    if (row.paymentLogs[0].year <= new Date().getFullYear() && row.paymentLogs[new Date().getUTCMonth()].paymentLogId == 0) {
+      this.disableForgivenessBtn = false;
+    }
+
+    if (row.paymentLogs[0].year > new Date().getFullYear()) {
+      this.disableForgivenessBtn = false;
+    }
   }
 
   applyFilter(filterValue: string) {
@@ -210,23 +224,43 @@ export class PaymentListComponent implements OnInit {
     this.determineMinusPlusYearBtnColor();
   }
 
+  // getUnpaidTotal(paymentStartDate: Date, paymentLogs: PaymentLog[]) {
+  //   let unpaidMonthsCounter = 0;
+  //   paymentLogs.forEach(p => {
+  //     if (!this.registrationAfterThisMonth(paymentStartDate, p.month) && p.paymentLogId === 0) {
+  //       unpaidMonthsCounter++;
+  //     }
+  //   });
+  //   return unpaidMonthsCounter;
+  // }
+
   getUnpaidTotal(paymentStartDate: Date, paymentLogs: PaymentLog[]) {
     let unpaidMonthsCounter = 0;
     paymentLogs.forEach(p => {
-      if (!this.registrationAfterThisMonth(paymentStartDate, p.month) && p.paymentLogId === 0) {
+      if (p.paymentLogId === 0 && this.registrationBeforeThisMonth(paymentStartDate, p.month)) {
         unpaidMonthsCounter++;
       }
     });
     return unpaidMonthsCounter;
   }
 
-  registrationAfterThisMonth(paymentStartDate: Date, monthToPay: number): boolean {
+  // registrationAfterThisMonth(paymentStartDate: Date, monthToPay: number): boolean {
+  //   const paymentStartYear = new Date(paymentStartDate).getFullYear();
+  //   const paymentStartMonth = new Date(paymentStartDate).getUTCMonth() + 1;
+  //   if (paymentStartYear > this.year || (paymentStartYear === this.year && paymentStartMonth > monthToPay)) {
+  //     return true;
+  //   }
+  //   return false;
+
+  // }
+
+  registrationBeforeThisMonth(paymentStartDate: Date, monthToPay: number): boolean {
     const paymentStartYear = new Date(paymentStartDate).getFullYear();
     const paymentStartMonth = new Date(paymentStartDate).getUTCMonth() + 1;
     if (paymentStartYear > this.year || (paymentStartYear === this.year && paymentStartMonth > monthToPay)) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
 
   }
 

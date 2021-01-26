@@ -1,10 +1,10 @@
 <div>
     <app-header (sideBarToggle)="isExpanded=!isExpanded"></app-header>
       <mat-sidenav-container autosize>
-      <mat-sidenav #sidenav role="navigation" mode="side" opened>
+      <mat-sidenav #sidenav role="navigation" mode="side" opened class="mainDiv" [style.background-image]="'url(../../../assets/bg-image_postLogin.jpg)'">
         <app-sidebar [expanded]="isExpanded"></app-sidebar>
       </mat-sidenav>
-      <mat-sidenav-content>
+      <mat-sidenav-content class="mainDiv" [style.background-image]="'url(../../../assets/bg-image_postLogin.jpg)'">
         <main>
           <router-outlet></router-outlet>
         </main>

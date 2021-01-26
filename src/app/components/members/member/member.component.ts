@@ -51,7 +51,7 @@ export class MemberComponent implements OnInit {
         this.selectedPriestFatherId = data.member.fatherPriest.memberId;
       }
 
-      if (this.action === 'save' && this.primaryOrDependent === 'dependent') {
+      if (this.action === 'save' && this.primaryOrDependent === 'dependent' && null != data.selectedParent.fatherPriest) {
         this.selectedPriestFatherId = data.selectedParent.fatherPriest.memberId;
       }
       this.selectedRelationship = data.member.relationship;

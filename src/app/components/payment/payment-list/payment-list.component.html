@@ -81,7 +81,7 @@
       <mat-cell *matCellDef="let element" id="month">
         <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[0].paymentLogId != 0 && element.paymentLogs[0].forgiven === false">done</mat-icon>
         <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[0].paymentLogId != 0 && element.paymentLogs[0].forgiven === true">pan_tool</mat-icon>
-        <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 1)">remove</mat-icon>
+        <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 1)">remove</mat-icon>
       </mat-cell>
   </ng-container>
     <ng-container matColumnDef="Feb">
@@ -89,7 +89,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[1].paymentLogId != 0 && element.paymentLogs[1].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[1].paymentLogId != 0 && element.paymentLogs[1].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 2)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 2)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container matColumnDef="Mar">
@@ -97,7 +97,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[2].paymentLogId != 0 && element.paymentLogs[2].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[2].paymentLogId != 0 && element.paymentLogs[2].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 3)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 3)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="April">
@@ -105,7 +105,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[3].paymentLogId != 0 && element.paymentLogs[3].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[3].paymentLogId != 0 && element.paymentLogs[3].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 4)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 4)">remove</mat-icon>
        </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="May">
@@ -113,7 +113,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[4].paymentLogId != 0 && element.paymentLogs[4].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[4].paymentLogId != 0 && element.paymentLogs[4].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 5)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 5)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="June">
@@ -121,7 +121,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[5].paymentLogId != 0 && element.paymentLogs[5].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[5].paymentLogId != 0 && element.paymentLogs[5].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 6)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 6)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="July">
@@ -129,7 +129,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[6].paymentLogId != 0 && element.paymentLogs[6].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[6].paymentLogId != 0 && element.paymentLogs[6].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 7)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 7)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Aug">
@@ -137,7 +137,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[7].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[7].paymentLogId != 0 && element.paymentLogs[7].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 8)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 8)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Sep">
@@ -145,7 +145,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[8].paymentLogId != 0 && element.paymentLogs[8].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[8].paymentLogId != 0 && element.paymentLogs[8].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 9)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 9)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Oct">
@@ -153,7 +153,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[9].paymentLogId != 0 && element.paymentLogs[9].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[9].paymentLogId != 0 && element.paymentLogs[9].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf= "registrationAfterThisMonth(element.paymentStartDate, 10)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf= "!registrationBeforeThisMonth(element.paymentStartDate, 10)">remove</mat-icon>
         </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Nov">
@@ -161,7 +161,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = " element.paymentLogs[10].paymentLogId!= 0 && element.paymentLogs[10].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[10].paymentLogId != 0 && element.paymentLogs[10].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 11)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 11)">remove</mat-icon>
       </mat-cell>
     </ng-container>
     <ng-container  matColumnDef="Dec">
@@ -169,7 +169,7 @@
         <mat-cell *matCellDef="let element" id="month">
           <mat-icon id="paidMonth" *ngIf = "element.paymentLogs[11].paymentLogId != 0 && element.paymentLogs[11].forgiven === false">done</mat-icon>
           <mat-icon id="assistedMonth" *ngIf = "element.paymentLogs[11].paymentLogId != 0 && element.paymentLogs[11].forgiven === true">pan_tool</mat-icon>
-          <mat-icon id="notMemberMonth" *ngIf = "registrationAfterThisMonth(element.paymentStartDate, 12)">remove</mat-icon>
+          <mat-icon id="notMemberMonth" *ngIf = "!registrationBeforeThisMonth(element.paymentStartDate, 12)">remove</mat-icon>
         </mat-cell>
     </ng-container>
 
